@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Home{%endblock %}
+
+{% block content %}
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>LUXURY PERFORMANCE CARS AT YOUR DESTINATION</h1>
+            <p>Discover Luxury Cars in Our Showroom</p>
+            <a href="#" class="learn-more-button">Learn More</a>
+        </div>
+        <div class="car-image">
+            <img src="{% static 'images/p-1-2.png' %}" alt="Porsche Car">
+        </div>
+    </section>
+    
+    <section class="car-details">
+        <div class="car-stats">
+            <h2>Base Price</h2>
+            <p>$5,647</p>
+        </div>
+        <div class="car-stats">
+            <h2>Power</h2>
+            <p>545 HP</p>
+        </div>
+        <div class="car-stats">
+            <h2>Engine</h2>
+            <p>756 V8</p>
+        </div>
+    </section>    
+
+    <!-- Plants Section -->
+    <div class="all-plants">
+        <div class="all-plants-text">
+            <h2>Plants</h2>
+            <h5>Learn More About Plants</h5>
+        </div>
+        
+        <div class="all-plants-link">
+            <a href="#">
+                <h5 class="more-link">More</h5>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+    
+    <section class="plants-section">
+        {% for plant in plant %}
+        <div class="plant-card">
+            <img src="{{plant.image.url}}" alt="{{plant.name}}">
+            <a href="{% url 'plants:plant_detail_view' plant.id%}"><h3>{{ plant.name }}</h3></a>
+            <p>{{ plant.about }}</p>
+            <p class="category">{{ plant.category }}</p>
+        </div>
+        {%endfor%}
+
+    </section>
+</main>
+
+{% endblock %}
