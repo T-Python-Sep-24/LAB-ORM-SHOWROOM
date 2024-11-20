@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Home {% endblock %}
+
+{% block main %}
+<main>
+
+   <div class="container-fluid pt-5 justify-content-center main-bg text-light align-items-center">
+      <div class="container align-items-center pt-5 mt-5">
+         <div class="container pt-5 py-5">
+            <h1 class="display-1 text-center pt-5">Tuwaiq ShowRoom </h1>
+            <h1 class="display-2 text-center pb-2">Database For Luxurious Cars Lovers</h1>
+            <form action="{% url 'main:home_view' %}" method="get" class="container-fluid d-flex justify-content-center mb-5 pb-5" role="search">
+
+               <input class="form-control pe-5 me-2  mb-5 text-center" style="width:60rem" type="search" name="keyword" value="{{ request.GET.keyword }}" placeholder="Search" aria-label="Search">
+
+            </form>
+         </div>
+      </div>
+   </div>
+   <div class="container mt-5 pt-5 bg-light rounded shadow">
+
+      <div class="container row">
+         <div class="col">
+            <h2>Cars</h2>
+         </div>
+         <div class="col text-end">
+            <a href="{% url 'cars:all_cars_view'%}" class="text-decoration-none text-black h5">More -> </a>
+         </div>
+      </div>
+
+      <div class="container p-5">
+         <div class="row row-cols-1 row-cols-md-4 g-4 h-100">
+            {% for car in cars %}
+              <div class="col car-card">
+                  <h3>{{ car.name }}</h3>
+                  <h3>{{ car.name }}</h3>
+                  <h3>{{ car.name }}</h3>
+                 <a class="btn btn-dark" href="{% url 'cars:car_details_view' car.id %}">Details</a>
+               </div>
+            {% endfor %}
+         </div>
+
+      </div>
+   </div>
+
+   <div class="container mt-5 pt-5 bg-light rounded shadow">
+
+      <div class="container row">
+         <div class="col">
+            <h2>Featured Brands</h2>
+         </div>
+         <div class="col text-end">
+            <a href="{% url 'brands:all_brands_view'%}" class="text-decoration-none text-black h5">More -> </a>
+         </div>
+      </div>
+
+      <div class="container p-5">
+         <div class="row row-cols-1 row-cols-md-4 g-4 h-100">
+            {% for brand in brands %}
+
+               <div class="col car-card">
+                  <h3>{{ brand.name }}</h3>
+                  <h3>{{ brand.name }}</h3>
+                  <h3>{{ brand.name }}</h3>
+                  <a href="{% url 'brands:brand_details_view' brand.id %}" class="btn btn-dark">Details</a>
+               </div>
+            {% endfor %}
+         </div>
+
+      </div>
+   </div>
+</main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Car Details{% endblock %}
+
+{% block main %}
+<main>
+    <div>
+        <div class="card">
+            <h4 class="card-title">{{car.name}}</h4>
+            <h4 class="card-title">{{car.brand}}</h4>
+            <div class="card-image">
+            <img src="{{car.photo.url}}" class="card-images" style="width: 100%;">
+            </div>
+            <p class="card-footer">{{car.model_year}}</p>
+        </div>
+    </div>
+</main>
+{% endblock %}

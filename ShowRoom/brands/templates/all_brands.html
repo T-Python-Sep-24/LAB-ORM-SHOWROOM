@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Brands {% endblock %}
+
+{% block main %}
+<main>
+
+
+        <div class="row row-cols-1 row-cols-md-3 m-5">
+            {% for brand in brands %}
+            <div class="card">
+                <div class="">
+                    <h3>{{brand.name}}</h3>
+                    <h3>{{brand.founded_at}}</h3>
+                    <a href="{% url 'brands:brand_details_view' brand.id %}" class="btn btn-dark">Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+</main>
+{% endblock %}

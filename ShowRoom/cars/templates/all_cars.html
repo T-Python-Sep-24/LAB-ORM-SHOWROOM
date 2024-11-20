@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Cars{% endblock %}
+
+{% block main %}
+<main>
+
+    <div class="row row-cols-1 row-cols-md-3 p-5 m-5 ">
+        {% for car in cars %}
+        <div class="card">
+            <a class="text-decoration-none text-dark p-3" href="{% url 'cars:car_details_view' car.id %}">
+                <h4 class="card-title">{{car.name}}</h4>
+                <h4 class="card-title">{{car.brand}}</h4>
+                <h4 class="card-images">{{car.photo.url}}</h4>
+                <p class="card-footer">{{car.model_year}}</p>
+
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

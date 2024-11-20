@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>{% block title %} {% endblock %}</title>
+
+    {% block additional_styles %}
+    <style>
+        .main-bg{
+            background: url('/static/images/main-bg-car.jpg');
+            position: relative;
+            background-position: center;
+            background-size: cover;
+            z-index: 1;
+             width: 100%;
+            height: 700px;
+        }
+        body{
+            background-color: #faf1da;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+    <div class="header ">
+        <div class="align-items-center pt-5 {% if request.resolver_match.view_name == 'main:home_view' %}fixed-top{% endif %}">
+            <div class="container mb-5 pb-5">
+                <nav class="navbar navbar-expand-md px-5 py-1 mb-5 align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <a class="navbar-brand text-decoration-none  display-1" href="/"><span class="h1">Tuwaiq Drive</span></a>
+                            <span class="navbar-text h5">Luxurious Vehicles</span>
+                        </div>
+                        <div class="ps-5 ms-5 justify-content-center">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class=" h5 collapse navbar-collapse justify-content-end justify-content-center" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.resolver_match.view_name == 'main:home_view' %}active{% endif %}" href="{% url 'main:home_view' %}">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.resolver_match.view_name == 'cars:all_cars_view' %}active{% endif %}" href="{% url 'cars:all_cars_view' %}">All Cars</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.resolver_match.view_name == 'brands:all_brands_view' %}active{% endif %}" href="{% url 'brands:all_brands_view' %}">All Brands</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <a href="{% url 'main:home_view' %}" class="btn btn-primary rounded-pill ms-md-3 slide-right">
+                            Test Drive Now <span class="ms-2">↗</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    {% block main %}
+    {% endblock %}
+
+    <footer class="text-center text-lg-start">
+        <hr class="my-4" style="width:90%;margin: 0 auto;">
+        <div class="container p-4">
+            <div class="row">
+
+                <div class="col">
+                    <h5 class="text-uppercase mb-5">Tuwaiq ShowRoom</h5>
+                    <div class="col pt-5">
+                        <i class="fa fa-facebook pe-2" style="font-size:30px"></i>
+                        <i class="fa fa-linkedin pe-2" style="font-size:30px"></i>
+                        <i class="fa fa-youtube pe-2" style="font-size:30px"></i>
+                        <i class="fa fa-instagram pe-2" style="font-size:30px"></i>
+                    </div>
+
+                </div>
+                {% block footer_link_section %}
+                <div class="col">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <h5>Plants</h5>
+                            <p><a href="{% url 'cars:all_cars_view' %}">Cars</a></p>
+
+                        </div>
+                        <div class="col">
+                            <h5>Contact Us</h5>
+                            <p><a href="{% url 'main:home_view' %}">Send a message</a></p>
+                            <p><a href="{% url 'main:home_view' %}">View Messages</a></p>
+                            <p>3</p>
+                        </div>
+                        <div class="col">
+                            <h5>Links</h5>
+                            <p>1</p>
+                            <p>2</p>
+                            <p>3</p>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+
+            </div>
+        </div>
+
+        <div class="text-center text-light bg-dark p-3" >
+            © 2024 Copyright:
+            <a class="text-body" href="{% url 'main:home_view' %}">HmzH</a>
+        </div>
+
+    </footer>
+</body>
+</html>
