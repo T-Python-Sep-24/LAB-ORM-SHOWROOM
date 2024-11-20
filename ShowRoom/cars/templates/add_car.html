@@ -23,8 +23,9 @@
                     <div>
                         <label class="form-label" for="brand">Brand</label>
                         <select id="brand" class="form-select" name="brand" required>
+
                             {% for brand in brands %}
-                            <option value="{{brand.name}}">{{ brand.name }}</option>
+                            <option value="{{brand.id}}">{{ brand.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
