@@ -3,18 +3,40 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import CarForm, ColorForm
+from brands.models import Brand
+
 from .models import Car, Color
 
 # Create your views here.
+
+
 def all_cars_view(request: HttpRequest):
     cars = Car.objects.all()
     return render(request, 'all_cars.html', context={'cars':cars})
+
 
 def car_details_view(request: HttpRequest, car_id):
 
     car = Car.objects.get(pk=car_id)
 
     return render(request, 'car_details.html', context={'car':car})
+
+
+def add_car_view(request: HttpRequest):
+    brands = Brand.objects.all()
+    colors = Color.objects.all()
+    if request.method == "POST":
+        car_form = CarForm(request.POST, request.FILES)
+        if car_form.is_valid():
+            car_form.save()
+            messages.success(request, "Car was added successfully", "alert-success")
+            return redirect(request, "cars:all_cars_view")
+        else:
+            print("add car form is not valid")
+            print(request.POST)
+            messages.error(request, "Error in adding car", "alert-danger")
+    return render(request, 'add_car.html', context={'brands': brands, 'colors': colors})
+
 
 def update_car_view(request: HttpRequest, car_id):
 

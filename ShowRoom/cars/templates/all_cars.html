@@ -4,19 +4,35 @@
 
 {% block main %}
 <main>
+    <div class="p-5">
+        <h2 class="text-center">Cars</h2>
+        <div class="container justify-content-center m-5 p-5 bg-light rounded shadow">
 
-    <div class="row row-cols-1 row-cols-md-3 p-5 m-5 ">
-        {% for car in cars %}
-        <div class="card">
-            <a class="text-decoration-none text-dark p-3" href="{% url 'cars:car_details_view' car.id %}">
-                <h4 class="card-title">{{car.name}}</h4>
-                <h4 class="card-title">{{car.brand}}</h4>
-                <h4 class="card-images">{{car.photo.url}}</h4>
-                <p class="card-footer">{{car.model_year}}</p>
+            <div class="container row mb-5">
+                <div class="col">
 
-            </a>
+                </div>
+                <div class="col text-end">
+                    <a href="{% url 'cars:add_car_view'%}" class="text-decoration-none text-black h5">Add Car </a>
+                </div>
+            </div>
+
+            <div class="container d-flex justify-content-center">
+                <div class="row row-cols-1 row-cols-3 gap-4 d-flex justify-content-center">
+
+                    {% for car in cars %}
+                    <div class="row p-5 shadow rounded">
+                        <img src="{{car.photo.url}}" style="width:100%;">
+                        <p>{{ car.name }}</p>
+                        <a class="" href="{% url 'cars:car_details_view' car.id %}">Details</a>
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
         </div>
-        {% endfor %}
     </div>
 </main>
 {% endblock %}

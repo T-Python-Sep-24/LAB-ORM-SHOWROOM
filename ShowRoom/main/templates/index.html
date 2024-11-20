@@ -18,7 +18,9 @@
          </div>
       </div>
    </div>
-   <div class="container mt-5 pt-5 bg-light rounded shadow">
+   <!-- featured cars div -->
+   <div class="p-5">
+      <div class="container m-5 p-5 bg-light rounded shadow">
 
       <div class="container row">
          <div class="col">
@@ -29,24 +31,26 @@
          </div>
       </div>
 
-      <div class="container p-5">
-         <div class="row row-cols-1 row-cols-md-4 g-4 h-100">
+      <div class="container d-flex justify-content-center">
+         <div class="row row-cols-1 row-cols-4 gap-4 d-flex justify-content-center">
             {% for car in cars %}
-              <div class="col car-card">
-                  <h3>{{ car.name }}</h3>
-                  <h3>{{ car.name }}</h3>
-                  <h3>{{ car.name }}</h3>
-                 <a class="btn btn-dark" href="{% url 'cars:car_details_view' car.id %}">Details</a>
-               </div>
+            <div class="row pt-5 shadow rounded">
+               <h3>{{ car.name }}</h3>
+               <img src="{{car.photo.url}}">
+
+               <a class="btn btn-dark" href="{% url 'cars:car_details_view' car.id %}">Details</a>
+            </div>
             {% endfor %}
          </div>
 
       </div>
    </div>
+   </div>
+   <!-- featured brands div -->
+   <div class="p-5">
+      <div class="container m-5 p-5 bg-light rounded shadow">
 
-   <div class="container mt-5 pt-5 bg-light rounded shadow">
-
-      <div class="container row">
+      <div class="container row mb-5">
          <div class="col">
             <h2>Featured Brands</h2>
          </div>
@@ -55,20 +59,24 @@
          </div>
       </div>
 
-      <div class="container p-5">
-         <div class="row row-cols-1 row-cols-md-4 g-4 h-100">
-            {% for brand in brands %}
+      <div class="container d-flex justify-content-center">
+         <div class="row row-cols-1 row-cols-4 gap-4 d-flex justify-content-center">
 
-               <div class="col car-card">
-                  <h3>{{ brand.name }}</h3>
-                  <h3>{{ brand.name }}</h3>
-                  <h3>{{ brand.name }}</h3>
-                  <a href="{% url 'brands:brand_details_view' brand.id %}" class="btn btn-dark">Details</a>
-               </div>
+            {% for brand in brands %}
+            <div class="row pt-5 shadow rounded">
+
+               <h3>{{ brand.name }}</h3>
+               <a class="" href="{% url 'brands:brand_details_view' brand.id %}">
+                  <img src="{{brand.logo.url}}" style="width:100%;">
+               </a>
+
+            </div>
             {% endfor %}
+
          </div>
 
       </div>
+   </div>
    </div>
 </main>
 {% endblock %}

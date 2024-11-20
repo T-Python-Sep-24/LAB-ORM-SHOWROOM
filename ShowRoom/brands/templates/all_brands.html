@@ -5,18 +5,28 @@
 {% block main %}
 <main>
 
+    <div class="p-5">
+        <h1 class="text-center">Brands</h1>
+        <div class="container justify-content-center m-5 p-5 bg-light rounded shadow">
 
-        <div class="row row-cols-1 row-cols-md-3 m-5">
-            {% for brand in brands %}
-            <div class="card">
-                <div class="">
-                    <h3>{{brand.name}}</h3>
-                    <h3>{{brand.founded_at}}</h3>
-                    <a href="{% url 'brands:brand_details_view' brand.id %}" class="btn btn-dark">Details</a>
+            <div class="container d-flex justify-content-center">
+                <div class="row row-cols-1 row-cols-3 gap-4 d-flex justify-content-center">
+
+                    {% for brand in brands %}
+                    <div class="row pt-5 shadow rounded">
+
+                        <h3>{{ brand.name }}</h3>
+                        <a class="" href="{% url 'brands:brand_details_view' brand.id %}">
+                            <img src="{{brand.logo.url}}" style="width:100%;">
+                        </a>
+
+                    </div>
+                    {% endfor %}
+
                 </div>
-            </div>
-            {% endfor %}
-        </div>
 
+            </div>
+        </div>
+    </div>
 </main>
 {% endblock %}

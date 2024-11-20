@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}New Car{% endblock %}
+
+{% block main %}
+
+<main>
+    <h1 class="display-6 text-center special-color pt-2">New Car</h1>
+    <hr class="special-color2" style="width:15%;margin: 0 auto;">
+    <div class="container pt-5">
+        <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+            <div class="col shadow rounded p-3 special-color">
+                <h1 class="">New Car</h1>
+                <h4>Fill the form bellow</h4>
+                <form class="mt-5" action="{% url 'cars:add_car_view' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Car Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Camry" required/>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="brand">Brand</label>
+                        <select id="brand" class="form-select" name="brand" required>
+                            {% for brand in brands %}
+                            <option value="{{brand.name}}">{{ brand.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-check mb-4 mt-4 gap-5">
+                        {% for color in colors %}
+                        <input type="checkbox" class="check-box-input" name="colors" value="{{color.id}}" id="color-{{color.id}}">
+                        <label class="form-label" for="color-{{color.id}}">{{color.name}}</label>
+                        {% endfor %}
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="specs">Car Specs</label>
+                        <textarea id="specs" name="specs" class="form-control" placeholder="Enter car specs" required></textarea>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="model_year">Model Year</label>
+                        <input type="number" id="model_year" name="model_year" class="form-number" max="2025" required>
+                    </div>
+                    <div class="form-image mb-4">
+                        <label class="form-label" for="photo">Model Year</label>
+                        <input type="file" id="photo" name="photo" class="form-image" accept="image/*" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn special-bg-color2 special-color btn-block p-2 mb-4">Send Message</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
