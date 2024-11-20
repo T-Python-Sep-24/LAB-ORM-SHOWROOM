@@ -3,7 +3,7 @@
 ## Using what you learned, create a new project called `ShowRoom`
 This is a website for showing brands of cars, cars and details about cars. Essentially a Show Room for cars !
 
-### Required models
+### Models
 #### `Brand`
 - this is a model for the brands of cars. ex: Chevrolet, Toytoa, Ford, Tesla, etc.
 - It should at leas have the following attributes: name, logo, about, founded_at, ..... etc. You can add more.
