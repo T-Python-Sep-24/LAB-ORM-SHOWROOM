@@ -1,7 +1,7 @@
 import requests
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -11,27 +11,23 @@ from cars.models import Car
 # Create your views here.
 
 def all_brands_view(request: HttpRequest):
-    try:
-        brands = Brand.objects.all()
 
-        paginator = Paginator(brands, 10)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+    brands = Brand.objects.annotate(car_count=Count('car'))
+    paginator = Paginator(brands, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-        if request.method == "GET":
-            if 'keyword' in request.GET:
-                keyword = request.GET['keyword']
+    if request.method == "GET":
+        if 'keyword' in request.GET:
+            keyword = request.GET['keyword']
 
-                brands = Brand.objects.filter(
-                    Q(name__contains=keyword) |
-                    Q(about__contains=keyword) |
-                    Q(founded_at__contains=keyword)
-                )
+            brands = Brand.objects.filter(
+                Q(name__contains=keyword) |
+                Q(about__contains=keyword) |
+                Q(founded_at__contains=keyword)
+            )
 
-        return render(request, 'all_brands.html', context={'brands': brands, 'page_obj': page_obj})
-
-    except Exception as e:
-        print(e)
+    return render(request, 'all_brands.html', context={'brands': brands, 'page_obj': page_obj})
 
 
 def brand_details_view(request: HttpRequest, brand_id:int):

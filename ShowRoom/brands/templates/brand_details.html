@@ -8,11 +8,11 @@
             <div class="col img">
                 <img class="img-fluid rounded shadow" src="{{brand.logo.url}}" style="width: 100%;">
             </div>
-            <div class="col p-3 gap-3">
+            <div class="col p-3 mt-5 gap-3">
                 <div class="d-flex justify-content-between">
 
                     <h1>{{brand.name}}</h1>
-                    <h4>{{ cars.count }}</h4>
+
                     <div>
                         <a class="btn btn-primary" href="{% url 'brands:update_brand_view' brand.id %}"><span class="material-symbols-outlined">edit_square</span></a>
                         <a class="btn btn-danger" href="{% url 'brands:delete_brand_view' brand.id %}"><span class="material-symbols-outlined">delete</span></a>
@@ -20,7 +20,8 @@
                 </div>
 
                 <p>{{brand.about}}</p>
-                <h6>{{brand.founded_at}}</h6>
+                <h5>{{brand.founded_at}}</h5>
+                <h6>Available Cars: {{ cars.count }}</h6>
 
 
             </div>

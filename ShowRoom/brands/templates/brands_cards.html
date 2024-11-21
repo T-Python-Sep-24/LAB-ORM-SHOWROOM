@@ -7,7 +7,7 @@
         <h5 class="card-title">{{ brand.name }}</h5>
         <p class="card-title">Founded At: {{ brand.founded_at }}</p>
         <p class="card-title">{{ brand.about|truncatewords:5 }}</p>
-
+        <p>Number of Cars: {{ brand.car_count }}</p>
     </div>
 
     <a class="btn btn-primary" href="{% url 'brands:brand_details_view' brand.id %}">Details</a>
