@@ -1,0 +1,142 @@
+/* base.html */
+:root{
+    --primary-color:#686d76;
+    --secondary-color: #dc5f00;
+    --bakground-color: #383b40;
+    --text-color : #ffffff;
+}
+
+html, body {
+    height: auto;
+    width: 100%;
+    margin: 0;
+    font-family: "Geist Mono", monospace;
+    background-color: var(--bakground-color);
+}
+main {
+    flex: 1;
+}
+
+header{
+    background: linear-gradient(20deg, #686D76, #ff6347);
+    box-shadow: 0 0 15px rgba(220, 95, 0, 0.2), 0 0 15px rgba(104, 109, 118, 0.2);
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--secondary-color);
+    border-radius: 40px;
+    margin: 20px 20px ;
+    width: 80%;
+    
+}
+.header-container {
+    margin: 0;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    
+}
+
+nav{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 20px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: flex-start;
+}
+
+nav ul li {
+
+    margin: 0 15px;
+
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+nav a:hover{
+    color: var(--secondary-color);
+}
+.footer-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-top: 1px solid var(--secondary-color);
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    box-shadow: 0 0 3px var(--secondary-color);
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-section h3{
+    font-size: 18px; 
+    margin-bottom: 10px;
+}
+.footer-section ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+}
+.footer-section ul li {
+     margin: 5px 0; 
+}
+.footer-section ul li a {
+     text-decoration: none; 
+     color: var(--text-color);
+     font-size: 16px;
+     transition: color 0.3s; 
+}
+.footer-section ul li a:hover {
+    color: var(--secondary-color);
+}
+
+/* home page */
+
+.page-container{
+     position: absolute;
+     top: 20%;
+     left: 5%;
+}
+
+.page-container h1{
+    font-size: 8rem;
+    font-weight: bold;
+    opacity: 0;
+    color: var(--text-color);
+    animation: fadeIn 6s forwards;
+
+}
+
+
+@keyframes fadeIn{
+    to{
+        opacity: 1;
+    }
+}
+
+.page-container p{
+    color: var(--text-color);
+    font-size: 2rem;
+}
+
+.page-container button{
+    font-size: larger;
+     color: var(--text-color);
+     background-color: black;
+     padding: 20px 20px;
+     border-radius: 40px;
+}
