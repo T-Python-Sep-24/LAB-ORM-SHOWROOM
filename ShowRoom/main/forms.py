@@ -9,5 +9,4 @@ class TestDriveRequestForm(forms.ModelForm):
             'name',
             'email',
             'car'
-            'created_at'
         ]
