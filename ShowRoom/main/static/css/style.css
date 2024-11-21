@@ -7,14 +7,18 @@
 }
 
 html, body {
-    height: auto;
+    height: 100%;
     width: 100%;
     margin: 0;
     font-family: "Geist Mono", monospace;
     background-color: var(--bakground-color);
+    flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
+
 main {
-    flex: 1;
+    flex-grow: 1;
 }
 
 header{
@@ -22,7 +26,6 @@ header{
     box-shadow: 0 0 15px rgba(220, 95, 0, 0.2), 0 0 15px rgba(104, 109, 118, 0.2);
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--secondary-color);
     border-radius: 40px;
     margin: 20px 20px ;
     width: 80%;
@@ -66,19 +69,20 @@ nav a {
 nav a:hover{
     color: var(--secondary-color);
 }
+
 .footer-container{
+    margin-top: auto; 
     display: flex;
     justify-content: space-between;
     padding: 20px;
     border-top: 1px solid var(--secondary-color);
     width: 100%;
-    position: fixed;
     bottom: 0;
     box-shadow: 0 0 3px var(--secondary-color);
+    position: relative;
 }
 
 .footer-section {
-    flex: 1;
     margin: 0 20px;
 }
 
@@ -135,8 +139,107 @@ nav a:hover{
 
 .page-container button{
     font-size: larger;
-     color: var(--text-color);
-     background-color: black;
-     padding: 20px 20px;
-     border-radius: 40px;
+    color: var(--text-color);
+    background-color: black;
+    padding: 20px 20px;
+    border-radius: 40px;
+}
+
+/* manage brands */
+.brand-title{
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+.brand-form{
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 20);
+}
+.brand-form input,.brand-form textarea {
+    width: 100%; 
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 0.5px solid #ccc;
+    box-sizing: border-box;
+}
+.form-group p {
+    margin: 50px 10px;
+    gap: 20px;
+}
+
+.btn-submit, .btn-back {
+    font-size: 10px;
+    color: var(--text-color);
+    background-color: black;
+    padding: 10px 10px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+/* all brands page */
+.all-brands{
+    padding: 40px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+
+}
+.all-brands h1 {
+    color: var(--text-color);
+}
+.search-form {
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+.search-button {
+    background-color: transparent;
+    color: var(--secondary-color);
+    border: none;
+
+}
+.search-brands {
+    width: 25%;
+    padding: 10px 10px;
+    border-radius: 20px;
+}
+
+.brand-card{
+    background-color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 20%;
+    box-shadow: 0 11px 11px rgba(0, 0, 20, 70);
+    position: relative;
+}
+
+.brand-logo{
+    width: 370px;
+    height: auto;
+    margin-bottom: 10px;
+}
+.brand-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px
+}
+
+.more-button{
+    font-size: 15px;
+    color: var(--text-color);
+    background-color: black;
+    padding: 10px 10px;
+    border-radius: 40px;
+    max-width: 20%;
+    align-self: flex-end;
 }

@@ -1,0 +1,34 @@
+{% extends 'main/base.html'%}
+{% load static %} 
+
+{% block title %}
+    {% if brand %}
+        Update Brand
+    {% else %} 
+        Add a New Brand
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="brand-title">
+        {% if brand %}
+            Update {{brand.name}}
+        {% else %} 
+            Add a New Brand
+        {% endif %}
+    </h1>
+    <form method="POST" enctype="multipart/form-data" class="brand-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn-submit">
+            {% if brand %}
+                Update Brand
+            {% else %} 
+                Add Brand
+             {% endif %}
+        </button>
+        <button class="btn-back"><a href="{% url 'main:home_view' %}" class="btn-back">Back to Home</a></button>
+    </form>
+{% endblock %}

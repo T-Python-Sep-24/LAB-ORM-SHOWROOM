@@ -1,0 +1,30 @@
+{% extends 'main/base.html'%}
+{% load static %} 
+
+{% block title %}
+   car brands
+{% endblock %}
+
+{% block content %}
+<div class="all-brands">
+   <h1>All Brands</h1>
+   <form method="get" action="{% url 'brands:all_brands_view' %}" class="search-form">
+      <input type="text" name="q" value="{{ query }}" placeholder="Search by brand name..." class="search-brands">
+      <button type="submit" class="search-button">
+         <span class="material-symbols-outlined ">search</span>
+     </button>
+   </form>
+   <div class="brand-list">
+      {% for brand in brands %}
+         <div class="brand-card">
+            <img src="{{ brand.logo.url }}" alt="{{brand.name}} logo" class="brand-logo">
+            <h3>{{ brand.name }}</h3>
+            <p>Cars available: {{ brand.get_car_count }}</p>
+            <button class="more-button">More</button>
+         </div>
+      {% empty %}
+         <p>No brands found.</p>
+      {% endfor %}
+   </div>
+</div>
+{% endblock %}
