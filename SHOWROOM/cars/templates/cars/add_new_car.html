@@ -1,0 +1,84 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Add New Car{% endblock %}
+
+{% block content %}
+
+<main class="add-car-page">
+    <section class="add-car-header">
+        <h1>Add a New Car</h1>
+        <p>Fill in the details below to add a new car to the collection.</p>
+    </section>
+
+    <section class="add-car-form">
+        <form action="{% url 'cars:add_new_car_view'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="car_name">Car Name</label>
+                <input type="text" id="car_name" name="car_name" class="form-control" placeholder="Enter Car Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="available_colors">Available Colors</label>
+                <div id="available_colors" class="checkbox-group">
+                    {% for color in colors %}
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="color_{{ color.id }}" name="available_colors" value="{{ color.id }}">
+                        <label for="color_{{ color.id }}">
+                            <span class="color-box color-{{ color.name|lower|slugify }}"></span> 
+                            {{ color.name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" class="form-control" placeholder="Enter Year" required>
+            </div>
+
+            <div class="form-group">
+                <label for="engine">Engine Type</label>
+                <input type="text" id="engine" name="engine" class="form-control" placeholder="Enter Engine Type (e.g., Petrol, Diesel)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="power">Horsepower</label>
+                <input type="number" id="power" name="power" class="form-control" placeholder="Enter Power in HP" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price" class="form-control" placeholder="Enter Price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="availability">Availability</label>
+                <select id="availability" name="availability" class="form-control" required>
+                    <option >Choose Availability</option>
+                    <option value="Available">Available</option>
+                    <option value="Unavailable">Unavailable</option>
+                    <option value="Pre-order">Pre-order</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="speed">Top Speed</label>
+                <input type="number" id="speed" name="speed" class="form-control" placeholder="Enter Top Speed (km/h or mph)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Car Image</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="submit-button">Add Car</button>
+        </form>
+    </section>
+</main>
+
+{% endblock %}

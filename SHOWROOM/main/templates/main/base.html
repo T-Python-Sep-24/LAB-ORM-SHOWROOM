@@ -27,7 +27,7 @@
                 <a href="{% url 'main:main_view'%}" class="{% if request.path == '/'%}active{%endif%}">Home</a>
                 <a href="{% url 'cars:all_cars_view'%}" class="{% if request.path == '/cars/all-cars/'%}active{%endif%}">All Cars</a>
             </nav>
-            <a href="#" class="contact-button">Add Car</a>
+            <a href="{% url 'cars:add_new_car_view'%}" class="contact-button">Add Car</a>
         </div>
     </header>
     

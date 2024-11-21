@@ -1,0 +1,102 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Update Car{% endblock %}
+
+{% block content %}
+
+<main class="add-car-page">
+    <section class="add-car-header">
+        <h1>Update Car</h1>
+        <p>Change the details below to update car from the collection.</p>
+    </section>
+
+    <section class="add-car-form">
+        <form action="{% url 'cars:car_update_view'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="car_name">Car Name</label>
+                <input type="text" id="car_name" name="car_name" class="form-control" placeholder="Enter Car Name" value="{{}}" >
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <select id="brand" name="brand" class="form-control" required>
+                    {% for brand in brands %}
+                    <option value="{{ brand.id }}">{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="available_colors">Available Colors</label>
+                <select id="available_colors" name="available_colors" class="form-control" multiple required>
+                    {% for color in colors %}
+                    <option value="{{ color.id }}">{{ color.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" class="form-control" placeholder="Enter Year" value="{{}}">
+            </div>
+
+            <div class="form-group">
+                <label for="engine">Engine Type</label>
+                <input type="text" id="engine" name="engine" class="form-control" placeholder="Enter Engine Type (e.g., Petrol, Diesel)" value="{{}}">
+            </div>
+
+            <div class="form-group">
+                <label for="power">Horsepower</label>
+                <input type="number" id="power" name="power" class="form-control" placeholder="Enter Power in HP" value="{{}}">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" class="form-control" placeholder="Enter Price" value="{{}}">
+            </div>
+
+            <div class="form-group">
+                <label for="availability">Availability</label>
+                <select id="availability" name="availability" class="form-control" required>
+                    <option >Choose Availability</option>
+                    <option value="Available" {% if == "Available" %} selected {% endif %}>Available</option>
+                    <option value="Unavailable">Unavailable</option>
+                    <option value="Pre-order">Pre-order</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="speed">Top Speed</label>
+                <input type="number" id="speed" name="speed" class="form-control" placeholder="Enter Top Speed (km/h or mph)" value="{{}}">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" class="form-control" required>
+                    <option >Choice Car Category</option>
+                    <option value="SUV" {% if == "SUV" %} selected {% endif %}>SUV</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Truck">Truck</option>
+                    <option value="Coupe">Coupe</option>
+                    <option value="Convertible">Convertible</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Car Image</label>
+                <div class="update-img">
+                    <img src="{{}}" alt="update-img-2" class="update-img-2"><br>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">Add Car</button>
+        </form>
+    </section>
+</main>
+
+{% endblock %}

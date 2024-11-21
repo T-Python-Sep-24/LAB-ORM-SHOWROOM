@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}{{ car.car_name }}{%endblock %}
+
+{% block content %}
+
+
+<main class="car-details-page">
+    <section class="car-image-section">
+        <img src="{{ car.image.url }}" alt="Car Image" class="car-image">
+        <p class="car-availability">{{car.availability}}</p>
+        <h1 class="car-name">{{car.car_name}}</h1>
+    </section>
+
+
+    <section class="car-color">
+        <div class="color-header">
+            <ul id="color-tiles" class="tileColor">
+                {% for color in car.available_colors.all %}
+                <li class="tileColor_1">
+                    <span class="color-circle" data-color="{{ color.hex_code }}"></span>
+                    <span>{{ color.name }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    
+
+
+    <section class="car-details-section">
+        <div class="detail-box">
+            <h2 class="detail-value">{{car.year}}<span></span></h2>
+            <p class="detail-label">Model</p>
+        </div>
+
+        <div class="detail-box">
+            <h2 class="detail-value">{{car.engine}}<span></span></h2>
+            <p class="detail-label">Engine</p>
+        </div>
+
+        <div class="detail-box">
+            <h2 class="detail-value">{{car.power}} <span>HP</span></h2>
+            <p class="detail-label">Power</p>
+        </div>
+
+        <div class="detail-box">
+            <h2 class="detail-value">{{car.speed}} <span>km/h</span></h2>
+            <p class="detail-label">Top speed</p>
+        </div>
+
+        <div class="detail-box">
+            <h2 class="detail-value">{{car.price}} <span>$</span></h2>
+            <p class="detail-label">Price</p>
+        </div>
+
+    </section>
+</main>
+
+
+{% endblock %}
