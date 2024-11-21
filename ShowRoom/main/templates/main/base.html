@@ -23,12 +23,7 @@
             <div class="container d-flex flex-row gap-5">
                 <!-- Brand name -->
                 <a class="navbar-brand gap-1 d-inline-flex px-3" href="/">
-                    <h1>
-                        Planteer
-                    </h1>
-                    <span class="material-symbols-outlined">
-                        psychiatry
-                    </span>
+                    
                 </a>
                 <!-- Toggle button to display navbar on small screens -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -38,7 +33,6 @@
                 </button>
                 <!-- Nav bar components -->
                 <div class="collapse navbar-collapse" id="navbarCollapseItems">
-
                     <!-- Nav links -->
                     <ul class="navbar-nav align-items-center gap-4 p-3">
                         <li class="nav-item">
@@ -52,12 +46,13 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="d-flex align-items-center justify-content-center gap-1">
                     <a href="{% url 'main:modeView' 'light' %}?next={{request.get_full_path|urlencode}}">
-                        <span class="material-symbols-outlined rounded-pill p-1">light_mode</span>
+                        <span class="material-symbols-outlined rounded-pill p-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}d-inline-block{% else %}d-none{% endif %}">light_mode</span>
                     </a>
                     <a href="{% url 'main:modeView' 'dark' %}?next={{request.get_full_path|urlencode}}">
-                        <span class="material-symbols-outlined rounded-pill p-1">dark_mode</span>
+                        <span class="material-symbols-outlined rounded-pill p-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'light' %}d-inline-block{% else %}d-none{% endif %}">dark_mode</span>
                     </a>
                 </div>
             </div>
