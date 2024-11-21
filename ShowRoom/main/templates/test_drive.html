@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Test Drive{% endblock %}
+
+{% block main %}
+
+<main>
+    <h1 class="display-6 text-center special-color pt-2">Test Drive</h1>
+    <hr class="special-color2" style="width:15%;margin: 0 auto;">
+    <div class="container pt-5">
+        <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+            <div class="col shadow rounded p-3 special-color">
+                <h1 class="">Test Drive Requrst</h1>
+                <h4>Fill the request form bellow</h4>
+                <form class="mt-5" action="{% url 'main:test_drive_view' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Hmzh Doe" required/>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="email" id="email" name="name" class="form-control" placeholder="example@g.com" required/>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <select id="car" class="form-select" name="brand" required>
+
+                            {% for car in cars %}
+                            <option value="{{car.id}}">{{ car.name }} {{car.model}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-block p-2 mb-4">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

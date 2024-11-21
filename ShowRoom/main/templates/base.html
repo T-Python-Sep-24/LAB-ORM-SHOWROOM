@@ -58,7 +58,7 @@
                     </div>
 
                     <div>
-                        <a href="{% url 'main:home_view' %}" class="btn btn-primary rounded-pill ms-md-3 slide-right">
+                        <a href="{% url 'main:test_drive_view' %}" class="btn btn-primary rounded-pill ms-md-3 slide-right">
                             Test Drive Now <span class="ms-2">↗</span>
                         </a>
                     </div>
@@ -97,14 +97,15 @@
                 <div class="col">
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
-                            <h5>Plants</h5>
-                            <p><a href="{% url 'cars:all_cars_view' %}">Cars</a></p>
+                            <h5>Main Pages</h5>
+                            <p><a href="{% url 'cars:all_cars_view' %}">Cars Showroom</a></p>
+                            <p><a href="{% url 'brands:all_brands_view' %}">Brands Listings </a></p>
 
                         </div>
                         <div class="col">
-                            <h5>Contact Us</h5>
-                            <p><a href="{% url 'main:home_view' %}">Send a message</a></p>
-                            <p><a href="{% url 'main:home_view' %}">View Messages</a></p>
+                            <h5>Test Drive</h5>
+                            <p><a href="{% url 'main:test_drive_view' %}">Get Your Test Drive Now</a></p>
+
                             <p>3</p>
                         </div>
                         <div class="col">
