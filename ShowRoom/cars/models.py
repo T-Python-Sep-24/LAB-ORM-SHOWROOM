@@ -22,6 +22,8 @@ class Car(models.Model):
     model = models.CharField(max_length=1024)
     modelYear = models.DateField()
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True)
+    topSpeed = models.CharField(max_length=258)
+    engine = models.CharField(max_length=1024)
     power = models.CharField(max_length=256)
     gear = models.CharField(max_length=128, choices=Gear.choices)
     bodyType = models.CharField(max_length=128, choices=BodyType.choices)
