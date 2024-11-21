@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Update Brand{% endblock %}
+
+{% block main %}
+
+<main>
+    <h1 class="display-6 text-center special-color pt-2">Update Brand</h1>
+    <hr class="special-color2" style="width:15%;margin: 0 auto;">
+    <div class="container pt-5">
+        <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+            <div class="col shadow rounded p-3 special-color">
+                <h1 class="">Update Brand</h1>
+                <h4>Fill the form bellow</h4>
+                <form class="mt-5" action="{% url 'brands:update_brand_view' brand.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Brand Name</label>
+                        <input type="text" id="name" name="name" class="form-control" value={{brand.name}} placeholder="Chevrolet" required/>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="about">About Brand</label>
+                        <textarea id="about" name="about" class="form-control" placeholder="talk about the brand" required>{{brand.about}}</textarea>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="founded_at">Founded At</label>
+                        <input type="date" id="founded_at" value="{{brand.founded_at.isoformat}}" name="founded_at" class="form-date" required>
+                    </div>
+                    <img src="{{ brand.logo.url }}" class="p-3 " style="width:50%;">
+                    <div class="form-image mb-4">
+                        <label class="form-label" for="logo">Brand Logo</label>
+                        <input type="file" id="logo" name="logo" class="form-img" accept="image/*">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-block p-2 mb-4">Update Brand</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

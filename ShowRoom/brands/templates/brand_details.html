@@ -3,11 +3,28 @@
 
 {% block main %}
     <main>
-        <div>
-            <img src="{{brand.logo.url}}">
-            <h1>{{brand.name}}</h1>
-            <p>{{brand.about}}</p>
-            <h1>{{brand.founded_at}}</h1>
+        <div class="container">
+        <div class="row  p-5 shadow rounded">
+            <div class="col img">
+                <img class="img-fluid rounded shadow" src="{{brand.logo.url}}" style="width: 100%;">
+            </div>
+            <div class="col p-3 gap-3">
+                <div class="d-flex justify-content-between">
+
+                    <h1>{{brand.name}}</h1>
+                    <h4>{{ cars.count }}</h4>
+                    <div>
+                        <a class="btn btn-primary" href="{% url 'brands:update_brand_view' brand.id %}"><span class="material-symbols-outlined">edit_square</span></a>
+                        <a class="btn btn-danger" href="{% url 'brands:delete_brand_view' brand.id %}"><span class="material-symbols-outlined">delete</span></a>
+                    </div>
+                </div>
+
+                <p>{{brand.about}}</p>
+                <h6>{{brand.founded_at}}</h6>
+
+
+            </div>
+        </div>
         </div>
     </main>
 {% endblock %}

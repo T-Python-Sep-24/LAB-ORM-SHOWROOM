@@ -1,17 +1,35 @@
 {% extends 'base.html' %}
-
 {% block title %}Car Details{% endblock %}
 
 {% block main %}
 <main>
-    <div>
-        <div class="card">
-            <h4 class="card-title">{{car.name}}</h4>
-            <h4 class="card-title">{{car.brand}}</h4>
-            <div class="card-image">
-            <img src="{{car.photo.url}}" class="card-images" style="width: 100%;">
+    <div class="container">
+        <div class="row  p-5 shadow rounded">
+            <div class="col img">
+                <img class="img-fluid rounded shadow" src="{{car.photo.url}}" style="width: 100%;">
             </div>
-            <p class="card-footer">{{car.model_year}}</p>
+            <div class="col p-3 g-2">
+                <div class="d-flex justify-content-between mb-4">
+
+                    <h1>{{car.name}}</h1>
+                    <div>
+                        <a class="btn btn-primary" href="{% url 'cars:update_car_view' car.id %}"><span class="material-symbols-outlined">edit_square</span></a>
+                        <a class="btn btn-danger" href="{% url 'cars:delete_car_view' car.id %}"><span class="material-symbols-outlined">delete</span></a>
+                    </div>
+                </div>
+
+                <h6>Specs: </h6>
+                <p>{{car.specs}}</p>
+                <div class="d-flex gap-2">
+                    <h6> Available Colors: </h6>
+                {% for color in car.colors.all %}
+
+                    <div class="p-1 rounded shadow" style="background-color: {{color.hexadecimal}}"><h6 class="text-primary">{{color}}</h6></div>
+                {% endfor %}
+                </div>
+                <h6>Model: {{car.model_year}}</h6>
+
+            </div>
         </div>
     </div>
 </main>

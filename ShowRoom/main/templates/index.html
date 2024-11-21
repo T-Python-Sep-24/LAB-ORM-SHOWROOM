@@ -9,8 +9,8 @@
       <div class="container align-items-center pt-5 mt-5">
          <div class="container pt-5 py-5">
             <h1 class="display-1 text-center pt-5">Tuwaiq ShowRoom </h1>
-            <h1 class="display-2 text-center pb-2">Database For Luxurious Cars Lovers</h1>
-            <form action="{% url 'main:home_view' %}" method="get" class="container-fluid d-flex justify-content-center mb-5 pb-5" role="search">
+            <h1 class="display-3 text-center pb-3">Luxury is Our Lifestyle, Cars, and Standards</h1>
+            <form action="{% url 'main:search_view' %}" method="get" class="container-fluid d-flex justify-content-center mb-5 pb-5" role="search">
 
                <input class="form-control pe-5 me-2  mb-5 text-center" style="width:60rem" type="search" name="keyword" value="{{ request.GET.keyword }}" placeholder="Search" aria-label="Search">
 
@@ -32,15 +32,8 @@
       </div>
 
       <div class="container d-flex justify-content-center">
-         <div class="row row-cols-1 row-cols-4 gap-4 d-flex justify-content-center">
-            {% for car in cars %}
-            <div class="row pt-5 shadow rounded">
-               <h3>{{ car.name }}</h3>
-               <img src="{{car.photo.url}}">
-
-               <a class="btn btn-dark" href="{% url 'cars:car_details_view' car.id %}">Details</a>
-            </div>
-            {% endfor %}
+         <div class="row row-cols-1 row-cols-4 gap-5 d-flex justify-content-center">
+           {% include 'cars_cards.html' %}
          </div>
 
       </div>
@@ -60,18 +53,9 @@
       </div>
 
       <div class="container d-flex justify-content-center">
-         <div class="row row-cols-1 row-cols-4 gap-4 d-flex justify-content-center">
+         <div class="row row-cols-1 row-cols-4 gap-5 d-flex justify-content-center">
 
-            {% for brand in brands %}
-            <div class="row pt-5 shadow rounded">
-
-               <h3>{{ brand.name }}</h3>
-               <a class="" href="{% url 'brands:brand_details_view' brand.id %}">
-                  <img src="{{brand.logo.url}}" style="width:100%;">
-               </a>
-
-            </div>
-            {% endfor %}
+           {% include 'brands_cards.html' %}
 
          </div>
 

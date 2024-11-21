@@ -15,7 +15,7 @@ class Color(models.Model):
 class Car(models.Model):
 
     name = models.CharField(max_length=100)
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     colors = models.ManyToManyField(Color)
     photo = models.ImageField(upload_to='images/', default="images/default.jpg")
     specs = models.TextField()
