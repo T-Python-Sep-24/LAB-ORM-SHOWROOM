@@ -1,14 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>New Brand</title>
-</head>
-<body>
-    <h1>Add a New Brand</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Render the form fields -->
-        <button type="submit">Add Brand</button>
-    </form>
-</body>
-</html>
+{% extends "brand/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Brand Page{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <label for="id_name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="id_name" placeholder="Enter brand name">
+</div>
+<div class="mb-3">
+    <label for="id_logo" class="form-label">Logo</label>
+    <input type="file" class="form-control" id="id_logo">
+</div>
+<div class="mb-3">
+    <label for="id_about" class="form-label">About</label>
+    <textarea class="form-control" id="id_about" rows="3" placeholder="Describe the brand"></textarea>
+</div>
+<div class="mb-3">
+    <label for="id_founded_at" class="form-label">Founded At</label>
+    <input type="date" class="form-control" id="id_founded_at">
+</div>
+<button type="submit" class="btn btn-primary w-100">Add Brand</button>
+
+{% endblock %}

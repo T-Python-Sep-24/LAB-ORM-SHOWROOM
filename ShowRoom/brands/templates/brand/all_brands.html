@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "brand/base.html" %}
 
 {% block content %}
     <h1 class="mb-4">All Brands</h1>
     
     <!-- Search Form -->
-    <form method="get" action="{% url 'all_brands' %}" class="mb-4">
+    <form method="get" action="{% url 'brands:all_brands' %}" class="mb-4">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ query|default:'' }}">
             <button type="submit" class="btn btn-primary">Search</button>

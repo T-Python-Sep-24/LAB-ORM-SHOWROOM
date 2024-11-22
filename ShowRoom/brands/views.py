@@ -26,7 +26,7 @@ def all_brands(request):
     page_number = request.GET.get('page')
     brands = paginator.get_page(page_number)
 
-    return render(request, 'brands/all_brands.html', {'brands': brands, 'query': query, 'sort': sort})
+    return render(request, 'brand/all_brands.html', {'brands': brands, 'query': query, 'sort': sort})
 
 def create_brand(request):
     if request.method == 'POST':
@@ -39,7 +39,7 @@ def create_brand(request):
             messages.error(request, "Error creating brand. Please check the form.")
     else:
         form = BrandForm()
-    return render(request, 'brands/create_brand.html', {'form': form})
+    return render(request, 'brand/create_brand.html', {'form': form})
 
 
 def brand_detail(request, brand_id):
