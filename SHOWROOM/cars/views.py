@@ -35,6 +35,7 @@ def add_new_car_view(request:HttpRequest):
         
         car = Car.objects.create(
             car_name=car_name,
+            brand=brand,
             year=year,
             engine=engine,
             power=power,
