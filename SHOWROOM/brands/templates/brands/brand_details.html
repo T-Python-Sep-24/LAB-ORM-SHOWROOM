@@ -30,9 +30,13 @@
         <ul class="cars-list">
             {% for car in cars %}
             <li class="car-item">
-                <img src="{{ car.photo.url }}" alt="{{ car.car_name }}" class="car-photo-2">
-                <h3 class="car-name-2">{{ car.car_name }}</h3>
-                <p class="car-year-2">Model Year: {{ car.year }}</p>
+                <img src="{{ car.image.url }}" alt="{{ car.car_name }}" class="car-photo-2">
+
+                <div class="car-item-detail">
+                    <h3 class="car-name-2">{{ car.car_name }}</h3>
+                    <p class="car-year-2">Model Year: {{ car.year }}</p>
+                </div>
+
             </li>
             {% empty %}
             <p>No cars available for this brand yet.</p>
