@@ -4,7 +4,27 @@
 {% block title %}All Brands{% endblock %}
 
 {% block content %}
-    <section class="container-md">
-
+    <section class="container-md text-center">
+        <h1 class="mt-4">
+            Brands
+        </h1>
+        <div class="half-border mb-5 mx-auto"></div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-gap-4">
+            {% for brand in brands %}
+            <div class="col">
+                <div class="card shadow border-0 crd {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% endif %}">
+                    <img src="{{brand.logo.url}}" class="card-img-top crd-img" alt="Brand logo">
+                    <div class="card-body text-start position-relative">
+                        <a href="" class="card-title fs-3 hover-underline">{{brand.name}}</a>
+                        <p class="card-text mb-1"><span class="fw-bold text-danger">Founder:</span> {{brand.founder}}</p>
+                        <p class="card-text"><span class="fw-bold text-danger">Headquarters:</span> {{brand.headquarters}}</p>
+                        <div class="d-flex position-absolute bottom-0 end-0 p-3">
+                            <a href="#" class="btn btn-danger text-white">More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </section>
 {% endblock %}

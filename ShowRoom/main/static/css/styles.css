@@ -137,11 +137,11 @@
     bottom: auto;
 }
 
-.card a {
+.card-home a {
     text-decoration: none;
     font-weight: 500;
     color: #e6ebf7;
-    text-shadow: none;
+    text-shadow: 0px 0px 5px #000000;
 }
 
 @keyframes texteffect {
@@ -189,7 +189,7 @@
 
 /* Brands pages styling */
 
-/* Add brand */
+/* Add/Update brand */
 .preview {
     height: 100px;
     width: 100px
@@ -203,4 +203,14 @@
 .light .frm {
     background: rgba(12, 18, 33, 0.1);
     backdrop-filter: blur(10px);
+}
+
+/* Display brands */
+.crd {
+    height: 27rem !important;
+}
+
+.crd-img {
+    height: 16rem;
+    object-fit: cover;
 }

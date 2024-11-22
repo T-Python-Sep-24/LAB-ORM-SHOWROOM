@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from cars.models import Car
+from brands.models import Brand
 
 # Home page view
 def homeView(request: HttpRequest):
     cars = Car.objects.all().order_by('addedAt')[0:3]
-    response = render(request, 'main/home.html', context={'cars':cars})
+    brands = Brand.objects.all().order_by('founded')[0:3]
+    
+    response = render(request, 'main/home.html', context={'cars':cars, 'brands': brands})
     return response
 
 #Contact us view

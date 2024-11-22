@@ -70,16 +70,17 @@
             <span class="material-symbols-outlined">arrow_forward</span>
         </div>
     </a>
-    <!-- Brands loop here -->
     <div class="row row-cols-sm-2 row-cols-lg-3">
+        {% for brand in brands %}
         <div class="col">
-            <div class="card text-bg-dark shadow">
-                <img src="{% static 'images/ElPorsche911Turbo.jpg' %}" class="card-img" alt="brand image">
+            <div class="card card-home text-bg-dark shadow-lg text-center border-0">
+                <img src="{{brand.logo.url}}" class="card-img crd-img" alt="brand image">
                 <div class="card-img-overlay align-content-end">
-                    <a href="" class="card-title fs-3">Card title</a>
+                    <a href="" class="card-title fs-3 hover-underline">{{brand.name}}</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </section>
 
