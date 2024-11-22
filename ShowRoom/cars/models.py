@@ -5,9 +5,10 @@ from brands.models import Brand
 class Color(models.Model):
     
     name = models.CharField(max_length=256, unique=True)
-
+    hex_value = models.CharField(max_length=7, default='#4335A7')
+    
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} - {self.hex_value}'
 
 class Car(models.Model):
     class DoorChoices(models.IntegerChoices):
@@ -36,10 +37,3 @@ class Car(models.Model):
     def __str__(self) -> str:
         return f'{self.name} - {self.brand.name}'
     
-    '''
-    This is a model to represent cars, ex: Camry, Caprice, Model 3, etc.
-It should at least have the following attributes: name, brand, colors,
-photo, specs, model, ..... etc. You can add more.
-Note: car model has a relation with Car model and Color model
-(use appropriate relation types for each)
-    '''

@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Add Color {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="d-flex flex-column justify-content-center align-items-center w-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-11 col-lg-7">
+                <div class="d-flex flex-column justify-content-start align-items-start mb-3">
+                    <h2 class="">Add New Car Color!</h2>
+                </div>
+                <form class="d-flex flex-column gap-4" action="{% url 'cars:new_color_view' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Color Name" class="form-control" required/>
+                    <input type="text" name="hex_value" placeholder="Color Hex Value e.g: #4335A7" class="form-control" required/>
+
+                    <input type="submit" value="Submit" class="btn" style="background-color: #4335A7; color: #EDF4F2"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

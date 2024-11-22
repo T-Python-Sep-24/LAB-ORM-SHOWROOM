@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Add Car {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="d-flex flex-column justify-content-center align-items-center w-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-11 col-lg-7">
+                <div class="d-flex flex-column justify-content-start align-items-start mb-3">
+                    <h2>Add To The CARs Show Room!</h2>
+                </div>
+                <form class="d-flex flex-column gap-4" action="{% url 'cars:new_car_view' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Car Name" class="form-control" required/>
+                    <input type="text" name="engine" placeholder="Car Engine Type" class="form-control" required/>
+
+                    <select name="brand" class="form-select" required>
+                        <option value="" disabled selected>Choose Car Brand</option>
+                        {% for brand in brands %}
+                            <option value="{{ brand.id }}">{{ brand.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <div>
+                        <h4>Choose Car Color</h4>
+                        <select name="colors" class="form-select" multiple required>
+                            {% for color in colors %}
+                            <option style="background-color: {{color.hex_value}};" value="{{ color.id }}">{{ color.name }} - {{color.hex_value}}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="form-text text-muted">Hold down Ctrl with Shift to select multiple colors.</small>
+                    </div>
+
+                    <select name="category" class="form-select" required>
+                        <option value="" disabled selected>Select Car Category</option>
+                        {% for value, label in categories %}
+                            <option value="{{value}}">{{label}} </option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="doors" class="form-select" required>
+                        <option value="" disabled selected>Select How Many Doors</option>
+                        {% for value, label in doors %}
+                            <option value="{{value}}">{{label}} </option>
+                        {% endfor %}
+                    </select>
+
+                    <div>
+                        <h4 class="mb-2">Car Year Model</h4>
+                        <input type="date" name="year" placeholder="Car Model" class="form-control" required/>
+                    </div>
+
+                    <div>
+                        <h4 class="mb-2">Car Photo</h4>
+                        <input type="file" name="image" placeholder="Car Photo" class="form-control" required accept="image/*"/>
+                    </div>
+
+                    <input type="submit" value="Submit" class="btn" style="background-color: #4335A7; color: #EDF4F2"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
