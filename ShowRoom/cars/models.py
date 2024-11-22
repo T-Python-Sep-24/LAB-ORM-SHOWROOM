@@ -4,7 +4,7 @@ from brands.models import Brand
 
 class Color(models.Model):
     name = models.CharField(max_length=258)
-    hexCode = models.IntegerField()
+    hexCode = models.CharField(max_length=8)
     image = models.ImageField(upload_to="images/colors/", default="images/default.jpg")
 
     def __str__(self) -> str:

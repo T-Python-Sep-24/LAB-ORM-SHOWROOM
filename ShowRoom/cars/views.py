@@ -1,9 +1,48 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.contrib import messages
-from cars.models import Car, Attachment
-from cars.forms import CarForm
+from cars.models import Car, Attachment, Color
+from cars.forms import CarForm, ColorForm
 
+
+# Add color view
+def addColorView(request:HttpRequest):
+    colorData = ColorForm()
+    response = render(request, 'colors/addColor.html')
+    if request.method == "POST":
+        colorData = ColorForm(request.POST, request.FILES)
+        if colorData.is_valid():
+            colorData.save()
+            messages.success(request, f"Color '{request.POST['name']}' was added successfully.", "alert-success")
+        else:
+            messages.error(request, f"Color '{request.POST['name']}' wasn't added. {colorData.errors}", "alert-danger")
+            
+        response = redirect('main:homeView')
+
+    return response
+
+# Update color view
+def updateColorView(request:HttpRequest, clrId:int):
+
+    try:
+        color = Color.objects.get(pk=clrId)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        response = render(request, 'colors/updateColor.html', context={'color': color})
+        if request.method == "POST":
+            colorData = ColorForm(request.POST, request.FILES, instance=color)
+            if colorData.is_valid():
+                colorData.save()
+                messages.success(request, f"Color '{request.POST['name']}' was updated successfully.", "alert-success")
+            else:
+                messages.error(request, f"Color '{request.POST['name']}' wasn't updated. {colorData.errors}", "alert-danger")
+                
+            response = redirect('main:homeView')
+
+    return response
+
+# Add car view
 def addCarView(request: HttpRequest):
 
     carData = CarForm()
@@ -17,9 +56,10 @@ def addCarView(request: HttpRequest):
             for img in images:
                 Attachment.objects.create(car=carData, image=img)
 
-            messages.success(request, f"'{request.POST['model']}' added successfully.", "alert-success")    
+            messages.success(request, f"'{request.POST['model']}' was added successfully.", "alert-success")    
             
-        response = redirect('cars:carsDisplayView', 'all')
+        #response = redirect('cars:carsDisplayView', 'all')
+        response = redirect('main:homeView')
     
     return response
 
