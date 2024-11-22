@@ -20,13 +20,12 @@
                         <input type="text" id="name" name="name" class="form-control" placeholder="Hmzh Doe" required/>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="name">Name</label>
-                        <input type="email" id="email" name="name" class="form-control" placeholder="example@g.com" required/>
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="example@g.com" required/>
                     </div>
 
                     <div class="form-outline mb-4">
-                        <select id="car" class="form-select" name="brand" required>
-
+                        <select id="car" class="form-select" name="car" required>
                             {% for car in cars %}
                             <option value="{{car.id}}">{{ car.name }} {{car.model}}</option>
                             {% endfor %}
