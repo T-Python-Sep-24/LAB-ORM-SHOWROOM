@@ -19,9 +19,9 @@ h1, h2, h5 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     padding: 1rem 2rem;
     background-color: #222;
-    z-index: 10;
 }
 
 .header-container h5{
@@ -38,14 +38,19 @@ h1, h2, h5 {
     gap: 20px;
 }
 
-.navigation a, .home-button a, .all-cars-button a, .history-button a, .add-car-button a{
+.navigation {
+    justify-content: center;
+}
+
+.navigation a {
     font-size: 1.5rem;
     color: #fff;
     text-decoration: none;
     transition: color 0.3s ease;
+    margin-left: 30px;
 }
 
-.navigation a:hover, .home-button a:hover, .all-cars-button a:hover, .history-button a:hover, .add-car-button a:hover{
+.navigation a:hover {
     color: #ff5722; 
 
 }
@@ -54,17 +59,26 @@ h1, h2, h5 {
     color: #ff5722;
     text-decoration: none;
     font-weight: bold;
-
-
 }
 
 
-/* Contact Button */
+/* All Buttons */
+
+.hrader-links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    z-index: 20;
+}
+
 .contact-button {
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 0.8rem;
     background-color: #444; 
     color: #fff;
     text-decoration: none;
+    font-size: 1.2rem;
     font-weight: bold;
     border: 1px solid #fff;
     border-radius: 5px;
@@ -210,7 +224,8 @@ footer {
 
 .cars-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .cars-header h1 {
@@ -567,6 +582,291 @@ footer {
     border-radius: 50%;
     border: 1px solid #ccc; 
 }
+
+/* Brand Details page */
+
+.brand-details-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+    font-family: Arial, sans-serif;
+}
+
+.brand-image-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.brand-logo-2 {
+    max-width: 500px;
+    width: auto;
+    height: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.brand-image-section .brand-name {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #000;
+    padding-top: 80pc;
+    margin-bottom: 30px;
+}
+
+.brand-description {
+    font-size: 1.6rem;
+    margin: 5px 0;
+    text-align: justify;
+}
+
+.brand-details-section {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 80%; 
+    max-width: 1000px; 
+    padding: 1.5rem; 
+    border-radius: 10px; 
+    padding-top: 80px;
+    margin: 20px auto; 
+}
+
+.brand-detail-box {
+    text-align: center; 
+    flex: 1; 
+    padding: 0 1rem; 
+}
+
+.brand-detail-value {
+    font-size: 3rem; 
+    color: #000; 
+    font-weight: bold; 
+}
+
+.brand-detail-label {
+    margin-top: 0.5rem; 
+    font-size: 1.6rem; 
+    color: #ff5722; 
+}
+
+
+.brand-cars-section {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 40px;
+    border-top: 1px solid #ddd; 
+    padding-top: 20px; 
+}
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.cars-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.car-item {
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.car-photo-2 {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.car-name-2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.car-year-2 {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* All Brands Page */
+
+.all-brands-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.brands-header {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.brands-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    
+}
+
+.brands-header p {
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+.search-form {
+    margin: 20px auto;
+    margin-bottom: 40px;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.search-form input[type="text"] {
+    width: 90%;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    padding: 10px;
+    background-color: #f1f1f1; 
+    color: black; 
+    border-radius: 5px;
+}
+
+.search-form input[type="text"]::placeholder {
+    color: black; 
+}
+
+.search-button {
+    background-color: #ff5722; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #e64a19; 
+}
+
+
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.brand-card {
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: scale(1.05);
+}
+
+.brand-card .brand-logo{
+    max-width: 400px;
+    height: 200px;
+    background-color: white;
+
+}
+
+.brand-logo {
+    width: 100%;
+    height: 200px;
+    object-fit:cover;
+    margin-bottom: 20px;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    padding-top: 10px !important;
+    border-top: 1px solid #333 !important;
+    margin-bottom: 0.5rem;
+}
+
+.brand-car-count {
+    font-size: 1.2rem;
+    color: #ff5722;
+    margin-bottom: 1rem;
+}
+
+.view-details-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ff5722;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+/* Messages for user */
+
+.notification-container {
+    position: fixed;
+    top: 10px;
+    left: 40%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+    max-width: 90%;
+  }
+  
+  .notification {
+    padding: 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease;
+  }
+  
+  .notification.success {
+    background-color: #4caf50;
+  }
+  
+  .notification.error {
+    background-color: #f44336;
+  }
+  
+  .notification.info {
+    background-color: #2196f3;
+  }
+  
+  .notification.warning {
+    background-color: #ff9800;
+  }  
 
 
 /* Responsive Design */

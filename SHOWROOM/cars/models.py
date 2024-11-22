@@ -1,7 +1,6 @@
 from django.db import models
+from brands.models import Brand
 from django.core.validators import MinValueValidator, MaxValueValidator
-
-
 
 class Color(models.Model):
     name = models.CharField(max_length=50)
@@ -32,7 +31,8 @@ class Car(models.Model):
 
 
     car_name = models.CharField(max_length=1024)
-    available_colors = models.ManyToManyField(Color, related_name="cars")
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="cars")
+    available_colors = models.ManyToManyField(Color, related_name="cars", blank=True)
     year = models.PositiveIntegerField(
         validators=[MinValueValidator(1886), MaxValueValidator(2100)]
     )

@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}{{ brand.brand_name }}{% endblock %}
+
+{% block content %}
+<main class="brand-details-page">
+    <section class="brand-image-section">
+        <img src="{{ brand.logo.url }}" alt="{{ brand.brand_name }} Logo" class="brand-logo-2">
+        <h1 class="brand-name">{{ brand.brand_name }}</h1>
+        <p class="brand-description">{{ brand.about }}</p>
+
+        <div class="brand-details-section">
+            <div class="brand-detail-box">
+                <div class="brand-detail-value">{{ brand.founded_at }}</div>
+                <div class="brand-detail-label">Founded</div>
+            </div>
+            <div class="brand-detail-box">
+                <div class="brand-detail-value">{{ brand.country_of_origin }}</div>
+                <div class="brand-detail-label">Country of Origin</div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="brand-cars-section">
+        <h2 class="section-title">Cars by {{ brand.brand_name }}</h2>
+
+        <ul class="cars-list">
+            {% for car in cars %}
+            <li class="car-item">
+                <img src="{{ car.photo.url }}" alt="{{ car.car_name }}" class="car-photo-2">
+                <h3 class="car-name-2">{{ car.car_name }}</h3>
+                <p class="car-year-2">Model Year: {{ car.year }}</p>
+            </li>
+            {% empty %}
+            <p>No cars available for this brand yet.</p>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
+{% endblock %}

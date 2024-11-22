@@ -18,6 +18,17 @@
   </head>
 
   <body>
+
+    {% if messages %}
+    <div class="notification-container">
+      {% for message in messages %}
+        <div class="notification {{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
     <header>
         <div class="header-container">
             <div class="logo">
@@ -25,9 +36,14 @@
             </div>
             <nav class="navigation">
                 <a href="{% url 'main:main_view'%}" class="{% if request.path == '/'%}active{%endif%}">Home</a>
-                <a href="{% url 'cars:all_cars_view'%}" class="{% if request.path == '/cars/all-cars/'%}active{%endif%}">All Cars</a>
+                <a href="{% url 'cars:all_cars_view'%}" class="{% if request.path == '/cars/all/'%}active{%endif%}">All Cars</a>
+                <a href="{% url 'brands:all_brands_view'%}" class="{% if request.path == '/brands/all/'%}active{%endif%}">All Brand</a>
+
             </nav>
-            <a href="{% url 'cars:add_new_car_view'%}" class="contact-button">Add Car</a>
+            <div class="hrader-links">
+                <a href="{% url 'cars:add_new_car_view'%}" class="contact-button">Add Car</a>
+                <a href="{% url 'brands:add_new_brand_view'%}" class="contact-button">Add Brand</a>
+            </div>
         </div>
     </header>
     

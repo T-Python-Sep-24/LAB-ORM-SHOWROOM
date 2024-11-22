@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from .models import Car, Color
+from brands.models import Brand
+from django.contrib import messages
+
 
 
 
@@ -18,6 +21,7 @@ def add_new_car_view(request:HttpRequest):
 
     if request.method == "POST":
         car_name = request.POST.get("car_name")
+        brand_id = request.POST.get("brand")
         available_colors = request.POST.getlist("available_colors")
         year = request.POST.get("year")
         engine = request.POST.get("engine")
@@ -26,6 +30,8 @@ def add_new_car_view(request:HttpRequest):
         availability = request.POST.get("availability")
         speed = request.POST.get("speed")
         image = request.FILES.get("image")
+
+        brand = get_object_or_404(Brand, id=brand_id)
         
         car = Car.objects.create(
             car_name=car_name,
@@ -42,11 +48,16 @@ def add_new_car_view(request:HttpRequest):
             color = Color.objects.get(id=color_id)
             car.available_colors.add(color)
 
-        return redirect("cars:car_details", car_id=car.id)
+
+        messages.success(request, "Car successfully added!")
+
+        return redirect("cars:car_details_view", car_id=car.id)
     
     colors = Color.objects.all()
+    brands = Brand.objects.all()
 
-    return render(request, 'cars/add_new_car.html', {"colors": colors})
+
+    return render(request, 'cars/add_new_car.html', {"colors": colors, "brands": brands})
 
 
 
