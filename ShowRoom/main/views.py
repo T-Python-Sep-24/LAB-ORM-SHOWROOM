@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
+from cars.models import Car
 
 # Home page view
 def homeView(request: HttpRequest):
-    response = render(request, 'main/home.html')
+    cars = Car.objects.all().order_by('addedAt')[0:3]
+    response = render(request, 'main/home.html', context={'cars':cars})
     return response
+
+#Contact us view
+
 
 #Mode change view
 def modeView(request: HttpRequest, mode):
@@ -17,4 +22,3 @@ def modeView(request: HttpRequest, mode):
         
     return response
 
-#Contact us view

@@ -1,6 +1,16 @@
 from django.db import models
 from brands.models import Brand
 
+
+class Color(models.Model):
+    name = models.CharField(max_length=258)
+    hexCode = models.IntegerField()
+    image = models.ImageField(upload_to="images/colors/", default="images/default.jpg")
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+
 class Car(models.Model):
     class Gear(models.TextChoices):
         AUTO = "AT", "Automatic"
@@ -24,20 +34,20 @@ class Car(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True)
     topSpeed = models.CharField(max_length=258)
     engine = models.CharField(max_length=1024)
-    power = models.CharField(max_length=256)
     gear = models.CharField(max_length=128, choices=Gear.choices)
     bodyType = models.CharField(max_length=128, choices=BodyType.choices)
     capacity = models.SmallIntegerField()
     fuel = models.CharField(max_length=128, choices=Fuel.choices)
+    colors = models.ManyToManyField(Color)
+    addedAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return f"{self.model}"
     
-class Color(models.Model):
-    name = models.CharField(max_length=258)
-    hexCode = models.IntegerField()
-    image = models.ImageField(upload_to="images/colors/", default="images/default.jpg")
 
 class Attachment(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="images/cars/", default="images/default.jpg")
+
+    def __str__(self) -> str:
+        return f"Images for: {self.car}"

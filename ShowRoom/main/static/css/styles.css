@@ -1,13 +1,206 @@
 /* Font */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.f-bebas {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.logo {
+    max-width: 150px;
+}
+
+.logo:hover,
+.hoverEffect:hover,
+.nav li:hover {
+    transform: scale(1.13);
+    transition: all 0.3s;
+}
+
+.light .white-shadow {
+    text-shadow: 0px 0px 12px#ffffff;
+}
+
+.hover-underline {
+    display: inline-block;
+    position: relative;
+}
+
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #e53030;
+    transition: transform 0.25s ease-out;
+}
+
+.hover-underline:hover::after {
+    transform: scaleX(1);
+}
+
+.hover-underline::after {
+    transform-origin: bottom center;
+}
+
+.hover-underline:hover::after {
+    transform-origin: bottom center;
+}
+
+.active {
+    color:#e53030 !important;
+}
 
 /* Dark mode general styling */
 .dark {
-
+    font-family: 'Ubuntu', sans-serif;
+    background-image: linear-gradient(#121a2e, #080c15);
+    color: #cbd5e1;
 }
 
+/* Navbar color */
+.dark .nav {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
 
+/* Links */
+.dark a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #cbd5e1;
+}
+
+.dark a:hover {
+    color: #e53030;
+    transition: all 0.2s;
+}
+
+/* Mode icon */
+.dark .activeicon {
+    background: rgba(255, 255, 255, 0.1);
+}
 
 /* Light mode general styling */
 .light {
+    font-family: 'Ubuntu', sans-serif;
+    background-image: linear-gradient(#e2e8f0, #94a3b8);
+}
 
+/* Links */
+.light a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #0c1221;
+}
+
+.light a:hover {
+    color: #e53030;
+    transition: all 0.2s;
+}
+
+/* Navbar color */
+.light .nav {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Mode icon */
+.light .activeicon {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Home page styling */
+.hero {
+    background-image: url('../images/ElPorsche911Turbo.jpg');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+    height: 500px;
+    min-height: 80%;
+}
+
+.herotitle {
+    color: #ffffff;
+    text-shadow: 0px 0px 5px #ffa0a0;
+    animation: texteffect 1s infinite alternate;
+}
+
+.hero .link {
+    color: #e6ebf7;
+}
+
+.carousel-caption {
+    top: 0;
+    bottom: auto;
+}
+
+.card a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #e6ebf7;
+    text-shadow: none;
+}
+
+@keyframes texteffect {
+    to {
+        text-shadow: 0px 0px 20px #ffa0a0;
+    }
+}
+
+/* About us styling */
+.about-us img {
+    border-radius: 5px;
+    width: 100%;
+    height: 25rem;
+    transform: translateX(20%);
+    object-fit: cover;
+}
+
+.about-us .content {
+    box-shadow: 0px 0px 20px #475569a8;
+    border-radius: 5px;
+    background: #e2e8f080;
+    backdrop-filter: blur(10px);
+    max-width: 80%;
+    height: 18rem;
+    transform: translate(-25%, 50%);
+}
+
+@media only screen and (max-width: 768px) {
+    .about-us img {
+        transform: translateX(0);
+    }
+
+    .about-us .content {
+        max-width: 100%;
+        height: 100%;
+        transform: translate(0, 8%);
+    }
+}
+
+.half-border { 
+    background: linear-gradient(to right, #e53030 50%, transparent 50%); 
+    width: 200px;
+    padding: 1px; 
+}
+
+/* Brands pages styling */
+
+/* Add brand */
+.preview {
+    height: 100px;
+    width: 100px
+}
+
+.dark .frm {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.light .frm {
+    background: rgba(12, 18, 33, 0.1);
+    backdrop-filter: blur(10px);
 }
