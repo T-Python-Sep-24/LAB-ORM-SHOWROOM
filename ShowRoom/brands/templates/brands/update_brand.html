@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+
+{% block title %}Update {{ brand.name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+<div class="container mt-5">
+    <h1 class="text-center">Update {{ brand.name }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Brand Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ brand.name }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="logo" class="form-label">Brand Logo</label>
+            <div class="mb-3">
+                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" style="width: 150px; height: auto;">
+            </div>
+            <input type="file" class="form-control" id="logo" name="logo">
+        </div>
+        <div class="mb-3">
+            <label for="about" class="form-label">About</label>
+            <textarea class="form-control" id="about" name="about" rows="5">{{ brand.about }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="founded_at" class="form-label">Founded At</label>
+            <input type="date" class="form-control" id="founded_at" name="founded_at" value="{{ brand.founded_at|date:'Y-m-d' }}">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Update Brand</button>
+    </form>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+
+{% block title %}Add New Brand{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+<div class="container mt-5">
+    <h1 class="text-center">Add a New Brand</h1>
+    <form method="post" action="{% url 'brands:new_brand_view' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Brand Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter brand name" required>
+        </div>
+        <div class="mb-3">
+            <label for="logo" class="form-label">Brand Logo</label>
+            <input type="file" class="form-control" id="logo" name="logo" required accept="image/*">
+        </div>
+        <div class="mb-3">
+            <label for="about" class="form-label">About</label>
+            <textarea class="form-control" id="about" name="about" rows="5" placeholder="Enter details about the brand" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="founded_at" class="form-label">Founded At</label>
+            <input type="date" class="form-control" id="founded_at" name="founded_at" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add Brand</button>
+    </form>
+</div>
+</div>
+{% endblock %}

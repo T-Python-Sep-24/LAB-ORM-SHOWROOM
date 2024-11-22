@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+
+{% block title %}{{ brand.name }} Details{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+<div class="container mt-5">
+    <h1>{{ brand.name }}</h1>
+    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-fluid mb-3">
+    <p><strong>About:</strong> {{ brand.about }}</p>
+    <p><strong>Founded At:</strong> {{ brand.founded_at }}</p>
+    <a href="{% url 'brands:update_brand_view' brand.id %}" class="btn btn-warning">Edit Brand</a>
+</div>
+{% endblock %}

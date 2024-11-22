@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+
+{% block title %}All Brands{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+<div class="container mt-5 ">
+    <h1 class="text-center">All Brands</h1>
+    <div class="row">
+        {% for brand in brands %}
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ brand.name }}</h5>
+                    <p class="card-text">{{ brand.about|truncatewords:10 }}</p>
+                    <a href="{% url 'brands:brand_detail_view' brand.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No brands available.</p>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock %}

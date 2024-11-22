@@ -1,0 +1,25 @@
+{% extends " main/base.html" %}
+
+{% block title %}All Cars{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>All Cars</h1>
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="card-text">{{ car.specs|truncatewords:10 }}</p>
+                    <a href="{% url 'cars:car_details' car.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No cars available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
