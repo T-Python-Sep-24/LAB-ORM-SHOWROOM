@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">All Brands</h1>
+    
+    <!-- Search Form -->
+    <form method="get" action="{% url 'all_brands' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ query|default:'' }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <!-- Sorting Links -->
+    <div class="mb-3">
+        <a href="?sort=name" class="btn btn-outline-secondary btn-sm">Sort by Name</a>
+        <a href="?sort=cars" class="btn btn-outline-secondary btn-sm">Sort by Number of Cars</a>
+    </div>
+
+    <!-- Brand Cards -->
+    <div class="row">
+        {% for brand in brands %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ brand.name }}</h5>
+                        <p>{{ brand.about|truncatewords:20 }}</p>
+                        <p><strong>Founded:</strong> {{ brand.founded_at }}</p>
+                        <p><strong>Cars Available:</strong> {{ brand.car_count }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No brands found.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination">
+            {% if brands.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ brands.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">Previous</a>
+                </li>
+            {% endif %}
+            {% for page_num in brands.paginator.page_range %}
+                <li class="page-item {% if page_num == brands.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}{% if query %}&q={{ query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">{{ page_num }}</a>
+                </li>
+            {% endfor %}
+            {% if brands.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ brands.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

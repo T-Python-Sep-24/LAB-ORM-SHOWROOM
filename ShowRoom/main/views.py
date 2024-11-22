@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+from cars.models import Car
+from brands.models import Brand
 
-# Create your views here.
 def index_view(request):
-    return render(request, 'main/index.html') 
-
-def all_cars(request):
-    return render(request, 'main/all_cars.html') 
+    latest_cars = Car.objects.all().order_by('-id')[:4]  # Fetch the latest 4 cars
+    latest_brands = Brand.objects.all().order_by('-id')[:4]  # Fetch the latest 4 brands
+    return render(request, 'main/index.html', {
+        'latest_cars': latest_cars,
+        'latest_brands': latest_brands,
+    })
 
 

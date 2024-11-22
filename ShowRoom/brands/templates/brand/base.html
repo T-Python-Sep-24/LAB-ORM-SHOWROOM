@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Brand Page{% endblock %}</title>
+    <!-- Add CSS frameworks like Bootstrap or your custom styles -->
+    <link rel="stylesheet" href="{% static 'css/brand.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'brand_list' %}">All Brands</a></li>
+                <li><a href="{% url 'create_brand' %}">Add Brand</a></li>
+                <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container mt-3">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <main>
+        <div class="container">
+            {% block content %}
+            <!-- Content will be inserted here -->
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Brand Page. All rights reserved.</p>
+    </footer>
+
+    <!-- Add JavaScript files -->
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

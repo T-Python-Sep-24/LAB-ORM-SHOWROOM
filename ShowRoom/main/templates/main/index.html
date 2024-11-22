@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Home - CarsPulse{% endblock %}
+
+{% block content %}
+<div class="text-center my-4">
+    <h1 class="display-4">Welcome to Cars & Brands</h1>
+    <p class="lead">Discover the latest cars and brands, explore details, and manage your collection with ease.</p>
+    <div class="gif-container">
+        <img src="{% static 'gif/RXhV.gif' %}" alt="Cool Car" class="img-fluid rounded">
+    </div>
+</div>
+
+<!-- Latest Cars Section -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Latest Cars</h2>
+    <div class="row">
+        {% for car in latest_cars %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.name }}</h5>
+                        <p class="card-text"><strong>Brand:</strong> {{ car.brand.name }}</p>
+                        <p class="card-text"><strong>Price:</strong> ${{ car.price }}</p>
+                        <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No cars available.</p>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'cars:all_cars' %}" class="btn btn-secondary">View All Cars</a>
+    </div>
+</section>
+
+<!-- Latest Brands Section -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Latest Brands</h2>
+    <div class="row">
+        {% for brand in latest_brands %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ brand.name }}</h5>
+                        <p class="card-text">{{ brand.about|truncatewords:15 }}</p>
+                        <a href="{% url 'brands:brand_detail' brand.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No brands available.</p>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'brands:all_brands' %}" class="btn btn-secondary">View All Brands</a>
+    </div>
+</section>
+{% endblock %}

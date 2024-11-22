@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ brand.name }} Details</title>
+</head>
+<body>
+    <header>
+        <h1>{{ brand.name }}</h1>
+    </header>
+
+    <div>
+        <img src="{{ brand.logo.url }}" alt="{{ brand.name }} Logo" style="width: 200px; height: auto;">
+        <p><strong>About:</strong> {{ brand.about }}</p>
+    </div>
+
+    <hr>
+
+    <section>
+        <h2>Cars in {{ brand.name }}</h2>
+        <ul>
+            {% for car in cars %}
+                <li>
+                    <strong>{{ car.name }}</strong> - Model Year: {{ car.model_year }} - Price: ${{ car.price }}
+                </li>
+            {% empty %}
+                <li>No cars available for this brand.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>
