@@ -14,7 +14,7 @@ def manage_brand_view(request , brand_id = None):
             brand = Brand.objects.get(pk=brand_id)
         except Brand.DoesNotExist:
             pass
-    if request.method   == "POST":
+    elif request.method   == "POST":
         form = BrandForm(request.POST,request.FILES, instance = brand)
         if form.is_valid():
             form.save()
@@ -34,3 +34,12 @@ def all_brands_view(request):
         
          return render(request, 'brands/brands.html', {'brands': brands, 'query': query})
 
+def brand_details_view(request , brand_id = None):
+     
+    try:
+        brand = Brand.objects.get(pk=brand_id)
+
+    except Brand.DoesNotExist:
+          return redirect('brands:all_brands') 
+    
+    return render(request, 'brands/details.html', {'brand': brand})

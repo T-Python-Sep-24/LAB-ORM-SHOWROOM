@@ -1,0 +1,17 @@
+{% extends 'main/base.html'%}
+{% load static %} 
+
+{% block title %}
+   brand details
+{% endblock %}
+
+{% block content %}
+<div class="brand-details-container">
+    <h1>{{ brand.name }}</h1>
+    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+    <p><strong>Founded At:</strong> {{ brand.founded_at }}</p>
+    <p><strong>About : </strong>{{ brand.about }}</p>
+    <p><strong>Origin : </strong>{{ brand.origin}}</p>
+</div>
+   
+{% endblock %}

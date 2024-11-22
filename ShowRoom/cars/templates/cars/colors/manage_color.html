@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if color %}
+        Update Color
+    {% else %}
+        Add a New Color
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="car-title">
+        {% if color %}
+            Update {{ color.name }}
+        {% else %}
+            Add a New Color
+        {% endif %}
+    </h1>
+
+    <form method="POST" enctype="multipart/form-data" class="car-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn-submit">
+            {% if color %}
+                Update Color
+            {% else %}
+                Add Color
+            {% endif %}
+        </button>
+        <button class="btn-back">
+            <a href="{% url 'main:home_view' %}" class="btn-back">Back to Home</a>
+        </button>
+    </form>
+{% endblock %}

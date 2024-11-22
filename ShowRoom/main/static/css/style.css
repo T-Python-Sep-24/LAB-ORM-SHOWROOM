@@ -186,8 +186,6 @@ nav a:hover{
     padding: 40px;
     border: none;
     border-radius: 0;
-    cursor: pointer;
-
 }
 .all-brands h1 {
     color: var(--text-color);
@@ -196,11 +194,13 @@ nav a:hover{
     display: flex; 
     align-items: center; 
     gap: 10px; 
+    margin-bottom: 30px;
 }
 .search-button {
     background-color: transparent;
     color: var(--secondary-color);
     border: none;
+    cursor: pointer;
 
 }
 .search-brands {
@@ -234,12 +234,91 @@ nav a:hover{
     gap: 20px
 }
 
-.more-button{
+.more-button {
     font-size: 15px;
     color: var(--text-color);
     background-color: black;
-    padding: 10px 10px;
+    padding: 15px 30px;
     border-radius: 40px;
-    max-width: 20%;
     align-self: flex-end;
+}
+
+.more-button a{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* brand details */
+.brand-details-container{
+    position: relative;
+    max-width: 95%;
+    margin: 50px auto;
+    background-color: var(--text-color);
+    border-radius: 20px;
+    box-shadow: 0 11px 11px rgba(0, 0, 20, 70);
+   
+
+}
+.brand-details-container h1{
+    font-size: 4rem;
+    color: var(--secondary-color);
+    text-align: center;
+}
+.brand-details-container img{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-width: 250px;
+    height: auto;
+    border-radius: 8px;
+
+}
+.brand-details-container p {
+    font-size: 20px;
+    line-height: 1.8;
+    padding: 15px;
+}
+
+/* manage car */
+.car-title {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+.car-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.car-form input, .car-form textarea, .car-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 0.5px solid #ccc;
+    box-sizing: border-box;
+}
+
+.form-group input[type="checkbox"] {
+    vertical-align: middle; 
+    width: 15px; 
+    height: 20px; 
+    flex-wrap: wrap;  
+}
+.form-group label {
+    display: inline-block; 
+    font-weight: normal;  
+    vertical-align: middle; 
+    margin-left: 5px; 
+}
+.form-group input[type="checkbox"]:checked {
+    background-color: var(--secondary-color); 
+    border-color: var(--secondary-color);
+
 }
