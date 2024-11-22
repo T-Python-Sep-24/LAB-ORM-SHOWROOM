@@ -1,0 +1,54 @@
+{% extends 'main/base.html'%}
+{%load static%}
+
+   
+    {%block head%}
+    <link href="{% static 'css/cars.css' %}" rel="stylesheet" />
+
+    {%endblock%}
+    {%block title%}<title>Update Color</title>{%endblock%}
+
+     {%block content%}
+
+     <h1 class="space-grotesk text-white mb-3">Update Color</h1>
+     {% if messages %}
+     <div class="messages">
+         {% for message in messages %}
+             <div class="alert {{ message.tags }}">
+                 {{ message }}
+             </div>
+         {% endfor %}
+     </div>
+ {% endif %}
+    <div class="form-container py-4 rounded-4 d-flex flex-column justify-content-center mt-2">
+        
+            <div class="p-0 gap-4 d-flex justify-content-center align-items-center ">
+                <form action="{%url 'cars:update_color_view' color.id%}" class="container-fluid " method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="name" class="form-label">Color Name</label>
+                        <input type="text" value="{{color.name}}" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <!-- Dynamic style, rendered by Django -->
+                        <label for="hex_code" class="form-label">Hex Code<span style="background-color: {{ color.hex_code }};"  class="rounded"></span></label>
+                        <input type="text" value="{{color.hex_code}}" class="form-control" maxlength="7" placeholder="Please enter a valid hex color code (e.g., #FFFFFF)." id="hex_code" name="hex_code" required>
+                    </div>   
+                </div>
+                
+
+                <div class="row align-items-center">
+                    <div class="d-flex mt-2 justify-content-end gap-4">
+                        <input type="submit" value="Update Color" class="btn btn-success text-white"/>
+                        <a href="{%url 'main:home_view'%}" class="btn btn-danger text-white">Cancel</a>
+                    </div>
+                </div>    
+                </form>
+        
+        </div>
+    </div>
+
+    
+     
+     {%endblock%}

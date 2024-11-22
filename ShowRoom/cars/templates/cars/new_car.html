@@ -1,0 +1,106 @@
+{% extends 'main/base.html'%}
+{%load static%}
+
+   
+    {%block head%}
+    <link href="{% static 'css/cars.css' %}" rel="stylesheet" />
+
+    {%endblock%}
+    {%block title%}<title>Add Car</title>{%endblock%}
+
+     {%block content%}
+
+     <h1 class="space-grotesk text-white mb-3">Add Car</h1>
+
+    <div class="form-container py-4 rounded-4 d-flex flex-column justify-content-center mt-2">
+        
+            <div class="p-0 gap-4 d-flex justify-content-center align-items-center ">
+                <form action="" class="container-fluid " method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="name" class="form-label">Car Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="model" class="form-label">Car Model</label>
+                        <input type="text" class="form-control" id="model" name="model" required>
+                    </div>   
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <div class="mb-3">
+                            <label for="seats" class="form-label">Number of Seats</label>
+                            <input type="number" min="1" max="100" class="form-control" id="seats" name="seats" required>
+                        </div>  
+                        <div class="mb-3">
+                            <label for="doors" class="form-label">Number of Doors</label>
+                            <input type="number" min="1" max="10" class="form-control" id="doors" name="doors" required>
+                        </div>  
+    
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="specs" class="form-label">Specifications</label>
+                        <textarea class="form-control" id="specs" rows="5" name="specs" required></textarea>
+                    </div>
+
+                </div>
+
+                <div class="row">  
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="engine" class="form-label">Engine</label>
+                        <input type="text" class="form-control" id="engine" name="engine" required>
+                    </div>
+                    
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <select name="publisher" class="form-select" required>
+                            <option>Choose Brand</option>
+                            {% for brand in brands %}
+                                <option value="{{ brand.id }}">{{ brand.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   
+                </div>  
+                <div class="row"> 
+
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="colors" class="form-label">Colors</label>
+                        <div class="d-flex align-items-center checkbox-container">
+                        {% for color in colors%}
+                            <input type="checkbox" class="form-check" id="check-{{color.id}}" name="careInstructions" value="{{color.id}}"/>
+                            <label class="" for="check-{{color.id}}">{{color.name}}</label>
+                        {%endfor%}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="image" class="form-label">Car Photos</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required  multiple/>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="year" class="form-label">Year</label>
+                        <input type="text" class="form-control" id="year" name="year" required>
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="model" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" required>
+                    </div>   
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="d-flex mt-2 justify-content-end gap-4">
+                        <input type="submit" value="Add Car" class="btn btn-success text-white"/>
+                        <a href="{%url 'main:home_view'%}" class="btn btn-danger text-white">Cancel</a>
+                    </div>
+                </div>    
+                </form>
+        
+        </div>
+    </div>
+
+    
+     
+     {%endblock%}

@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.space-grotesk{
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+body a{
+    text-decoration: none;
+}
+nav {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+.navbar-nav .nav-item.dropdown .nav-link::after {
+    content: none; 
+}
+
+
+.navbar-nav .nav-item.dropdown .nav-link::after {
+    content: '\f13a';
+    font-family: 'Font Awesome 6 Free'; 
+    border:none;
+    font-weight: 900; 
+    margin-left: 5px;
+    vertical-align: middle; 
+}
+
+main{
+    min-height: 50vh;
+}
+main a{
+    color: black ;
+    transition: color 0.4s ease;
+}
+main a:hover{
+    color: white;
+}
+.welcome-area {
+    background-image: url('../images/blackcar.jpg');
+    background-position:top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 80vh;
+    gap: 5rem;
+}
+.welcome-area a{
+     font-weight: 500;
+}
+
+.welcome-area h1{
+    font-size: 4.5rem;
+}
+/*Cards*/
+.img-card{
+    height: 100%;
+    width: 100%;
+
+    object-fit: cover;
+}
+.card{
+    color: black;
+    transition: transform ease 0.4s, color ease 0.4s;
+}
+.card:hover{
+    transform:scale(1.11);
+    color: black;
+}
+.colors-container span{
+    display: inline-block; 
+    width:1rem;
+    height: 1rem;
+    
+}
+/*slide logos*/
+.logos{
+    overflow: hidden;
+    padding: 60px 0;
+    white-space: nowrap;
+    position: relative;
+}
+.logos:before,
+.logos:after{
+    position: absolute;
+    top:0;
+    width:4rem;
+    height: 100%;
+    content: "";
+    z-index:2 ;
+}
+
+.logos:before{
+    left:0;
+    background: linear-gradient(to left,rgba(255,255,255,0),rgb(0, 0, 0));
+}
+.logos:after{
+    right:0;
+    background: linear-gradient(to right,rgba(255,255,255,0),rgb(0, 0, 0));
+}
+.logos:hover .logos-slide{
+    animation-play-state: paused;
+}
+.logos-slide{
+    display: inline-block;
+
+    animation: 35s slide infinite linear;
+}
+.logos-slide a img{
+    height: 70px;
+    margin: 0 30px;
+    transition: transform 0.3s ease;
+}
+.logos-slide a img:hover{
+    transform: scale(1.2);
+}
+
+.i-view{
+    padding-left: 1rem;
+    font-size: 0.9rem;
+}
+footer a{
+    color: black !important;
+    transition: color 0.4s ease;
+}
+footer a:hover{
+    color: #ffc107 !important;
+}
+
+@keyframes slide{
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-100%);
+    }
+}

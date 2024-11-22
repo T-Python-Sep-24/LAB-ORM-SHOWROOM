@@ -1,0 +1,63 @@
+{% extends 'main/base.html'%}
+{%load static%}
+
+   
+    {%block head%}
+    <link href="{% static 'css/cars.css' %}" rel="stylesheet" />
+
+    {%endblock%}
+    {%block title%}<title>Add Brand</title>{%endblock%}
+
+     {%block content%}
+
+     <h1 class="space-grotesk text-white mb-3">Add Brand</h1>
+        {% if messages %}
+            <div class="messages">
+         {% for message in messages %}
+             <div class="alert {{ message.tags }}">
+                 {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div class="form-container py-4 rounded-4 d-flex flex-column justify-content-center mt-2">
+        
+            <div class="p-0 gap-4 d-flex justify-content-center align-items-center ">
+                <form action="{%url 'brands:new_brand_view'%}" class="container-fluid " method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="name" class="form-label">Brand Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="found_at" class="form-label">Found At</label>
+                        <input type="date" class="form-control" id="found_at" name="found_at" required>
+                    </div>   
+                </div>
+               
+                <div class="row"> 
+                     <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="logo" class="form-label">Logo</label>
+                        <input type="file" class="form-control" id="logo" name="logo" accept="image/*" required/>
+                    </div>
+                     <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="about" class="form-label">About</label>
+                        <textarea class="form-control" id="about" rows="3" name="about" required></textarea>
+                    </div>
+                </div> 
+        
+                <div class="row align-items-center">
+                    <div class="d-flex mt-2 justify-content-end gap-4">
+                        <input type="submit" value="Add Brand" class="btn btn-success text-white"/>
+                        <a href="{%url 'main:home_view'%}" class="btn btn-danger text-white">Cancel</a>
+                    </div>
+                </div>    
+                </form>
+        
+        </div>
+    </div>
+
+    
+     
+     {%endblock%}
