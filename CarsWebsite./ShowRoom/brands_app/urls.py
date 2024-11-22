@@ -1,6 +1,8 @@
 from django.urls import path
 from .import views
 
+app_name ="brands_app"
+
 urlpatterns = [
     path('all/',views.all_brands_view, name='all_brands_view'),
     path('details/<int:brand_id>/',views.brand_detail_view, name='brand_detail_view'),
