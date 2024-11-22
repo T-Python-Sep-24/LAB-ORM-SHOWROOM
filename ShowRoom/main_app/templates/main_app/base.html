@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ShowRoom{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-top: 0px;
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: gray; /* Gray background for dropdown */
+            min-width: 160px;
+            z-index: 1;
+            border-radius: 5px; /* Rounded corners */
+        }
+        .dropdown-content a {
+            color: white; /* White text color */
+            padding: 10px; /* Padding for links */
+            text-decoration: none; /* No underline */
+            display: block; /* Make links block elements */
+        }
+        .dropdown-content a:hover {
+            background-color: white; /* White background on hover */
+            color: black; /* Black text on hover */
+        }
+        .dropdown:hover .dropdown-content {
+            display: block; /* Show dropdown on hover */
+        }
+        footer {
+            text-align: center;
+            padding: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: relative;
+            bottom: -300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'main_app:home_view' %}">
+            <img src="{% static 'images/car_logo.png' %}" alt="Car Logo" style="height: 35px;">
+        </a>
+        <nav>
+            <a href="#">About</a>
+            <a href="#">Cars</a>
+            <div class="dropdown">
+                <a href="#">Services</a>
+                <div class="dropdown-content">
+                    <a href="#">Book a test drive</a>
+                    <a href="#">Book a service</a>
+                </div>
+            </div>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
+

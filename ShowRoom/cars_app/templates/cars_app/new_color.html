@@ -1,0 +1,62 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}Add New Color{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(55, 68, 82);
+        color: aliceblue;
+    }
+    .project-form-container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.233);
+        border-radius: 8px;
+    }
+    .project-form label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .project-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box; /* Ensures padding is included in total width */
+    }
+    .project-form button {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%; /* Make button full width */
+        margin-top: 10px; /* Add some space above the button */
+    }
+    .project-form button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="project-form-container">
+    <div class="contact-welcome-text">
+        <h2>Add New Color</h2>
+    </div>
+    <form class="project-form" method="post">
+        {% csrf_token %}
+        
+        <label for="name">Color Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter color name" required>
+
+        <label for="hex_code">Hex Code:</label>
+        <input type="text" id="hex_code" name="hex_code" placeholder="#FFFFFF" required pattern="^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$" title="Please enter a valid hex code (e.g., #FFFFFF or #FFF)">
+
+        <button type="submit">Add Color</button>
+    </form>
+</div>
+{% endblock %}
