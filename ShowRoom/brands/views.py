@@ -8,7 +8,8 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 def all_brands_view(request:HttpRequest):
-    return render(request,'brands/all_brands.html')
+    brands=Brand.objects.all()
+    return render(request,'brands/all_brands.html',{"brands":brands})
 
 def new_brand_view(request:HttpRequest):
     if request.method=="POST":
@@ -47,8 +48,19 @@ def update_brand_view(request:HttpRequest,brand_id):
         messages.error(request, f"An error occurred: {str(e)}")
         return redirect('main:home_view')
 
-def delete_brand_view(request:HttpRequest):
-    return render(request,'brands/all_brands.html')
+def delete_brand_view(request:HttpRequest,brand_id):
+    try:
+        brand=Brand.objects.get(pk=brand_id)
+        brand.delete()
+        messages.success(request, 'The brand has been deleted successfully!','alert-success')
+        return redirect("main:home_view")
+    except Brand.DoesNotExist:
+        print("error massege")
+        messages.error(request, "An error occurred: The page not found",'alert-danger')
+        return redirect('main:home_view')
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}",'alert-danger')
+        return redirect('main:home_view')
 
 def details_brand_view(request:HttpRequest, brand_id):
     try:

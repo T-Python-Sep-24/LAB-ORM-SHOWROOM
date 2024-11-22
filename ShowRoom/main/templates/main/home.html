@@ -7,6 +7,15 @@
     {%block title%}<title>Home</title>{%endblock%}
 
      {%block content%}
+      {% if messages %}
+            <div class="messages">
+         {% for message in messages %}
+             <div class="alert {{ message.tags }}">
+                 {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
      <div class="welcome-area rounded-4 d-flex flex-column justify-content-center align-items-center">
         <h1 class="text-white space-grotesk">Find your dream Car</h1>   
             <a href="#brands-field" class="d-flex flex-column justify-content-center
