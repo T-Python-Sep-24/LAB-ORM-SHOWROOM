@@ -4,6 +4,7 @@ from django.contrib import messages
 from cars.models import Car, Attachment, Color
 from cars.forms import CarForm, ColorForm
 from brands.models import Brand
+from django.core.paginator import Paginator
 
 
 # Add color view
@@ -157,7 +158,11 @@ def displayCarsView(request: HttpRequest, filter: str):
     if "brand" in request.GET and request.GET['brand'] != '':
         cars = cars.filter(brand=request.GET["brand"])
 
-    response = render(request, 'cars/displayCars.html', context={'cars': cars, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages, 'colors': colors, 'brands': brands})
+    paginator = Paginator(cars, 4)
+    pageNumber = request.GET.get('page', 1)
+    page_obj = paginator.get_page(pageNumber)
+
+    response = render(request, 'cars/displayCars.html', context={'cars': page_obj, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages, 'colors': colors, 'brands': brands})
     
     return response
 

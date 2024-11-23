@@ -58,6 +58,7 @@
     font-family: 'Ubuntu', sans-serif;
     background-image: linear-gradient(#121a2e, #080c15);
     color: #cbd5e1;
+    overflow-x: hidden;
 }
 
 /* Navbar color */
@@ -87,6 +88,7 @@
 .light {
     font-family: 'Ubuntu', sans-serif;
     background-image: linear-gradient(#e2e8f0, #94a3b8);
+    overflow-x: hidden;
 }
 
 /* Links */
@@ -295,4 +297,40 @@
 .light .list-group-item h5,
 .light .list-group-item p {
     color:#0c1221
+}
+
+/* 404 styling */
+.four {
+    fill: none;
+    stroke: #e53030;
+    stroke-width: 12;
+    stroke-dasharray: 200 100;
+}
+
+.zero {
+    fill: none;
+    stroke: #1d2741;
+    stroke-width: 12;
+    stroke-dasharray: 200 100;
+}
+
+.animate {
+    -webkit-animation: swirls 2s linear infinite;
+    -moz-animation: swirls 2s linear infinite;
+    -o-animation: swirls 2s linear infinite;
+    animation: swirls 2s linear infinite;
+}
+
+.img-404{
+    height:200px
+}
+
+@keyframes swirls {
+    from {
+        stroke-dashoffset: 0;
+    }
+
+    to {
+        stroke-dashoffset: 300;
+    }
 }

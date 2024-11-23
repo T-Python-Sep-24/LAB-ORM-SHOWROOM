@@ -5,6 +5,7 @@ from brands.models import Brand
 from brands.forms import BrandForm
 from cars.models import Car, Attachment
 from django.db.models import Q, Count
+from django.core.paginator import Paginator
 
 # Add brand instance
 def addBrandView(request: HttpRequest):
@@ -71,7 +72,11 @@ def displayBrandsView(request: HttpRequest):
     if "search" in request.GET and len(request.GET["search"]) >= 2:
         brands = brands.filter(name__contains=request.GET["search"]).order_by('-founded')
 
-    response = render(request, 'brands/displayBrands.html', context={'brands': brands})
+    paginator = Paginator(brands, 6)
+    pageNumber = request.GET.get('page', 1)
+    page_obj = paginator.get_page(pageNumber)
+
+    response = render(request, 'brands/displayBrands.html', context={'brands': page_obj})
     return response
 
 # Brand details view
