@@ -1,27 +1,27 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Add Car{% endblock %}
+{% block title %}Update {{car.model}}{% endblock %}
 
 {% block content %}
     <section class="container-md text-center">
         <h1 class="mt-4">
-        Add Car
+        Update {{car.model}}
         </h1>
         <div class="half-border mb-5 mx-auto"></div>
         <div class="d-flex justify-content-center">
-            <form action="{% url 'cars:addCarView' %}" method="post" class="text-start p-4 rounded-4 shadow-sm frm needs-validation" enctype="multipart/form-data" novalidate>
+            <form action="{% url 'cars:updateCarView' car.id %}" method="post" class="text-start p-4 rounded-4 shadow-sm frm needs-validation" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="model" class="form-label fw-medium">Model</label>
-                    <input type="text" class="form-control" id="model" name="model" placeholder="Ex. RS7.." required>
+                    <input type="text" class="form-control" id="model" name="model" placeholder="Ex. RS7.." value="{{car.model}}" required>
                     <div class="invalid-feedback">
                         Please enter a valid model name.
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="modelYear" class="form-label fw-medium">Model Year</label>
-                    <input type="number" name="modelYear" id="modelYear"  class="form-control" min="1800" max="2099" step="1" placeholder="Ex. 2000" required />
+                    <input type="number" name="modelYear" id="modelYear"  class="form-control" min="1800" max="2099" step="1" placeholder="Ex. 2000" value="{{car.modelYear}}" required />
                     <div class="invalid-feedback">
                         Please enter a valid model year.
                     </div>
@@ -31,7 +31,7 @@
                     <select id="brand" name="brand" class="form-select" aria-label="Brand select" required>
                         <option disabled selected>Choose brand..</option>
                         {% for brand in brands %}
-                        <option value="{{brand.id}}">{{brand.name}}</option>
+                        <option value="{{brand.id}}" {% if brand == car.brand %}selected{% endif %}>{{brand.name}}</option>
                         {% endfor %}
                     </select>
                     <div class="invalid-feedback">
@@ -40,14 +40,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="topSpeed" class="form-label fw-medium">Top Speed</label>
-                    <input type="text" class="form-control" id="topSpeed" name="topSpeed" placeholder="Ex. 200km/h" required>
+                    <input type="text" class="form-control" id="topSpeed" name="topSpeed" value="{{car.topSpeed}}" placeholder="Ex. 200km/h" required>
                     <div class="invalid-feedback">
                         Please enter a valid top speed.
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="engine" class="form-label fw-medium">Engine</label>
-                    <input type="text" class="form-control" id="engine" name="engine" placeholder="Ex. TFSI 331 kW (450 PS) tiptronic" required>
+                    <input type="text" class="form-control" id="engine" name="engine" value="{{car.engine}}" placeholder="Ex. TFSI 331 kW (450 PS) tiptronic" required>
                     <div class="invalid-feedback">
                         Please enter valid engine specefications.
                     </div>
@@ -56,7 +56,7 @@
                     <p class="fw-medium mb-1">Gear</p>
                     <div class="d-flex ms-2 gap-2">
                         {% for value, label in gearTypes %}
-                        <input type="radio" class="btn-check" name="gear" id="{{value}}" value="{{value}}" autocomplete="off" required>
+                        <input type="radio" class="btn-check" name="gear" id="{{value}}" value="{{value}}" autocomplete="off" {% if value == car.gear %}checked{% endif %} required>
                         <label class="btn rounded-pill py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}btn-outline-light{% else %}btn-outline-dark{% endif %}" for="{{value}}">{{label}}</label>
                         {% endfor %}
                         <div class="invalid-feedback">
@@ -69,7 +69,7 @@
                     <select id="bodyType" name="bodyType" class="form-select" aria-label="Body Type select" required>
                         <option disabled selected>Choose body..</option>
                         {% for value, label in bodyTypes %}
-                        <option value="{{value}}">{{label}}</option>
+                        <option value="{{value}}" {% if value == car.bodyType %}selected{% endif %}>{{label}}</option>
                         {% endfor %}
                     </select>
                     <div class="invalid-feedback">
@@ -85,7 +85,7 @@
                                 groups
                                 </i>
                             </span>
-                            <input type="number" name="capacity" id="capacity" class="form-control" min="2" max="20" step="1" placeholder="10" aria-describedby="basic-addon1" required />
+                            <input type="number" name="capacity" id="capacity" class="form-control" min="2" max="20" step="1" value="{{car.capacity}}" placeholder="10" aria-describedby="basic-addon1" required />
                             <div class="invalid-feedback">
                                 Please enter a valid capacity.
                             </div>
@@ -94,7 +94,7 @@
                     <div class="flex-column">
                         <label for="price" class="form-label fw-medium">Price</label>
                         <div class="input-group mb-3 rounded-3">
-                            <input type="number" name="price" id="price" class="form-control" min="10000" step="1" placeholder="400000" required />
+                            <input type="number" name="price" id="price" class="form-control" min="10000" step="1" value="{{car.price}}" placeholder="400000" required />
                             <span class="input-group-text" id="basic-addon1">SAR.</span>
                             <div class="invalid-feedback">
                                 Please enter a valid price.
@@ -107,7 +107,7 @@
                     <div class="d-flex flex-column ms-2 gap-2">
                         <div>    
                             {% for color in colors %}
-                            <input type="checkbox" class="btn-check" name="colors" id="c-{{color.id}}" value="{{color.id}}" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="colors" id="c-{{color.id}}" value="{{color.id}}" {% if color in car.colors.all %}checked{% endif %} autocomplete="off">
                             <label class="btn rounded-pill py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}btn-outline-light{% else %}btn-outline-dark{% endif %}" for="c-{{color.id}}">{{color.name}}</label>
                             {% endfor %}
                         </div>
@@ -117,7 +117,7 @@
                     <p class="fw-medium mb-1">Fuel Type</p>
                     <div class="d-flex ms-2 gap-2">
                         {% for value, label in fuelTypes %}
-                        <input type="radio" class="btn-check" name="fuel" id="{{value}}" value="{{value}}" autocomplete="off" required>
+                        <input type="radio" class="btn-check" name="fuel" id="{{value}}" value="{{value}}" {% if value == car.fuel %}checked{% endif %} autocomplete="off" required>
                         <label class="btn rounded-pill py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}btn-outline-light{% else %}btn-outline-dark{% endif %}" for="{{value}}">{{label}}</label>
                         {% endfor %}
                         <div class="invalid-feedback">
@@ -127,15 +127,18 @@
                 </div>
                 <div class="mb-3">
                     <label for="images" class="form-label fw-medium">Upload Car image/s</label>
-                    <input class="form-control" type="file" id="images" name="images" accept="image/*" multiple required>
-                    <div class="invalid-feedback">
-                        Please choose at least one image.
-                    </div>
+                    <input class="form-control" type="file" id="images" name="images" accept="image/*" multiple>
+                </div>
+                <p class="fw-medium mb-1">Current Images</p>
+                <div class="d-flex gap-4 mb-4">
+                    {% for img in carImgs %}
+                    <img src="{{img.image.url}}" class="rounded-2 shadow" style="height: 80px;" alt="Car images">
+                    {% endfor %}
                 </div>
                 <div class="d-flex justify-content-center">
                     <button class="w-50 btn border-2 btn-outline-danger"
                         type="submit">
-                    Add</button>
+                    Update</button>
                 </div>
             </form>
         </div>

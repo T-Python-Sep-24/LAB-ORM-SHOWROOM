@@ -3,8 +3,8 @@ from brands.models import Brand
 
 
 class Color(models.Model):
-    name = models.CharField(max_length=258)
-    hexCode = models.CharField(max_length=8)
+    name = models.CharField(max_length=258, unique=True)
+    hexCode = models.CharField(max_length=8, unique=True)
     image = models.ImageField(upload_to="images/colors/", default="images/default.jpg")
 
     def __str__(self) -> str:
@@ -27,10 +27,10 @@ class Car(models.Model):
         PICKUP = "PIK", "Pick-up"
         CONVERTABLE = "CON", "Convertable"
         COUPE = "COU", "Coupe"
-        MINIVAN = "MIV", "minivan"
+        MINIVAN = "MIV", "Minivan"
 
     model = models.CharField(max_length=1024)
-    modelYear = models.DateField()
+    modelYear = models.SmallIntegerField()
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True)
     topSpeed = models.CharField(max_length=258)
     engine = models.CharField(max_length=1024)
@@ -39,6 +39,7 @@ class Car(models.Model):
     capacity = models.SmallIntegerField()
     fuel = models.CharField(max_length=128, choices=Fuel.choices)
     colors = models.ManyToManyField(Color)
+    price = models.IntegerField()
     addedAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

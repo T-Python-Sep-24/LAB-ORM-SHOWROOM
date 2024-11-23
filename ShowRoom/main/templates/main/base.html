@@ -40,6 +40,7 @@
 
 
                 {% url 'main:homeView' as homeUrl %}
+                {% url 'brands:displayBrandsView' as brandsUrl %}
                 <!-- Nav bar components -->
                 <div class="collapse navbar-collapse justify-content-end my-3" id="navbarCollapseItems">
                     <!-- Nav links -->
@@ -52,7 +53,7 @@
                             <a class="hover-underline white-shadow" href="#">Cars</a>
                         </li>
                         <li class="nav-item p-1">
-                            <a class="hover-underline white-shadow" href="#">Brands</a>
+                            <a class="hover-underline white-shadow {% if request.path == brandsUrl %}active{% endif %}" href="{{brandsUrl}}">Brands</a>
                         </li>
                         <li class="nav-item p-1">
                             <a class="hover-underline white-shadow" href="{{homeUrl}}#about">About</a>
@@ -120,7 +121,7 @@
                             <a class="" href="#">Cars</a>
                         </li>
                         <li class="nav-item p-2">
-                            <a class="" href="#">Brands</a>
+                            <a class="" href="{{brandsUrl}}">Brands</a>
                         </li>
                         <li class="nav-item p-2">
                             <a class="" href="#">About</a>
