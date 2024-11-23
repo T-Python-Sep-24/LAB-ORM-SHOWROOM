@@ -1,0 +1,53 @@
+<h1>All Cars</h1>
+
+<form method="get">
+    <label for="brand">Brand:</label>
+    <select name="brand">
+        <option value="">-- All Brands --</option>
+        {% for brand in brands %}
+            <option value="{{ brand.id }}" {% if brand.id == brand_filter %}selected{% endif %}>{{ brand.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="color">Color:</label>
+    <select name="color">
+        <option value="">-- All Colors --</option>
+        {% for color in colors %}
+            <option value="{{ color.id }}" {% if color.id == color_filter %}selected{% endif %}>{{ color.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="search">Search:</label>
+    <input type="text" name="search" value="{{ search }}">
+
+    <button type="submit">Filter</button>
+</form>
+
+<div>
+    {% if page_obj.paginator.count == 0 %}
+        <p>No cars found matching the filters.</p>
+    {% endif %}
+
+    {% for car in page_obj %}
+        <div>
+            <h3>{{ car.name }}</h3>
+            <p>Brand: {{ car.brand.name }}</p>
+            <p>Available Colors: {% for color in car.colors.all %}{{ color.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <a href="{% url 'cars:car_detail' car.id %}">View Details</a> |
+            <a href="{% url 'cars:update_car' car.id %}">Update</a> |
+            <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+        </div>
+    {% endfor %}
+</div>
+
+<div>
+    {% if page_obj.has_previous %}
+        <a href="?page=1&brand={{ brand_filter }}&color={{ color_filter }}&search={{ search }}">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}&brand={{ brand_filter }}&color={{ color_filter }}&search={{ search }}">Previous</a>
+    {% endif %}
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&brand={{ brand_filter }}&color={{ color_filter }}&search={{ search }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&brand={{ brand_filter }}&color={{ color_filter }}&search={{ search }}">Last</a>
+    {% endif %}
+</div>

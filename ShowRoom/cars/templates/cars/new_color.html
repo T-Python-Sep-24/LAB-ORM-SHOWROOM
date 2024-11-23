@@ -1,0 +1,7 @@
+<h1>Add New Color</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Color</button>
+</form>
+<a href="{% url 'cars:all_cars' %}">Back to All Cars</a>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShowRoom</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+
+    <header>
+        <h1>Welcome to the ShowRoom</h1>
+        <div class="nav-links">
+            <a href="{% url 'cars:all_cars' %}" class="{% if request.resolver_match.url_name == 'all_cars' %}active{% endif %}">All Cars</a>
+            <a href="{% url 'brands:all_brands' %}" class="{% if request.resolver_match.url_name == 'all_brands' %}active{% endif %}">All Brands</a>
+        </div>
+    </header>
+
+
+    <section class="latest-section">
+        <h2>Latest Cars</h2>
+        <div class="card-grid">
+            {% for car in latest_cars %}
+                <div class="card">
+                    <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-image">
+                    <div class="card-content">
+                        <h3>{{ car.name }}</h3>
+                        <p><strong>Brand:</strong> {{ car.brand.name }}</p>
+                        <a href="{% url 'cars:car_detail' car.id %}" class="button">View Details</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'cars:all_cars' %}" class="button">See All Cars</a>
+    </section>
+
+    <!-- Latest Brands Section -->
+    <section class="latest-section">
+        <h2>Latest Brands</h2>
+        <div class="card-grid">
+            {% for brand in latest_brands %}
+                <div class="card">
+                    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="card-image">
+                    <div class="card-content">
+                        <h3>{{ brand.name }}</h3>
+                        <p>{{ brand.about|truncatewords:20 }}</p>
+                        <a href="{% url 'brands:brand_detail' brand.id %}" class="button">View Details</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'brands:all_brands' %}" class="button">See All Brands</a>
+    </section>
+
+</body>
+</html>

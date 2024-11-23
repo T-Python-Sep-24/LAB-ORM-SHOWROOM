@@ -1,0 +1,12 @@
+<h1>{{ car.name }}</h1>
+<img src="{{ car.photo.url }}" alt="{{ car.name }}" width="300">
+<p>Brand: {{ car.brand.name }}</p>
+<p>Model: {{ car.model }}</p>
+<p>Specs: {{ car.specs }}</p>
+<p>Available Colors:</p>
+<ul>
+    {% for color in car.colors.all %}
+        <li>{{ color.name }} ({{ color.hex_code }})</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'cars:all_cars' %}">Back to All Cars</a>

@@ -1,0 +1,10 @@
+<h1>{{ brand.name }}</h1>
+<img src="{{ brand.logo.url }}" alt="{{ brand.name }}" width="150">
+<p>{{ brand.about }}</p>
+<h3>Cars in this Brand</h3>
+<ul>
+    {% for car in brand.cars.all %}
+        <li>{{ car.name }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'brands:all_brands' %}">Back to All Brands</a>

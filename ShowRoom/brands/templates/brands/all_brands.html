@@ -1,0 +1,22 @@
+<!-- all_brands.html -->
+<h1>All Brands</h1>
+
+<form method="get">
+    <input type="text" name="search" placeholder="Search by Brand" value="{{ search }}">
+    <button type="submit">Search</button>
+</form>
+
+<div>
+    {% for brand in brands %}
+        <div>
+            <h3>{{ brand.name }}</h3>
+            <p>{{ brand.about|truncatewords:20 }}</p>
+            <p>Cars: {{ brand.cars.count }}</p>
+            <a href="{% url 'brands:brand_detail' brand.id %}">View Details</a> |
+            <a href="{% url 'brands:update_brand' brand.id %}">Update</a> |
+            <a href="{% url 'brands:delete_brand' brand.id %}">Delete</a>
+        </div>
+    {% empty %}
+        <p>No brands found matching the search.</p>
+    {% endfor %}
+</div>
