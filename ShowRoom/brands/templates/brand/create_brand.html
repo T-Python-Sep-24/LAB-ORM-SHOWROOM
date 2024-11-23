@@ -1,26 +1,25 @@
 {% extends "brand/base.html" %}
 {% load static %}
-{% load crispy_forms_tags %}
-
 {% block title %}Brand Page{% endblock %}
-
 {% block content %}
-<div class="mb-3">
-    <label for="id_name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="id_name" placeholder="Enter brand name">
-</div>
-<div class="mb-3">
-    <label for="id_logo" class="form-label">Logo</label>
-    <input type="file" class="form-control" id="id_logo">
-</div>
-<div class="mb-3">
-    <label for="id_about" class="form-label">About</label>
-    <textarea class="form-control" id="id_about" rows="3" placeholder="Describe the brand"></textarea>
-</div>
-<div class="mb-3">
-    <label for="id_founded_at" class="form-label">Founded At</label>
-    <input type="date" class="form-control" id="id_founded_at">
-</div>
-<button type="submit" class="btn btn-primary w-100">Add Brand</button>
-
+<form action="{% url 'brands:create_brand' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_name" class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" id="id_name" placeholder="Enter brand name">
+    </div>
+    <div class="mb-3">
+        <label for="id_logo" class="form-label">Logo</label>
+        <input type="file" name="logo" class="form-control" id="id_logo">
+    </div>
+    <div class="mb-3">
+        <label for="id_about" class="form-label">About</label>
+        <textarea name="about" class="form-control" id="id_about" rows="3" placeholder="Describe the brand"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="id_founded_at" class="form-label">Founded At</label>
+        <input type="date" name="founded_at" class="form-control" id="id_founded_at">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Add Brand</button>
+</form>
 {% endblock %}

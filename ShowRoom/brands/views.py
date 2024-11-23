@@ -19,7 +19,8 @@ def all_brands(request):
     if sort == 'name':
         brands = brands.order_by('name')
     elif sort == 'cars':
-        brands = sorted(brands, key=lambda b: b.car_count(), reverse=True)
+        brands = sorted(brands, key=lambda b: b.cars.count(), reverse=True)
+
 
     # Paginate the results
     paginator = Paginator(brands, 6)  # 6 brands per page
@@ -45,7 +46,7 @@ def create_brand(request):
 def brand_detail(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     cars = brand.cars.all()  # Fetch cars related to the brand
-    return render(request, 'brand_details.html', {'brand': brand, 'cars': cars})
+    return render(request, 'brand/brand_detail.html', {'brand': brand, 'cars': cars})
 
 def brand_update(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
