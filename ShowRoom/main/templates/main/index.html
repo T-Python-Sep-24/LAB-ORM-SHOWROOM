@@ -1,7 +1,24 @@
 {% extends 'main/base.html' %}
 
+{% load static %}
+
 {% block title %}Showroom{% endblock %}
 
+{% block style %}<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock %}
+
 {% block content %}
-Welcome home
+<!-- hero section -->
+ <section class="hero container">
+    <div class="row row-cols-md-2">
+        <div class="col">
+            <img src="{% static 'images/pexels-dark-car.jpg' %}" alt="car decoration image">
+        </div>
+        <div class="col">
+            <div class="hero-text d-flex flex-column">
+                <h1>Welcom to Showroom</h1>
+                <p>Showroom is the place to find all information about cars </p>
+            </div>
+        </div>
+    </div>
+ </section>
 {% endblock %}
