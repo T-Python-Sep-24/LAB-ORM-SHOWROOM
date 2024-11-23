@@ -38,7 +38,7 @@
                     <div class="checkbox-item">
                         <input type="checkbox" id="color_{{ color.id }}" name="available_colors" value="{{ color.id }}">
                         <label for="color_{{ color.id }}">
-                            <span class="color-box color-{{ color.name|lower|slugify }}"></span> 
+                            <span class="color-box" style="background-color: {{ color.hex_code|default:'#000000' }};"></span>
                             {{ color.name }}
                         </label>
                     </div>

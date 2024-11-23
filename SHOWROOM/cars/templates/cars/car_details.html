@@ -26,7 +26,7 @@
             <ul id="color-tiles" class="tileColor">
                 {% for color in car.available_colors.all %}
                 <li class="tileColor_1">
-                    <span class="color-circle-large" data-color-2="{{ color.hex_code }}"></span>
+                    <span class="color-circle-large" style="background-color: {{ color.hex_code|default:'#000000' }};"></span>
                 </li>
                 {% endfor %}
             </ul>

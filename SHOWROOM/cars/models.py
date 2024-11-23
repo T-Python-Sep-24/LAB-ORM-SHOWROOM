@@ -5,7 +5,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Color(models.Model):
     name = models.CharField(max_length=50)
     hex_code = models.CharField(max_length=7, blank=True, null=True)
-    photo = models.ImageField(upload_to="colors/", blank=True, null=True)
 
     PREDEFINED_COLORS = [
         {"name": "Red", "hex_code": "#FF0000"},

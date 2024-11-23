@@ -124,7 +124,7 @@ def car_update_view(request:HttpRequest, car_id: int):
         car.save()    
         messages.success(request, "Car Updated successfully!")
 
-        return redirect("cars:car_details_view", brand_id=car.brand.id)
+        return redirect("cars:car_details_view", car_id=car.id)
     
     brands = Brand.objects.all()
     colors = Color.objects.all()
@@ -143,3 +143,40 @@ def car_delete_view(request:HttpRequest, car_id: int):
     messages.success(request, "Car deleted successfully!")
 
     return redirect('main:main_view')
+
+
+
+
+def add_new_color_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        hex_code = request.POST.get("hex_code")
+
+        if name and hex_code:
+            Color.objects.create(name=name, hex_code=hex_code)
+
+            messages.success(request, "Color added successfully!")
+
+            return redirect("main:main_view")
+        
+
+        else:
+            messages.error(request, "Please provide all required fields.")
+
+    return render(request, 'cars/add_new_color.html')
+
+
+
+
+def update_color_view(request, color_id):
+    color = get_object_or_404(Color, id=color_id)
+
+    if request.method == "POST":
+        color.name = request.POST.get("name", color.name)
+        color.hex_code = request.POST.get("hex_code", color.hex_code)
+
+        color.save()
+        messages.success(request, "Color updated successfully!")
+        return redirect("main:main_view")
+
+    return render(request, 'cars/update_color.html', {"color": color})

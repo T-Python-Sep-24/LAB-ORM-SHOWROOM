@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Update Color{% endblock %}
+
+{% block content %}
+
+<main class="update-color-page">
+    <section class="update-color-header">
+        <h1>Update Color</h1>
+    </section>
+
+    <section class="update-color-form">
+        <form action="{% url 'cars:update_color_view' color.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Color Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ color.name }}" >
+            </div>
+            <div class="form-group">
+                <label for="hex_code">Hex Code</label>
+                <input type="text" id="hex_code" name="hex_code" class="form-control" value="{{ color.hex_code }}" >
+            </div>
+            
+            <button type="submit" class="submit-button">Update Color</button>
+        </form>
+    </section>
+</main>
+{% endblock %}
