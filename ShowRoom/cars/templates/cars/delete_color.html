@@ -1,0 +1,7 @@
+<h1>Are you sure you want to delete this color?</h1>
+<p>Color: {{ color.name }} (Hex: {{ color.hex_code }}, RGB: {{ color.rgb_value }})</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+<a href="{% url 'cars:all_cars' %}">Cancel</a>

@@ -1,0 +1,7 @@
+<h1>Are you sure you want to delete this brand?</h1>
+<p>Brand: {{ brand.name }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+<a href="{% url 'brands:brand_detail' brand.id %}">Cancel</a>

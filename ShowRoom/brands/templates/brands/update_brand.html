@@ -1,0 +1,13 @@
+<h1>Update Brand: {{ brand.name }}</h1>
+
+{% if brand.id %}
+    <a href="{% url 'brands:brand_detail' brand.id %}">Back to Brand Details</a>
+{% else %}
+    <p>Error: Brand ID is missing</p>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Brand</button>
+</form>

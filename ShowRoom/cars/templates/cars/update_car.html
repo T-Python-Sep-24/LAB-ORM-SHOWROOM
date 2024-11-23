@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Car - {{ car.name }}</title>
+</head>
+<body>
+
+<h1>Update Car: {{ car.name }}</h1>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label for="name">Car Name</label>
+    <input type="text" name="name" value="{{ form.name.value }}" id="name" required>
+
+    <label for="brand">Brand</label>
+    <select name="brand" id="brand" required>
+        <option value="">-- Select Brand --</option>
+        {% for brand in brands %}
+            <option value="{{ brand.id }}" {% if form.brand.value == brand.id %}selected{% endif %}>{{ brand.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="colors">Colors</label>
+    <div>
+        {% for color in colors %}
+            <div>
+                <label>
+                    <input type="checkbox" name="colors" value="{{ color.id }}" {% if color.id in form.colors.value %}checked{% endif %}> {{ color.name }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+
+    <label for="photo">Photo</label>
+    <input type="file" name="photo" id="photo" accept="image/*">
+
+    <label for="specs">Specs</label>
+    <textarea name="specs" id="specs" rows="5">{{ form.specs.value }}</textarea>
+
+    <label for="model">Model</label>
+    <input type="text" name="model" value="{{ form.model.value }}" id="model" required>
+
+    <button type="submit">Update Car</button>
+</form>
+
+<a href="{% url 'cars:all_cars' %}" class="back-link">Back to All Cars</a>
+
+</body>
+</html>
