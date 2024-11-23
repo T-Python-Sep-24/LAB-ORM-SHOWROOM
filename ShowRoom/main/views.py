@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
-from cars.models import Car
+from cars.models import Car, Attachment
 from brands.models import Brand
 
 # Home page view
 def homeView(request: HttpRequest):
     cars = Car.objects.all().order_by('addedAt')[0:3]
     brands = Brand.objects.all().order_by('founded')[0:3]
+    carimages = Attachment.objects.all()
     
-    response = render(request, 'main/home.html', context={'cars':cars, 'brands': brands})
+    response = render(request, 'main/home.html', context={'cars':cars, 'brands': brands, 'carimages': carimages})
     return response
 
 #Contact us view

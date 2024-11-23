@@ -41,16 +41,16 @@
 
                 {% url 'main:homeView' as homeUrl %}
                 {% url 'brands:displayBrandsView' as brandsUrl %}
+                {% url 'cars:displayCarsView' 'all' as carsUrl %}
                 <!-- Nav bar components -->
                 <div class="collapse navbar-collapse justify-content-end my-3" id="navbarCollapseItems">
                     <!-- Nav links -->
                     <ul class="navbar-nav align-items-center gap-3 px-4">
                         <li class="nav-item p-1">
-                            <a class="hover-underline white-shadow {% if request.path == homeUrl %}active{% endif %}"
-                                href="{{homeUrl}}">Home</a>
+                            <a class="hover-underline white-shadow {% if request.path == homeUrl %}active{% endif %}" href="{{homeUrl}}">Home</a>
                         </li>
                         <li class="nav-item p-1">
-                            <a class="hover-underline white-shadow" href="#">Cars</a>
+                            <a class="hover-underline white-shadow {% if request.path == carsUrl %}active{% endif %}" href="{{carsUrl}}">Cars</a>
                         </li>
                         <li class="nav-item p-1">
                             <a class="hover-underline white-shadow {% if request.path == brandsUrl %}active{% endif %}" href="{{brandsUrl}}">Brands</a>
@@ -118,13 +118,13 @@
                             <a class="" href="{{homeUrl}}">Home</a>
                         </li>
                         <li class="nav-item p-2">
-                            <a class="" href="#">Cars</a>
+                            <a class="" href="{{carsUrl}}">Cars</a>
                         </li>
                         <li class="nav-item p-2">
                             <a class="" href="{{brandsUrl}}">Brands</a>
                         </li>
                         <li class="nav-item p-2">
-                            <a class="" href="#">About</a>
+                            <a class="" href="{{homeUrl}}#about">About</a>
                         </li>
                         <li class="nav-item p-2">
                             <a class="" href="#">Contact</a>

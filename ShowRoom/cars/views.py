@@ -101,13 +101,18 @@ def updateCarView(request: HttpRequest, carid:int):
             #response = redirect('cars:carsDisplayView', 'all')
             response = redirect('main:homeView')
 
-    
     return response
 
 def displayCarsView(request: HttpRequest, filter: str):
 
-    # if filter == 'all':
-    cars = Car.objects.all().order_by('-addedAt')
-    response = render(request, 'cars/displayCars.html', context={'cars': cars})
+    bodyTypes = Car.BodyType.choices
+    carImages = Attachment.objects.all()
+
+    if filter == 'all':
+        cars = Car.objects.all().order_by('-addedAt')
+    else:
+        cars = Car.objects.filter(bodyType=filter).order_by('-addedAt')
+
+    response = render(request, 'cars/displayCars.html', context={'cars': cars, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages})
     
     return response

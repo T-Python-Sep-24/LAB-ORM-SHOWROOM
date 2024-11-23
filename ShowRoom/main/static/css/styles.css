@@ -133,6 +133,7 @@
 }
 
 .carousel-caption {
+    text-shadow: 0px 0px 5px #484848;
     top: 0;
     bottom: auto;
 }
@@ -142,6 +143,12 @@
     font-weight: 500;
     color: #e6ebf7;
     text-shadow: 0px 0px 5px #000000;
+}
+
+.carousel-caption a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #e6ebf7;
 }
 
 @keyframes texteffect {
@@ -213,4 +220,21 @@
 .crd-img {
     height: 16rem;
     object-fit: cover;
+}
+
+/* Cars pages styling */
+.car-card{
+    height: 28rem !important;
+}
+
+.car-card img {
+    height: 18rem;
+    object-fit: cover;
+}
+
+.car-carousel img {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }

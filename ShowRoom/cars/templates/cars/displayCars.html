@@ -1,8 +1,34 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Cars{% endblock %}
+{% block title %}{{selected|capfirst}} Cars{% endblock %}
 
 {% block content %}
-
+<section class="container-md my-5 text-center">
+    <h1 class="mt-4">
+        {{selected|capfirst}} Cars
+    </h1>
+    <div class="half-border mb-5 mx-auto"></div>
+    <div class="row row-cols-1 row-cols-md-2 row-gap-4">
+        {% for car in cars %}
+        <div class="col">
+            <div class="card shadow border-0 car-card {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% endif %}">
+                {% for carImg in carImages %}
+                {% if carImg.car == car and "front" in carImg.image.url %}
+                <img src="{{carImg.image.url}}" class="card-img-top" alt="Car logo">
+                {% endif %}
+                {% endfor %}
+                <div class="card-body text-start position-relative">
+                    <a href="" class="card-title fs-3 hover-underline">{{car.brand.name}} - {{car.model}}</a>
+                    <p class="card-text mb-1"><span class="fw-bold text-danger">Model year:</span> {{car.modelYear}}</p>
+                    <p class="card-text"><span class="fw-bold text-danger">Starting price:</span> {{car.price}}.00 SAR.</p>
+                    <div class="d-flex position-absolute bottom-0 end-0 p-3">
+                        <a href="#" class="btn btn-danger text-white">More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
