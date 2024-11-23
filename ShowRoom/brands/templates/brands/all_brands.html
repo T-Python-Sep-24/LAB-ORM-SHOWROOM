@@ -4,41 +4,41 @@
 {% block title %}All Brands{% endblock %}
 
 {% block content %}
-<h1>All Brands</h1>
-
-<!-- Search Form -->
-<form method="GET" class="search-form">
-    <input type="text" name="search" placeholder="Search brands by name" value="{{ request.GET.search }}" class="search-input">
-    <button type="submit" class="search-button">Search</button>
-</form>
+<h1 class="text-center mb-4">All Brands</h1>
 
 <!-- Add New Brand Button -->
-<div class="add-new">
-    <a href="{% url 'brands:new_brand' %}" class="button">Add New Brand</a>
+<div class="text-center mb-4">
+    <a href="{% url 'brands:new_brand' %}" class="button">
+        <span>Add New Brand</span>
+    </a>
 </div>
 
 <!-- Brands Display -->
-<div class="card-container">
+<div class="horizontal-scroll-container">
     {% for brand in brands %}
         <div class="card">
-            <!-- Brand Logo -->
             {% if brand.logo %}
+                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
             {% else %}
+                <img src="{% static 'images/placeholder.png' %}" alt="No Logo Available">
             {% endif %}
-            <!-- Brand Details -->
             <h3>{{ brand.name }}</h3>
-            {% if brand.founded_at %}
-                <p><strong>Founded:</strong> {{ brand.founded_at }}</p>
-            {% else %}
-                <p><strong>Founded:</strong> Not Available</p>
-            {% endif %}
-            {% if brand.headquarters %}
-                <p><strong>Headquarters:</strong> {{ brand.headquarters }}</p>
-            {% else %}
-                <p><strong>Headquarters:</strong> Not Available</p>
-            {% endif %}
-            <a href="{% url 'brands:brand_detail' brand.id %}" class="button">View Details</a>
+            <p>Founded: {{ brand.founded_at }}</p>
+            <a href="{% url 'brands:brand_detail' brand.id %}" class="button">
+                <span>View Details</span>
+            </a>
         </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+<div class="pagination">
+    {% for page in paginator.page_range %}
+        {% if page == page_obj.number %}
+            <span class="active">{{ page }}</span>
+        {% else %}
+            <a href="?page={{ page }}">{{ page }}</a>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

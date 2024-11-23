@@ -1,4 +1,6 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
 {% block title %}{{ form.instance.pk|yesno:"Edit Car,Add New Car" }}{% endblock %}
 
 {% block content %}

@@ -1,20 +1,58 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
 {% block title %}{{ brand.name }}{% endblock %}
 
 {% block content %}
-<h1>{{ brand.name }}</h1>
-<img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
-<p>About: {{ brand.about }}</p>
-<p>Founded At: {{ brand.founded_at }}</p>
-<p>Headquarters: {{ brand.headquarters }}</p>
+<div class="card-container">
+    <div class="card">
+        <!-- Brand Logo -->
+        {% if brand.logo %}
+            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="card-img">
+        {% else %}
+            <img src="{% static 'images/placeholder.png' %}" alt="No Logo Available" class="card-img">
+        {% endif %}
 
+        <!-- Brand Details -->
+        <div class="card-content">
+            <h3 class="card-title">{{ brand.name }}</h3>
+            <p class="card-text"><strong>About:</strong> {{ brand.about }}</p>
+            <p class="card-text"><strong>Founded At:</strong> {{ brand.founded_at }}</p>
+            <p class="card-text"><strong>Headquarters:</strong> {{ brand.headquarters }}</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="card-actions">
+            <a href="{% url 'brands:update_brand' brand.id %}" class="button">Edit</a>
+            <a href="{% url 'brands:delete_brand' brand.id %}" onclick="return confirm('Are you sure?');" class="button">Delete</a>
+        </div>
+    </div>
+</div>
+
+<!-- Cars by Brand -->
 <h2>Cars by {{ brand.name }}</h2>
-<ul>
+<div class="horizontal-scroll-container">
     {% for car in brand.cars.all %}
-        <li><a href="{% url 'cars:car_detail' car.id %}">{{ car.name }}</a></li>
-    {% endfor %}
-</ul>
+        <div class="card">
+            <!-- Car Image -->
+            {% if car.photo %}
+                <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-img">
+            {% else %}
+                <img src="{% static 'images/placeholder.png' %}" alt="No Image Available" class="card-img">
+            {% endif %}
 
-<a href="{% url 'brands:update_brand' brand.id %}">Edit</a> | 
-<a href="{% url 'brands:delete_brand' brand.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+            <!-- Car Details -->
+            <div class="card-content">
+                <h3 class="card-title">{{ car.name }}</h3>
+                <p class="card-text"><strong>Model:</strong> {{ car.model }}</p>
+                <p class="card-text"><strong>Price:</strong> ${{ car.price }}</p>
+            </div>
+
+            <!-- Link to Car Details -->
+            <div class="card-actions">
+                <a href="{% url 'cars:car_detail' car.id %}" class="button">View Details</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

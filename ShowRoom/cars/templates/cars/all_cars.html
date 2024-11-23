@@ -4,33 +4,46 @@
 {% block title %}All Cars{% endblock %}
 
 {% block content %}
-<h1>All Cars</h1>
+<div class="nine text-center mb-4">
+    <h1>All Cars <span>Explore Our Collection</span></h1>
+</div>
 
-<!-- Search and Filter Form -->
-<form method="GET" class="search-form">
+<!-- Add New Car Button -->
+<div class="text-center mb-4">
+    <a href="{% url 'cars:new_car' %}" class="button">
+        <span>Add New Car</span>
+    </a>
+</div>
+
+<!-- Filter Form -->
+<form method="GET" class="search-form mb-4">
     <input type="text" name="search" placeholder="Search cars by name" value="{{ request.GET.search }}">
+    
     <select name="brand">
         <option value="">All Brands</option>
         {% for brand in brands %}
-            <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:"s" %}selected{% endif %}>{{ brand.name }}</option>
+            <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:"s" %}selected{% endif %}>
+                {{ brand.name }}
+            </option>
         {% endfor %}
     </select>
+    
     <select name="color">
         <option value="">All Colors</option>
         {% for color in colors %}
-            <option value="{{ color.id }}" {% if request.GET.color == color.id|stringformat:"s" %}selected{% endif %}>{{ color.name }}</option>
+            <option value="{{ color.id }}" {% if request.GET.color == color.id|stringformat:"s" %}selected{% endif %}>
+                {{ color.name }}
+            </option>
         {% endfor %}
     </select>
-    <button type="submit">Filter</button>
+    
+    <button type="submit" class="button">
+        <span>Filter</span>
+    </button>
 </form>
 
-<!-- Add New Car Button -->
-<div class="add-new">
-    <a href="{% url 'cars:new_car' %}" class="button">Add New Car</a>
-</div>
-
 <!-- Cars Display -->
-<div class="card-container">
+<div class="horizontal-scroll-container">
     {% for car in cars %}
         <div class="card">
             {% if car.photo %}
@@ -40,10 +53,24 @@
             {% endif %}
             <h3>{{ car.name }}</h3>
             <p>Brand: {{ car.brand.name }}</p>
-            <p>Model: {{ car.model }}</p>
             <p>Price: ${{ car.price }}</p>
-            <a href="{% url 'cars:car_detail' car.id %}" class="button">View Details</a>
+            <a href="{% url 'cars:car_detail' car.id %}" class="button">
+                <span>View Details</span>
+            </a>
         </div>
+    {% empty %}
+        <p>No cars available.</p>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+<div class="pagination">
+    {% for page in paginator.page_range %}
+        {% if page == page_obj.number %}
+            <span class="active">{{ page }}</span>
+        {% else %}
+            <a href="?page={{ page }}&search={{ request.GET.search }}&brand={{ request.GET.brand }}&color={{ request.GET.color }}">{{ page }}</a>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

@@ -21,9 +21,9 @@ def brand_detail(request: HttpRequest, brand_id: int):
     cars = brand.cars.all()  # Cars belonging to this brand
     return render(request, 'brands/brand_detail.html', {'brand': brand, 'cars': cars})
 
-def new_brand(request: HttpRequest):
+def new_brand(request):
     if request.method == 'POST':
-        form = BrandForm(request.POST, request.FILES)
+        form = BrandForm(request.POST, request.FILES)  # Include FILES for image uploads
         if form.is_valid():
             form.save()
             messages.success(request, "Brand added successfully!")

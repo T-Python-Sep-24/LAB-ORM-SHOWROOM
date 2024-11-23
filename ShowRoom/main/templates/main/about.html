@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+{% block content %}
+<div class="about-card">
+    <h1>About Us 🌟</h1>
+    <div class="card-content">
+        <p>
+            Welcome to <strong>ShowRoom 🚗</strong>, your premier destination for exploring the latest and most iconic vehicles in the industry. 
+            We are dedicated to making your car-buying journey smooth, exciting, and informative! 🎉
+        </p>
+        <p>
+            <span>💡</span> <strong>Our Mission:</strong> Connecting car enthusiasts and buyers with trusted brands while showcasing high-quality automobiles for every lifestyle.
+        </p>
+        <p>
+            <span>🌍</span> Whether you dream of cruising in a luxury car, need a family-friendly SUV, or are on the lookout for the latest eco-friendly models, 
+            <strong>ShowRoom</strong> has you covered! 🛠️ Explore our vast collection of cars and find your perfect match.
+        </p>
+        <p>
+            <span>🤝</span> At ShowRoom, we take pride in offering an exceptional user experience, combining sleek designs, reliable data, and tailored recommendations. Your journey starts here! 🚀
+        </p>
+        <a href="{% url 'cars:all_cars' %}" class="button">Explore Cars 🚗</a>
+    </div>
+</div>
+{% endblock %}

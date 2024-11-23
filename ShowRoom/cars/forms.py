@@ -4,10 +4,7 @@ from .models import Car , Color
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ['name', 'brand', 'colors', 'photo', 'specs', 'model', 'year', 'price']
-        widgets = {
-            'colors': forms.CheckboxSelectMultiple(),  # Display colors as checkboxes
-        }
+        fields = ['name', 'brand', 'colors', 'photo', 'specs', 'year', 'price', 'car_type']
 
 
 class ColorForm(forms.ModelForm):
