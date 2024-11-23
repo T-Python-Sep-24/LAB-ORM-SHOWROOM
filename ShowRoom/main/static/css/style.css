@@ -9,7 +9,7 @@ body, h1, h2, h3, p, ul, ol, li, a {
 /* Body Styling */
 body {
     font-family: Arial, sans-serif;
-    background: url('../images/background.jpg') no-repeat center center fixed;
+    background: url('/static/images/bg1.jpeg') no-repeat center center fixed;
     background-size: cover;
     color: #ffffff;
     line-height: 1.6;
@@ -17,7 +17,7 @@ body {
 
 /* Header */
 header {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(67, 63, 63, 0.805);
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
@@ -25,7 +25,7 @@ header {
 }
 
 header nav a {
-    color: #ffffff;
+    color: #312f2f;
     margin-right: 20px;
     font-size: 18px;
     font-weight: bold;
@@ -33,7 +33,7 @@ header nav a {
 }
 
 header nav a:hover {
-    color: #f4a261;
+    color: #73e6d2;
 }
 
 /* Main Content */
@@ -47,7 +47,7 @@ main {
 h1, h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #f4a261;
+    color: #403a35;
 }
 
 /* Horizontal Scroll Container */
@@ -70,21 +70,21 @@ h1, h2 {
 }
 
 .horizontal-scroll-container::-webkit-scrollbar-track {
-    background-color: #f9f9f9;
+    background-color: #151414;
 }
 
 /* Card Styling */
 .card {
     position: relative;
-    width: 700px;
-    height: 300px;
+    width: 676px;
+    height: 400px;
     background-color: #243137; /* Changed to original color */
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    perspective: 1000px;
+    perspective: 548px;
     box-shadow: 0 0 0 5px #ffffff80; /* Added from the second snippet */
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -116,9 +116,8 @@ h1, h2 {
 /* Card Image */
 .card img {
     width: 67%;
-    height: 327px;
+    height: 163px;
     object-fit: cover;
-    border-bottom: 2px solid #bd9f67; /* Maintain original styling */
 }
 
 /* Card Title */
@@ -285,7 +284,7 @@ form input, form select, form textarea {
 }
 
 form input[type="submit"], form button {
-    background-color: #f4a261;
+    background-color: #71f3e0e3;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -295,14 +294,14 @@ form input[type="submit"], form button {
 }
 
 form input[type="submit"]:hover, form button:hover {
-    background-color: #e76f51;
+    background-color: #72e7df;
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.613);
     color: #ffffff;
     position: relative;
     bottom: 0;

@@ -6,15 +6,30 @@ from .forms import BrandForm
 from cars.models import Car
 
 
+
 def all_brands(request):
+    search_query = request.GET.get('search', '')
+    founded_at_filter = request.GET.get('founded_at', '')
+    headquarters_filter = request.GET.get('headquarters', '')
+
     brands = Brand.objects.all()
 
-    # Search functionality
-    search_query = request.GET.get('search')
     if search_query:
         brands = brands.filter(name__icontains=search_query)
+    if founded_at_filter:
+        brands = brands.filter(founded_at=founded_at_filter)
+    if headquarters_filter:
+        brands = brands.filter(headquarters__icontains=headquarters_filter)
 
-    return render(request, 'brands/all_brands.html', {'brands': brands})
+    years = Brand.objects.values_list('founded_at', flat=True).distinct()
+    headquarters = Brand.objects.values_list('headquarters', flat=True).distinct()
+
+    return render(request, 'brands/all_brands.html', {
+        'brands': brands,
+        'years': years,
+        'headquarters': headquarters,
+    })
+
 
 def brand_detail(request: HttpRequest, brand_id: int):
     brand = get_object_or_404(Brand, id=brand_id)
