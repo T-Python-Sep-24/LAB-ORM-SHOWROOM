@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Add Brand{% endblock %}
+{% block style %}
+{% endblock %}
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Add Car{% endblock %}
+{% block style %}
+{% endblock %}
+{% block content %} 
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 600px; border-radius: 8px;">
+      <h2 class="text-center mb-4">Add New Brand</h2>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group mb-3">
+          <label for="title">Name</label>
+          <input type="text" id="title" name="name" class="form-control" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="image">Logo</label>
+          <input type="file" id="image" name="logo" class="form-control-file" required>
+        </div>
+
+        
+        <div class="form-group mb-3">
+          <label for="tools">About</label>
+          <input type="text" id="tools" name="about" class="form-control" placeholder="E.g., HTML | CSS | JavaScript | Django" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="tools"> founded_at</label>
+            <input type="date" id="tools" name="founded_at" class="form-control" placeholder="E.g., HTML | CSS | JavaScript | Django" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="github_url">Brand URL</label>
+            <input type="url" id="github_url" name="website" class="form-control" placeholder="https://toyota.com" required>
+          </div>
+        
+        <div class="text-center">
+          <button type="submit" class="btn btn-dark">Save Brand</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block content %} 
+{% endblock %}

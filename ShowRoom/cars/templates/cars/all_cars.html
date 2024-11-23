@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}All Cars{% endblock %}
+{% block style %}
+{% endblock %}
+{% block content %} 
+
+<div class="container text-center mt-5">
+    <h1>Cars</h1>
+    <hr style="width: 80px; border-top: 3px solid #1d3557; margin: 0 auto 2rem;">
+</div>
+<div class="container d-flex flex-wrap justify-content-center mt-5">
+    {% for car in cars %}
+    <div class="card shadow p-4 m-3 d-flex flex-row" style="width: 100%; max-width: 800px; border-radius: 12px; background-color: #ffffff;">
+        
+        <div class="p-3" style="background-color: #ffffff; border-radius: 8px; flex: 0 0 300px; max-height: 300px;">
+            <img src="{{ car.photo.url }}" alt="car Image" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+
+        <div class="p-4" style="flex: 1;">
+            <h5 class="text-uppercase mb-3" style="color: #333;">{{ car.name }}</h5>
+            
+            <div class="mb-3">
+                <h6 class="text-uppercase" style="color: #007bff;">brand</h6>
+                <p>{{ car.brand }}</p>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="text-uppercase" style="color: #007bff;">Color</h6>
+                <p>{{ car.colors }}</p>
+            </div>
+            
+            <div class="mb-3">
+                <h6 class="text-uppercase" style="color: #007bff;">Model Year</h6>
+                <p>{{ car.model_year }}</p>
+            </div>
+            <div class="mb-3">
+                <h6 class="text-uppercase" style="color: #007bff;">Fuel</h6>
+                <p>{{ car.fuel_type }}</p>
+            </div>
+            <div class="mb-3">
+                <h6 class="text-uppercase" style="color: #007bff;">Price</h6>
+                <p>{{ car.price }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
