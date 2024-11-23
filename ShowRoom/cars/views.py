@@ -12,8 +12,9 @@ def all_cars_view(request:HttpRequest):
     return render(request, "cars/all_cars.html")
 
 def car_detail_view(request:HttpRequest, car_id:int):
+    car = Car.objects.get(pk=car_id)
     
-    return render(request, "cars/car_detail.html")
+    return render(request, "cars/car_detail.html", {'car': car})
 
 
 
@@ -40,10 +41,32 @@ def new_car_view(request:HttpRequest):
                             })
 
 def car_update_view(request:HttpRequest, car_id:int):
+    car = Car.objects.get(pk=car_id)
     
-    return render(request, "cars/car_update.html")
+    colors = Color.objects.all()
+    brands = Brand.objects.all()
+    
+    if request.method == "POST":
+        car_form = CarForm(instance=car, data=request.POST, files=request.FILES)
+        if car_form.is_valid():
+            car_form.save()
+            return redirect("main:home_view")
+        else:
+            print("not valid form", car_form.errors)
+            
+        return redirect("cars:car_detail_view", car_id=car_id)
+    
+    return render(request, "cars/car_update.html", {
+                            'car': car,
+                            'categories': Car.Category.choices, 
+                            'doors': Car.DoorChoices.choices, 
+                            'colors': colors, 
+                            'brands': brands
+                            })
 
 def car_delete_view(request:HttpRequest,  car_id:int):
+    car = Car.objects.get(pk=car_id)
+    car.delete()
     
     return redirect("main:home_view")
 

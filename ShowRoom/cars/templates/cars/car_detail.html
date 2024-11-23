@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+
+{% block title %} {{car.name}} Details {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<h1 class="mb-4 d-flex flex-column justify-content-center align-items-center">
+    Car Details
+</h1>
+
+<div class="container d-flex flex-column align-items-center">
+    <div class="d-flex flex-column justify-content-start align-items-center car_detail">
+        <!-- <div class="w-100"> -->
+        <img  class="car_detail_img align-self-center fit-sm-cover fit-lg-contain" src="{{car.image.url}}"/>
+        <div class="line m-0"></div>
+        <!-- </div> -->
+        <div class="d-flex flex-column justify-content-start align-items-start w-100 p-5 gap-4">
+            <div class="d-flex flex-row flex-warp justify-content-start align-items-center gap-4 w-100">
+                <h2>{{car.name}} - {{car.brand.name}}</h2>
+                <img src="{{car.brand.logo.url}}" class="rounded-circle brand_small_logo" />
+            </div>
+            <div class="">
+                <h3 class="text-dark mb-3">
+                    Key Features
+                </h3>
+                <ul class="d-flex flex-column flex-lg-row flex-wrap justify-content-sm-start align-items-sm-start justify-content-lg-between align-items-lg-baseline gap-sm-5 p-3">
+                    <li class="col-lg-5">
+                        The Car Has <span>{{car.engine}}</span>  Engine
+                    </li>
+                    <li class="col-lg-6">
+                        It is a <span>{{car.doors}}</span> Doors Car
+                    </li>
+                    <li class="col-lg-5">
+                        The Car Considered  <span>{{car.category}}</span> Car
+                    </li>
+                    <li class="col-lg-6">
+                        The Car Model Year is <span>{{car.year|date:"Y"}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div >
+                <h3 class="text-secondary mb-3">Avaliable Colors:</h3>
+                <div class="row mt-2 row-cols-1 row-cols-md-3 g-4">
+                    {% for color in car.colors.all %}
+                        <div class="color_box me-4" style="background-color: {{ color.hex_value }};"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4 d-flex flex-row gap-5">
+            <a href="{% url 'cars:car_update_view' car.id %}">
+                <button type="button" class="btn btn-warning">Update Car</button>
+            </a>
+    
+            <a href="{% url 'cars:car_delete_view' car.id %}">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Car</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -29,7 +29,7 @@
                         <h4>Choose Car Color</h4>
                         <select name="colors" class="form-select" multiple required>
                             {% for color in colors %}
-                            <option style="background-color: {{color.hex_value}};" value="{{ color.id }}">{{ color.name }} - {{color.hex_value}}</option>
+                            <option style="background-color: {{ color.hex_value }};" value="{{ color.id }}">{{ color.name }} - {{color.hex_value}}</option>
                             {% endfor %}
                         </select>
                         <small class="form-text text-muted">Hold down Ctrl with Shift to select multiple colors.</small>

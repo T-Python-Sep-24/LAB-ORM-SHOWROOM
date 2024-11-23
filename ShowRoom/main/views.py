@@ -4,10 +4,13 @@ from django.http import HttpRequest, HttpResponse
 from .models import Contact
 from .forms import ContactForm
 
+from cars.models import Car
+
 
 def home_view(request:HttpRequest):
+    cars = Car.objects.all()
 
-    return render(request, 'main/home.html')
+    return render(request, 'main/home.html', {'cars': cars})
 
 def contact_view(request:HttpRequest):
     contact_form = ContactForm()
