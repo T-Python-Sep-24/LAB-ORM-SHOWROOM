@@ -1,0 +1,75 @@
+/* General form styles */
+.car-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.car-form .form-group {
+    margin-bottom: 20px;
+}
+
+.car-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.car-form input, .car-form select, .car-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.car-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.car-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Color selection styles */
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.color-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* cars.css */
+.color-preview {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    display: inline-block;
+    margin-right: 10px; /* Optional spacing */
+    border-radius: 50%; /* Optional: makes the color preview round */
+}
+
+
+.color-option input {
+    margin-right: 10px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .car-form {
+        padding: 15px;
+    }
+}

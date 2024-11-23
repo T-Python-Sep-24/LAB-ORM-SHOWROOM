@@ -4,6 +4,7 @@ from .models import Car, Color
 from brands.models import Brand
 from .forms import CarForm
 from django.contrib import messages
+
 def all_cars(request):
     query = request.GET.get('q', '')  # Search query
     brand_filter = request.GET.get('brand', '')  # Filter by brand

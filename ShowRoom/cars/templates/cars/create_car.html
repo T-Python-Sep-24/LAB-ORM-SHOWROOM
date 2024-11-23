@@ -3,10 +3,54 @@
 {% block title %}Add Car{% endblock %}
 
 {% block content %}
-<h1>Add a New Car</h1>
-<form method="post" enctype="multipart/form-data">
+<h1 class="text-center mb-4">Add a New Car</h1>
+
+<form method="post" enctype="multipart/form-data" class="car-form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Car</button>
+    
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">Car Name</label>
+        {{ form.name }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.brand.id_for_label }}">Brand</label>
+        {{ form.brand }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.photo.id_for_label }}">Car Photo</label>
+        {{ form.photo }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.specs.id_for_label }}">Car Specifications</label>
+        {{ form.specs }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.model.id_for_label }}">Car Model</label>
+        {{ form.model }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.price.id_for_label }}">Car Price</label>
+        {{ form.price }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.colors.id_for_label }}">Select Car Colors</label>
+        <div class="color-options">
+            {% for color in form.colors %}
+                <label class="color-option">
+                    {{ color }}
+                    <span class="color-preview" ></span>
+                    <span>{{ color.choice_value.name }}</span>
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary btn-block">Add Car</button>
 </form>
 {% endblock %}
