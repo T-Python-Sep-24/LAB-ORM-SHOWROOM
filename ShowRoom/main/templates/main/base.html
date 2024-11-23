@@ -18,9 +18,8 @@
                     <nav>
                         <ul class="nav-center">
                             <li><a href="{% url 'main:home_view' %}">Home</a></li>
-                            <li><a href="">About</a></li>
                             <li><a href="{% url 'brands:all_brands_view' %}">Car Brands</a></li>
-                            <li><a href="#">Car Lounge</a></li>
+                            <li><a href="{% url 'cars:all_cars_view' %}">Car Lounge</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                     </nav>
@@ -38,22 +37,30 @@
                 <div class="footer-section company-links">
                     <h3>COMPANY</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Car Lounge</a></li>
+                        <li><a href="{% url 'main:home_view' %}">Home</a></li>
+                        <li><a href="{% url 'cars:all_cars_view' %}">Car Lounge</a></li>
                     </ul>
                 </div>
                 <div class="footer-section support-links">
                     <h3>SUPPORT</h3>
                     <ul>
                         <li><a href="#">Contact</a></li>
-                        <li><a href="#">About</a></li>
                     </ul>
                 </div>
                 <div class="footer-section location-links">
                     <h3>LOCATION</h3>
                     <ul>
-                        <li><a href="#">Find Us</a></li>
                         <li><a href="#">Our Showrooms</a></li>
+                        <li class="address">
+                            <span>King Fahd Road</span>
+                            <span class="separator">|</span>
+                            <span><a href="https://www.google.com/maps?q=King+Fahd+St,+Riyadh" target="_blank">Riyadh, Saudi Arabia</a></span>
+                        </li>
+                        <li class="address">
+                            <span>Eastern Ring Road</span>
+                            <span class="separator">|</span>
+                            <span><a href="https://www.google.com/maps?q=King+Abdullah+Rd,+Riyadh" target="_blank">Riyadh, Saudi Arabia</a></span>
+                        </li>
                     </ul>
                 </div>
             </div>

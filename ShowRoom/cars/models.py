@@ -27,7 +27,7 @@ class Car(models.Model):
         CROSSOVER = 'crossover', 'Crossover'
 
     name = models.CharField(max_length=254)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand,related_name='cars', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to="images/")
     specs = models.TextField()
     model = models.CharField(max_length=254)

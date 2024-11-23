@@ -1,10 +1,41 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block content%}
+{% block content %}
 <title>{% block title %}Home Page{% endblock %}</title>
-<section class = "page-container">
-    <h1>ShowRoom</h1>
-    <p>Every Car Has a Story... Will You Be the Hero?</p>
-    <button class="explore-button">Explore</button>
-</section>
+
+<div class="main-container">
+    <section class="page-container">
+        <h1>ShowRoom</h1>
+        <p>Every Car Has a Story... Will You Be the Hero?</p>
+        <button class="explore-button">Explore</button>
+    </section>
+    <div class="top-brands-section">
+        <div class="brands-logos">
+            <h2>Top Brand with Most Cars</h2>
+            {% if top_brand %}
+                <div class="brand-logo-container">
+                    <a href="{% url 'brands:brand_details_view' brand_id=top_brand.id %}">
+                        <img src="{{ top_brand.logo.url }}" alt="{{ top_brand.name }}" class="brand-logo">
+                    </a>
+                    <p>{{ top_brand.name }} - {{ top_brand.get_car_count }} Cars</p>
+                </div>
+            {% else %}
+                <p>No brands available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="home-cars-container">
+    <div class="latest-cars-section">
+        <h2 class="latest-cars-title">Latest Cars</h2>
+        <div class="cars-list">
+            {% if cars %}
+                {% include 'cars/cars_list.html' with cars=cars %}
+            {% else %}
+                <p>No cars available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

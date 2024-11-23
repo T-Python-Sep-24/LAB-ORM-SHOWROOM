@@ -4,18 +4,12 @@ from django.forms import inlineformset_factory
 
 
 class CarForm(forms.ModelForm):
-    colors = forms.ModelMultipleChoiceField(
-        queryset=Color.objects.all(),  
-        widget=forms.CheckboxSelectMultiple(attrs={
-            'class': 'form-control'
-        }), 
-        required=False 
-    )
+
 
     class Meta:  
         model = Car
-        fields = ['name', 'brand', 'photo', 'specs', 'model', 'segment', 'price', 'currency', 'colors']
-
+        fields = ['name', 'brand', 'photo', 'specs', 'model', 'segment', 'price', 'currency', 'color']
+    color = forms.ModelMultipleChoiceField(queryset=Color.objects.all(), widget=forms.CheckboxSelectMultiple)
 
 
 class VehiclePhotoForm(forms.ModelForm):

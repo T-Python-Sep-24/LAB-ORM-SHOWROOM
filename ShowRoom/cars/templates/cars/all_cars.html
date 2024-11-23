@@ -1,0 +1,83 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+   All Cars
+{% endblock %}
+
+{% block content %}
+<div class="all-brands">
+   <h1>All Cars</h1>
+   <div class="filter-summary">
+      {% if query %}
+         <p>Showing results for cars with name containing "{{ query }}".</p>
+      {% endif %}
+      {% if brand_filter %}
+         <p>Filtered by Brand: "{{ brand_filter }}".</p>
+      {% endif %}
+      {% if color_filter %}
+         <p>Filtered by Color: "{{ color_filter }}".</p>
+      {% endif %}
+   </div>
+   <form method="get" action="{% url 'cars:all_cars_view' %}" class="search-form">
+      <div>
+          <input type="text" name="q" value="{{ query }}" placeholder="Search by car name..." class="search-input">
+      </div>
+      <div>
+          <select name="brand" class="filter-select">
+              <option value="">All Brands</option>
+              {% for brand in brands %}
+                  <option value="{{ brand.name }}" {% if brand.name == brand_filter %}selected{% endif %}>
+                      {{ brand.name }}
+                  </option>
+              {% endfor %}
+          </select>
+      </div>
+      <div>
+          <select name="color" class="filter-select">
+              <option value="">All Colors</option>
+              {% for color in colors %}
+                  <option value="{{ color.name }}" {% if color.name == color_filter %}selected{% endif %}>
+                      {{ color.name }}
+                  </option>
+              {% endfor %}
+          </select>
+      </div>
+      <div>
+         <button type="submit" class="search-button">
+            <span class="material-symbols-outlined ">search</span>
+        </button>
+      </div>
+  </form>
+   <div class="brand-list">
+      {% for car in cars %}
+         <div class="brand-card">
+            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="brand-logo">
+            <div class="car-name-container">
+               <h3>{{ car.name }}</h3>
+               {% if car.brand.logo %}
+                   <img src="{{ car.brand.logo.url }}" alt="{{ car.brand.name }}" class="brand-logo-card">
+               {% endif %}
+            </div>
+            <h4>{{ car.price }} {{car.currency}}</h4>
+            <button class="more-button">
+                <a href="{% url 'cars:car_details_view' card_id=car.id %}">More</a>
+            </button>
+         </div>
+      {% endfor %}
+   </div>
+   <div class="pagination-container">
+      <span class="step-links">
+         {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}&brand={{ brand_filter }}&color={{ color_filter }}" class="prev-page">Previous</a>
+         {% endif %}
+         <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+         </span>
+         {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ query }}&brand={{ brand_filter }}&color={{ color_filter }}" class="next-page">Next</a>
+         {% endif %}
+      </span>
+   </div>
+</div>
+{% endblock %}

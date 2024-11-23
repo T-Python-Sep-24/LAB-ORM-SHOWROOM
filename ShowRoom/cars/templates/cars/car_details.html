@@ -1,0 +1,29 @@
+{% extends 'main/base.html'%}
+{% load static %} 
+
+{% block title %}
+   brand details
+{% endblock %}
+
+{% block content %}
+<div class="car-details-container">
+    <h1>{{ car.name }}</h1>
+    <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+    <p><strong>Brand:</strong> {{ car.brand }}</p>
+    <p><strong>Specs : </strong>{{ car.specs }}</p>
+    <p><strong>Model : </strong>{{ car.model}}</p>
+    <p><strong>Segment : </strong>{{ car.segment}}</p>
+    <p><strong>Colors:</strong>
+        {% if car.color.all %}
+          {% for color in car.color.all %}
+            {{ color.name }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            No colors available.
+          {% endfor %}
+        {% else %}
+          No colors assigned.
+        {% endif %}
+      </p>
+    <p><strong>price : </strong>{{ car.price}} {{car.currency}}</p>
+</div>
+{% endblock %}
