@@ -20,7 +20,7 @@
                             <li><a href="{% url 'main:home_view' %}">Home</a></li>
                             <li><a href="{% url 'brands:all_brands_view' %}">Car Brands</a></li>
                             <li><a href="{% url 'cars:all_cars_view' %}">Car Lounge</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="{% url 'dashboard:dashboard_view' %}">AutoHub</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -39,12 +39,6 @@
                     <ul>
                         <li><a href="{% url 'main:home_view' %}">Home</a></li>
                         <li><a href="{% url 'cars:all_cars_view' %}">Car Lounge</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section support-links">
-                    <h3>SUPPORT</h3>
-                    <ul>
-                        <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section location-links">

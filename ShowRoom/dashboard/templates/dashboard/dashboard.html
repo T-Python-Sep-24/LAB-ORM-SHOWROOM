@@ -1,0 +1,122 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Console</title>
+
+    <link rel="stylesheet" href="{% static '/css/dashboard_style.css' %}">
+
+</head>
+<body>
+
+    <h1>AutoHub</h1>
+    <div class="container">
+        <div class="select-container">
+            <form method="GET" action="{% url 'dashboard:dashboard_view' %}">
+                <label for="table_select">Choose a table:</label>
+                <select name="table" id="table_select" onchange="this.form.submit()">
+                    <option value="cars" {% if table == 'cars' %}selected{% endif %}>Cars</option>
+                    <option value="brands" {% if table == 'brands' %}selected{% endif %}>Brands</option>
+                    <option value="colors" {% if table == 'colors' %}selected{% endif %}>Colors</option>
+                </select>
+            </form>
+            <form method="GET" action="{% url 'dashboard:dashboard_view' %}">
+                <input type="hidden" name="table" value="{{ table }}">
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- cars table  -->
+        {% if table == 'cars' %}
+        <div class="actions">
+            <a href="{% url 'cars:add_car' %}" class="button">Add Car</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in cars %}
+                <tr>
+                    <td>{{ car.name }}</td>
+                    <td>{{ car.brand.name }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.price }}</td>
+                    <td>
+                        <a href="{% url 'cars:update_car' car.id %}">Edit</a> |
+                        <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- brands table  -->
+
+        {% elif table == 'brands' %}
+        <div class="actions">
+            <a href="{% url 'brands:add_brand' %}" class="button">Add Brand</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Logo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for brand in brands %}
+                <tr>
+                    <td>{{ brand.name }}</td>
+                    <td><img src="{{ brand.logo.url }}" alt="{{ brand.name }}" width="50"></td>
+                    <td>
+                        <a href="{% url 'brands:update_brand' brand.id %}">Edit</a> |
+                        <a href="{% url 'brands:delete_brand' brand.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- colors table  -->
+        {% elif table == 'colors' %}
+        <div class="actions">
+            <a href="{% url 'cars:add_color' %}" class="button">Add Color</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Hex Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for color in colors %}
+                <tr>
+                    <td>{{ color.name }}</td>
+                    <td>{{ color.hexadecimal_color }}</td>
+                    <td>
+                        <a href="{% url 'cars:update_color' color.id %}">Edit</a> |
+                        <a href="{% url 'cars:delete_color' color.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <a href="/" class="back-btn">Go Home</a>
+    </div>
+
+</body>
+</html>

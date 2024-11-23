@@ -6,8 +6,7 @@ from brands.models import Brand
 from django.template.loader import get_template
 from django.core.paginator import Paginator
 from django.db.models import Q
-
-
+from django.contrib import messages
 
 # Create your views here.
 
@@ -17,7 +16,8 @@ def manage_car_view(request, car_id=None):
         try:
             car = Car.objects.get(pk=car_id)
         except Car.DoesNotExist:
-            pass
+            messages.error(request, "The car you are trying to edit does not exist.")
+            return redirect('cars:all_cars_view')
 
     if request.method == "POST":
         form = CarForm(request.POST, request.FILES, instance=car)
@@ -34,12 +34,25 @@ def manage_car_view(request, car_id=None):
             for photo in photo_files:
                 VehiclePhoto.objects.create(car=car, image=photo)
 
-            return redirect('/')
+            if not car_id:
+                messages.success(request, "Car added successfully.") 
+            else:
+                messages.success(request, "Car details updated successfully.") 
+
+            return redirect('cars:all_cars_view')
     else:
         form = CarForm(instance=car)
 
-    return render(request, 'cars/manage_car.html', {'form': form, 'car': car})
+    return render(request, 'cars/manage_car.html',locals())
 
+def delete_car(request, car_id):
+    try:
+        car = Car.objects.get(pk=car_id)
+        car.delete()
+        messages.success(request, "Car deleted successfully.")
+    except Car.DoesNotExist:
+        messages.error(request, "The car you are trying to delete does not exist.")
+    return redirect('cars:all_cars_view')
 
 def manage_color_view(request, color_id=None):
     color = None
@@ -53,10 +66,14 @@ def manage_color_view(request, color_id=None):
         form = ColorForm(request.POST, request.FILES, instance=color)
         if form.is_valid():
             color = form.save()
-            return redirect('/')
+            if color_id:
+                messages.success(request, "Color updated successfully.")
+            else:
+                messages.success(request, "Color added successfully.")
+                
+            return redirect('cars:all_cars_view')
     else:
         form = ColorForm(instance=color)
-
     try:
         get_template('cars/colors/manage_color.html')
     except Exception as e:
@@ -64,8 +81,14 @@ def manage_color_view(request, color_id=None):
 
     return render(request, 'cars/colors/manage_color.html', {'form': form, 'color': color})
 
-from django.db.models import Q
-from django.core.paginator import Paginator
+def delete_color(request, color_id):
+    try:
+        color = Color.objects.get(pk=color_id)
+        color.delete()
+        messages.success(request, "Color deleted successfully.")
+    except Color.DoesNotExist:
+        messages.error(request, "The color you are trying to delete does not exist.")
+    return redirect('cars:all_cars_view')
 
 def all_cars_view(request):
     query = request.GET.get('q', '')

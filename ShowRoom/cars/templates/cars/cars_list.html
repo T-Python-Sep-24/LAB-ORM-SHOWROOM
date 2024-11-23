@@ -1,6 +1,7 @@
 {% load static %}
 
 <div class="brand-list">
+    
     {% for car in cars %}
         <div class="brand-card">
             <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="brand-logo">

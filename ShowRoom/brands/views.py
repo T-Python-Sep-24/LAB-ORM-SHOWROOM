@@ -4,27 +4,46 @@ from .models import Brand
 from .forms import BrandForm
 from django.db.models import Q
 from django.core.paginator import Paginator
-
+from django.contrib import messages
 
 # Create your views here.
 
-def manage_brand_view(request , brand_id = None):
-
+def manage_brand_view(request, brand_id=None):
     brand = None
+
     if brand_id:
         try:
             brand = Brand.objects.get(pk=brand_id)
         except Brand.DoesNotExist:
-            pass
-    elif request.method   == "POST":
-        form = BrandForm(request.POST,request.FILES, instance = brand)
+            messages.error(request, "The brand you are trying to edit does not exist.")
+            return redirect('brands:all_brands_view')
+
+    if request.method == "POST":
+        form = BrandForm(request.POST, request.FILES, instance=brand)
+        
         if form.is_valid():
             form.save()
-            return redirect('/')  
+
+            if not brand_id:
+                messages.success(request, "Brand added successfully.")
+            else:
+                messages.success(request, "Brand updated successfully.")
+
+            return redirect('brands:all_brands_view')
+
     else:
         form = BrandForm(instance=brand)
-    
-    return render(request, 'brands/manage_brand.html', {'form':form , 'brand':brand})
+
+    return render(request, 'brands/manage_brand.html', {'form': form, 'brand': brand})
+
+def delete_brand(request, brand_id):
+    try:
+        brand = Brand.objects.get(pk=brand_id)
+        brand.delete()
+        messages.success(request, "Brand deleted successfully.")
+    except Brand.DoesNotExist:
+        messages.error(request, "The brand you are trying to delete does not exist.")
+    return redirect('brands:all_brands_view')
 
 def all_brands_view(request):
     query = request.GET.get('q', '')
