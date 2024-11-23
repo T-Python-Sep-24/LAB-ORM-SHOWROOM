@@ -53,14 +53,38 @@ def brand_details_view(request:HttpRequest, brand_id):
 
 
 
-def brand_update_view(request:HttpRequest):
+def brand_update_view(request:HttpRequest, brand_id):
 
-    return render(request, 'brands/update_brand.html')
+    brand = get_object_or_404(Brand, pk=brand_id)
+
+    if request.method == "POST":
+        brand.brand_name=request.POST.get("brand_name", brand.brand_name)
+        brand.about=request.POST.get("about", brand.about)
+        brand.founded_at=request.POST.get("founded_at", brand.founded_at)
+        brand.country_of_origin=request.POST.get("country_of_origin", brand.country_of_origin)
+
+        if request.FILES.get("logo"):
+            brand.logo=request.FILES["logo"]
+
+        brand.save()    
+        messages.success(request, "Brand Updated successfully!")
+
+
+        return redirect("brands:brand_details_view", brand_id=brand.id)
+
+    return render(request, 'brands/update_brand.html', {"brand": brand})
 
 
 
 
-def brand_delete_view(request:HttpRequest):
+def brand_delete_view(request:HttpRequest, brand_id):
+    
+    brand = get_object_or_404(Brand, pk=brand_id)
+    
+    brand.delete()
 
-    return render(request, 'brands/brand_delete.html')
+    messages.success(request, "Brand deleted successfully!")
+
+    return redirect('main:main_view')
+
 

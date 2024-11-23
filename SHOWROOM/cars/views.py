@@ -97,14 +97,49 @@ def car_details_view(request:HttpRequest, car_id: int):
 
 
 
-def car_update_view(request:HttpRequest):
 
-    return render(request, 'cars/update_car.html')
+def car_update_view(request:HttpRequest, car_id: int):
+    
+    car = get_object_or_404(Car, pk=car_id)
+
+    if request.method == "POST":
+        car.car_name=request.POST.get("car_name", car.car_name)
+        brand_id = request.POST.get("brand")
+        if brand_id:
+            car.brand = get_object_or_404(Brand, pk=brand_id)
+
+        color_ids = request.POST.getlist("available_colors")
+        car.available_colors.set(Color.objects.filter(id__in=color_ids))    
+
+        car.year=request.POST.get("year", car.year)
+        car.engine=request.POST.get("engine", car.engine)
+        car.power=request.POST.get("power", car.power)
+        car.price=request.POST.get("price", car.price)
+        car.availability=request.POST.get("availability", car.availability)
+        car.speed=request.POST.get("speed", car.speed)
+
+        if request.FILES.get("image"):
+            car.image=request.FILES["image"]
+
+        car.save()    
+        messages.success(request, "Car Updated successfully!")
+
+        return redirect("cars:car_details_view", brand_id=car.brand.id)
+    
+    brands = Brand.objects.all()
+    colors = Color.objects.all()
+
+    return render(request, 'cars/update_car.html', {"car": car, "brands": brands, "colors": colors})
 
 
 
 
-def car_delete_view(request:HttpRequest):
+def car_delete_view(request:HttpRequest, car_id: int):
+    
+    car = get_object_or_404(Car, pk=car_id)
+    
+    car.delete()
 
-    return render(request, 'cars/car_delete.html')
+    messages.success(request, "Car deleted successfully!")
 
+    return redirect('main:main_view')

@@ -8,6 +8,11 @@
 
 
 <main class="car-details-page">
+    <p class="car-brand">
+        <a href="{% url 'brands:brand_details_view' car.brand.id %}" class="brand-link">
+            {{ car.brand.brand_name }}
+        </a>
+    </p>
     <section class="car-image-section">
         <img src="{{ car.image.url }}" alt="Car Image" class="car-image-3">
         <p class="car-availability">{{car.availability}}</p>
@@ -15,13 +20,13 @@
     </section>
 
 
-    <section class="car-color">
+    <section class="car-color-2">
         <div class="color-header">
+            <h6>Available Colors:</h6>
             <ul id="color-tiles" class="tileColor">
                 {% for color in car.available_colors.all %}
                 <li class="tileColor_1">
-                    <span class="color-circle" data-color="{{ color.hex_code }}"></span>
-                    <span>{{ color.name }}</span>
+                    <span class="color-circle-large" data-color-2="{{ color.hex_code }}"></span>
                 </li>
                 {% endfor %}
             </ul>
@@ -56,6 +61,11 @@
             <p class="detail-label">Price</p>
         </div>
 
+    </section>
+
+    <section class="action-links">
+        <a href="{% url 'cars:car_update_view' car.id %}" class="update-button">Update</a>
+        <a href="{% url 'cars:car_delete_view' car.id %}" class="delete-button" onclick="return confirm('Are you sure you want to delete this car?');">Delete</a>
     </section>
 </main>
 

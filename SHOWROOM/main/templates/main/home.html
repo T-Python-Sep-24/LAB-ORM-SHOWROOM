@@ -36,26 +36,31 @@
             <p>3.0-liter twin</p>
         </div>
     </section> 
+
+    <div class="latest-cars-header">
+        <h3 class="latest-cars-title">Latest Cars</h3>
+        <div class="latest-cars-more">
+            <a href="{% url 'cars:all_cars_view' %}">
+                <span class="more-link">More</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+    </div>
     
-    <div class="all-cars-link">
-        <a href="{% url 'cars:all_cars_view' %}">
-            <h5 class="more-link">More</h5>
-            <span class="material-symbols-outlined">arrow_forward</span>
-        </a>
-    </div>
-</div>
+    
 
-<section class="plants-section">
-    {% for plant in plant %}
-    <div class="plant-card">
-        <img src="{}" alt="{}">
-        <a href="{}"><h3>{{ plant.name }}</h3></a>
-        <p>{{ plant.about }}</p>
-        <p class="category">{{ plant.category }}</p>
-    </div>
-    {%endfor%}
-
-</section>
+    <section class="cars-grid-2">
+        {% for car in cars %}
+        <div class="car-card-2">
+            <img src="{{ car.image.url }}" alt="{{ car.car_name }}" class="car-image-2-2">
+            <h2 class="car-name-2-2">{{ car.car_name }}</h2>
+            <p class="car-price-2-2">Price: ${{ car.price }}</p>
+            <a href="{% url 'cars:car_details_view' car.id %}" class="view-details-button">View Details</a>
+        </div>
+        {% endfor %}
+    </section>
+    
+    
 
 </main>
 

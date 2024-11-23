@@ -6,41 +6,44 @@
 
 {% block content %}
 
-<main class="add-car-page">
-    <section class="add-car-header">
+<main class="update-brand-page">
+    <section class="update-brand-header">
         <h1>Update Brand</h1>
     </section>
 
-    <section class="add-car-form">
-        <form action="{% url 'brands:brand_update_view'%}" method="post" enctype="multipart/form-data">
+    <section class="update-brand-form">
+        <form action="{% url 'brands:brand_update_view' brand.id%}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
             <div class="form-group">
                 <label for="brand_name">Brand Name</label>
-                <input type="text" id="brand_name" name="brand_name" class="form-control" placeholder="Enter Brand Name" required>
+                <input type="text" id="brand_name" name="brand_name" class="form-control" placeholder="Enter Brand Name" value="{{brand.brand_name}}">
             </div>
 
             <div class="form-group">
                 <label for="founded_at">Found At</label>
-                <input type="number" id="founded_at" name="founded_at" class="form-control" placeholder="Enter the Year of Brand Foundation" required>
+                <input type="number" id="founded_at" name="founded_at" class="form-control" placeholder="Enter the Year of Brand Foundation" value="{{brand.founded_at}}">
             </div>
 
             <div class="form-group">
                 <label for="country_of_origin">Origin Country</label>
-                <input type="text" id="country_of_origin" name="country_of_origin" class="form-control" placeholder="Enter the Brand Origin Country" required>
+                <input type="text" id="country_of_origin" name="country_of_origin" class="form-control" placeholder="Enter the Brand Origin Country" value="{{brand.country_of_origin}}">
             </div>
 
             <div class="form-group">
                 <label for="about">Description</label>
-                <textarea id="about" name="about" class="form-control" placeholder="Enter a Description About the Brand" rows="4" required></textarea>
+                <textarea id="about" name="about" class="form-control" placeholder="Enter a Description About the Brand" rows="4">{{brand.about}}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="image">Brand Logo</label>
-                <input type="file" id="logo" name="logo" class="form-control" accept="image/*" required>
+                <div class="update-img">
+                    <img src="{{brand.logo.url}}" alt="update-img" class="update-img"><br>
+                    <input type="file" id="logo" name="logo" class="form-control" accept="image/*">
+                </div>
             </div>
 
-            <button type="submit" class="submit-button">Update Brand</button>
+            <button type="submit" class="update-brand-submit-button">Update Brand</button>
         </form>
     </section>
 </main>

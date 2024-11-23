@@ -6,12 +6,12 @@
 
 {% block content %}
 
-<main class="add-car-page">
-    <section class="add-car-header">
+<main class="add-brand-page">
+    <section class="add-brand-header">
         <h1>Add a New Brand</h1>
     </section>
 
-    <section class="add-car-form">
+    <section class="add-brand-form">
         <form action="{% url 'brands:add_new_brand_view'%}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
@@ -40,7 +40,7 @@
                 <input type="file" id="logo" name="logo" class="form-control" accept="image/*" required>
             </div>
 
-            <button type="submit" class="submit-button">Add Brand</button>
+            <button type="submit" class="brand-submit-button">Add Brand</button>
         </form>
     </section>
 </main>

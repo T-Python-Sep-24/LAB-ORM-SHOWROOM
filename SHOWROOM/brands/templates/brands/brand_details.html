@@ -22,6 +22,11 @@
             </div>
         </div>
 
+        <div class="action-links">
+            <a href="{% url 'brands:brand_update_view' brand.id %}" class="update-button">Update</a>
+            <a href="{% url 'brands:brand_delete_view' brand.id %}" class="delete-button" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a>
+        </div>
+
     </section>
 
     <section class="brand-cars-section">
