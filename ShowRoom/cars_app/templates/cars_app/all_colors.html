@@ -1,0 +1,57 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}All Colors{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(55, 68, 82);
+        color: aliceblue;
+    }
+    .colors-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+    .color-card {
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+    }
+    .add-color-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+    }
+    .add-color-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="colors-container">
+    <h2>All Colors</h2>
+    {% for color in colors %}
+    <div class="color-card" style="background-color: {{ color.hex_code }};">
+        <strong>{{ color.name }}</strong> ({{ color.hex_code }})
+    </div>
+    {% empty %}
+    <p>No colors available. Please add some!</p>
+    {% endfor %}
+    
+    <a href="{% url 'cars_app:new_color_view' %}" class="add-color-button">Add More Colors</a>
+</div>
+{% endblock %}
+
+
+
+
+

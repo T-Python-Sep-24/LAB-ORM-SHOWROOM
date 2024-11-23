@@ -1,0 +1,73 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}All Brands{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(55, 68, 82);
+        color: aliceblue;
+    }
+    .brands-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+    .brand-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .brand-logo {
+        max-width: 100px;
+        margin-bottom: 10px;
+    }
+    .brand-name {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    .brand-about {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+    .brand-founded {
+        font-size: 0.9em;
+        color: #ccc;
+    }
+    .add-brand-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        text-align: center;
+        text-decoration: none;
+    }
+    .add-brand-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="brands-container">
+    <h2>All Brands</h2>
+    <a href="{% url 'brands_app:new_brand_view' %}" class="add-brand-button">Add New Brand</a>
+
+    {% for brand in brands %}
+    <div class="brand-card">
+        <img src="{{ brand.logo.url }}" alt="{{ brand.name }} Logo" class="brand-logo">
+        <div class="brand-name">{{ brand.name }}</div>
+        <div class="brand-about">{{ brand.about }}</div>
+        <div class="brand-founded">Founded on: {{ brand.founded_at }}</div>
+    </div>
+    {% empty %}
+    <p>No brands available. Please add some!</p>
+    {% endfor %}
+</div>
+{% endblock %}
