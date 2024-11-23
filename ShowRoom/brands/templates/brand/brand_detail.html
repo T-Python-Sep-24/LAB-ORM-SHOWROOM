@@ -1,31 +1,49 @@
 {% extends "brand/base.html" %}
 {% load static %}
+
 {% block title %}Brand Page{% endblock %}
+
 {% block content %}
-</head>
-<body>
-    <header>
+<div class="container my-5">
+    <header class="text-center mb-4">
         <h1>{{ brand.name }}</h1>
     </header>
 
-    <div>
+    <div class="text-center mb-4">
         <img src="{{ brand.logo.url }}" alt="{{ brand.name }} Logo" style="width: 200px; height: auto;">
         <p><strong>About:</strong> {{ brand.about }}</p>
     </div>
-    <a href="{% url 'brands:brand_update' brand.id %}" class="btn btn-primary">Update</a>
-    <a href="{% url 'brands:brand_delete' brand.id %}" class="btn btn-primary">Delete</a>
+
+    <div class="d-flex justify-content-center mb-4">
+        <a href="{% url 'brands:brand_update' brand.id %}" class="btn btn-primary me-2">Update</a>
+        <a href="{% url 'brands:brand_delete' brand.id %}" class="btn btn-danger">Delete</a>
+    </div>
+
     <hr>
 
     <section>
-        <h2>Cars in {{ brand.name }}</h2>
-        <ul>
+        <h2 class="text-center mb-4">Cars in {{ brand.name }}</h2>
+
+        <!-- Cars as Bootstrap Cards -->
+        <div class="row">
             {% for car in cars %}
-                <li>
-                    <strong>{{ car.name }}</strong> - Model Year: {{ car.model_year }} - Price: ${{ car.price }}
-                </li>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ car.name }}</h5>
+                            <p><strong>Model Year:</strong> {{ car.model_year }}</p>
+                            <p><strong>Price:</strong> ${{ car.price }}</p>
+                            <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-info">View Details</a>
+                        </div>
+                    </div>
+                </div>
             {% empty %}
-                <li>No cars available for this brand.</li>
+                <div class="col-12">
+                    <p>No cars available for this brand.</p>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     </section>
-    {% endblock %}
+</div>
+{% endblock %}

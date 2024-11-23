@@ -6,7 +6,7 @@ class CarAdmin(admin.ModelAdmin):
     list_display = ('name', 'brand', 'model', 'price')
     search_fields = ('name', 'brand__name')
     list_filter = ('brand', 'model', 'colors')
-
+filter_horizontal = ('colors',) 
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):

@@ -1,13 +1,15 @@
 from django import forms
-from .models import Car
+from .models import Car,Color
 
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['name', 'brand', 'colors', 'photo', 'specs', 'model', 'price']
-
+    widgets = {
+            'colors': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        }
+    
     def __init__(self, *args, **kwargs):
-        super(CarForm, self).__init__(*args, **kwargs)
-        # Apply the 'form-control' class to each field
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+        super().__init__(*args, **kwargs)
+        self.fields['colors'].queryset = Color.objects.all()
+        self.fields['colors'].widget.attrs.update({'class': 'form-check-input'})

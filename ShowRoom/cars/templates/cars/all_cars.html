@@ -3,57 +3,76 @@
 {% block title %}All Cars{% endblock %}
 
 {% block content %}
-<h1>All Cars</h1>
+<div class="container my-5">
+    <h1 class="text-center mb-4">All Cars</h1>
 
-<!-- Search Form -->
-<form method="get" action="{% url 'cars:all_cars' %}">
-    <div>
-        <input type="text" name="q" placeholder="Search by name" value="{{ query }}">
-        <button type="submit">Search</button>
-    </div>
-    <div>
-        <select name="brand">
-            <option value="">Filter by Brand</option>
-            {% for brand in brands %}
-                <option value="{{ brand.id }}" {% if brand.id|stringformat:"s" == brand_filter %}selected{% endif %}>{{ brand.name }}</option>
-            {% endfor %}
-        </select>
-        <select name="color">
-            <option value="">Filter by Color</option>
-            {% for color in colors %}
-                <option value="{{ color.id }}" {% if color.id|stringformat:"s" == color_filter %}selected{% endif %}>{{ color.name }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Filter</button>
-    </div>
-</form>
-
-<!-- Cars List -->
-<div>
-    {% for car in cars %}
-        <div>
-            <img src="{{ car.photo.url }}" alt="{{ car.name }}" style="width: 200px;">
-            <h3>{{ car.name }}</h3>
-            <p><strong>Brand:</strong> {{ car.brand.name }}</p>
-            <p><strong>Model:</strong> {{ car.model }}</p>
-            <p><strong>Price:</strong> ${{ car.price }}</p>
-            <a href="{% url 'cars:car_detail' car.id %}">View Details</a>
+    <!-- Search Form -->
+    <form method="get" action="{% url 'cars:all_cars' %}" class="mb-4">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" name="q" placeholder="Search by name" value="{{ query }}" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
         </div>
-    {% empty %}
-        <p>No cars found.</p>
-    {% endfor %}
-</div>
 
-<!-- Pagination -->
-<div>
-    {% if cars.has_previous %}
-        <a href="?page={{ cars.previous_page_number }}">Previous</a>
-    {% endif %}
-    {% for page in cars.paginator.page_range %}
-        <a href="?page={{ page }}">{{ page }}</a>
-    {% endfor %}
-    {% if cars.has_next %}
-        <a href="?page={{ cars.next_page_number }}">Next</a>
-    {% endif %}
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <select name="brand" class="form-select">
+                    <option value="">Filter by Brand</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand.id }}" {% if brand.id|stringformat:"s" == brand_filter %}selected{% endif %}>{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="color" class="form-select">
+                    <option value="">Filter by Color</option>
+                    {% for color in colors %}
+                        <option value="{{ color.id }}" {% if color.id|stringformat:"s" == color_filter %}selected{% endif %}>{{ color.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Cars List -->
+    <div class="row">
+        {% for car in cars %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.name }}</h5>
+                        <p><strong>Brand:</strong> {{ car.brand.name }}</p>
+                        <p><strong>Model:</strong> {{ car.model }}</p>
+                        <p><strong>Price:</strong> ${{ car.price }}</p>
+                        <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-info">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p>No cars found.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center my-4">
+        {% if cars.has_previous %}
+            <a href="?page={{ cars.previous_page_number }}" class="btn btn-secondary me-2">Previous</a>
+        {% endif %}
+        {% for page in cars.paginator.page_range %}
+            <a href="?page={{ page }}" class="btn btn-outline-secondary me-2">{{ page }}</a>
+        {% endfor %}
+        {% if cars.has_next %}
+            <a href="?page={{ cars.next_page_number }}" class="btn btn-secondary ms-2">Next</a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
