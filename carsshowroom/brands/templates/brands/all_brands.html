@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Brands
+{% endblock title %}
+    
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-end gap-2">
+        <form action="{% url 'brands:all_brands_view' %}" method="get">
+            <input type="search" class="form-control " placeholder="search for a specfic brand" value="{{request.GET.search}}" name="search"  />
+        </form>
+        
+        <a href="{% url 'brands:new_brand_view' %}" class="btn btn-primary">Add a new brand +</a>
+    </div>
+    <div class="container mt-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            {% for brand in brands %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ brand.logo.url }}" class="card-img-top  mb-2 rounded-start " alt="{{ brand.name }}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                    <a href="{% url 'brands:brand_detail_view' brand.id %}" class="text-decoration-none"><h5 class="card-title">Name: {{ brand.name }}</h5></a>
+                                
+                                <h5 class="card-title">Founded: {{ brand.founded_at }}</h5>
+                            </div>
+                            
+                        </div>
+                        <h5 class="card-footer">Cars: [{{brand.car_count}}]</h5>
+                        
+                        
+                    </div>
+                </div>
+
+                <!-- Modal for Delete Confirmation -->
+                
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if brands.has_previous %}
+                <li class="page-item">
+                    <a class="page-link text-decoration-underline text-dark" href="?page=1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-dark" href="?page={{ brands.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ brands.number }} of {{ brands.paginator.num_pages }}</span>
+                </li>
+
+                {% if brands.has_next %}
+                <li class="page-item">
+                    <a class="page-link text-dark" href="?page={{ brands.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-decoration-underline text-dark" href="?page={{ brands.paginator.num_pages }}">Last</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock content %}

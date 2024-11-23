@@ -1,0 +1,35 @@
+<div class="container mt-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for car in cars %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ car.photo.url }}" class="card-img-top img-fluid mb-2 rounded-start" alt="{{ car.name }}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="{% url 'cars:car_detail_view' car.id %}" class="text-decoration-none"><h5 class="card-title">Name: {{ car.name }}</h5></a>
+                        <h5 class="card-title">Brand: {{ car.brand.name }}</h5>
+                    </div>
+                    <p class="card-text"><strong>Model:</strong> {{ car.model }}</p>
+                    <h5 class="card-text">Colors:</h5>
+                    <div class="row">
+                        {% for color in car.colors.all %}
+                        <div class="col-4 bg-body-secondary">
+                            <span class="badge text-black d-flex align-items-center">
+                                {{ color.name }} 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ color.hex_value }}" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="8" r="8"/>
+                                </svg>
+                            </span>
+                        </div>
+                        
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+       
+        {% endfor %}
+    </div>
+   
+</div>

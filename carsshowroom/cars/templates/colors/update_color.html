@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block title %}
+    update Color
+{% endblock title %}
+
+
+{% block content %}
+  <div class="container mt-5">
+      <h1>Update  Color</h1>
+      <div class="row">
+          <div class="col-7">
+              <form class="d-flex flex-column gap-2" action="{% url 'cars:new_color_view' %}" method="post">
+                  {% csrf_token %}
+                  <input type="text" placeholder="Name" value="{{color.name}}" name="name" class="form-control" required/>
+                  <div class="d-flex flex-column gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="{{color.hex_value}}" class="bi bi-square-fill" viewBox="0 0 16 16">
+                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2z"/>
+                      </svg>
+                    <input type="text" placeholder="Give a hexadecimal value it starts with # " name="hex_value" required maxlength="7">
+
+                    
+                  </div>
+                  <input type="submit" value="ADD Brand" class="btn btn-primary mt-4" />
+              </form>
+          </div>
+      </div>
+  </div>
+{% endblock content %}

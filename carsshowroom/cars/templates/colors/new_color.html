@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block title %}
+    new Color
+{% endblock title %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Add a Color</h1>
+    <div class="row">
+        <div class="col-7">
+            <form class="d-flex flex-column gap-2" action="{% url 'cars:new_color_view' %}" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder="Name" name="name" class="form-control" required/>
+                <input type="text" placeholder="Give a hexadecimal value it starts with # " name="hex_value" required maxlength="7">
+                <input type="submit" value="ADD Brand" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    
