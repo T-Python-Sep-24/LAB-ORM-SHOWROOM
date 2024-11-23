@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block title %}
+    All Cars
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-end gap-2">
+            <form action="{% url 'cars:all_cars_view' %}" method="GET" >
+                <div class="d-flex gap-3">
+                    <input type="search" class="form-control" placeholder="search for a specfic car" value="{{request.GET.search}}" name="search"  />
+                    <select name="brand" class="form-select">
+                        <option value="">all brand</option>
+                        {% for brand in brands  %}
+                            <option value="{{brand.id}}">{{brand.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="color"  class="form-select">
+                        <option value="">all cars</option>
+                        
+                        {% for color in colors  %}
+                            <option value="{{color.id}}">
+                                {{color.name}}
+                            </option>
+                        {% endfor %}
+                            
+                    </select>
+            
+                    <input type="submit" value="apply" class="btn btn-primary"/>
+                </div>
+            </form>
+            <a href="{% url 'cars:new_car_view' %}" class="btn btn-primary">Add a new Car +</a>
+        </div>
+
+        {% include 'cars/car_list.html' %}
+
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation">
+                
+                <ul class="pagination">
+
+                    {% if cars.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-decoration-underline  text-dark" href="?page=1">
+                            First
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link  text-dark" href="?page={{ cars.previous_page_number }}">
+                            Previous
+                        </a>
+                    </li>
+                    {% endif %}
+    
+                    <li class="page-item disabled">
+                        <span class="page-link">Page {{ cars.number }} of {{ cars.paginator.num_pages }}</span>
+                    </li>
+    
+                    {% if cars.has_next %}
+                    <li class="page-item">
+                        <a class="page-link  text-dark" href="?page={{ cars.next_page_number }}">
+                            Next
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link text-decoration-underline  text-dark" href="?page={{ cars.paginator.num_pages }}">
+                            Last
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+{% endblock content %}
+    

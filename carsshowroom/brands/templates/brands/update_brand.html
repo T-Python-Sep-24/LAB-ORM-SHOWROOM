@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block title %}
+    Update Brand
+{% endblock title %}
+    
+{% block content %}
+<div class="container mt-5">
+    <h1>Update a Brand</h1>
+    <div class="row">
+        <div class="col-7">
+            <form class="d-flex flex-column gap-2" action="{% url 'brands:new_brand_view' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" placeholder="Name" value="{{brand.name}}"  name="name" class="form-control" required/>
+                <textarea placeholder="about" name="about"  class="form-control mt-3" required>{{brand.about}}</textarea>
+                <input type="date" name="founded_at" class="form-control" value="{{brand.founded_at}}" required/>
+                <div>
+                    <img src="{{brand.logo.url}}" class="w-25" alt="{{brand.name}}">
+                    <input type="file" name="logo" class="form-control mt-3" required accept="image/*"/>
+                </div>
+                
+                <input type="submit" value="Update Brand" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    

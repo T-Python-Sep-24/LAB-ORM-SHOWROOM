@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block title %}
+    Colors
+{% endblock title %}
+
+
+{% block content %}
+<div class="container mt-5" style="height: 72.5vh;">
+    
+    <div class="d-flex justify-content-between gap-2 me-4 align-content-center">
+        <h1>Colors</h1>
+        <a href="{% url 'cars:new_color_view' %}" class="btn btn-primary h-50 mt-3">Add a new Color +</a>
+    </div>
+    <div class="row mt-4 ">
+        {% for color in colors  %}
+        <div class="col-3 mb-2">
+            <div class="card bg-body-secondary" style="width: 18rem;">        
+                <div class="card-body ">
+                    <div class="d-flex justify-content-between align-content-center text-black">
+                        <h1 class="card-title">{{color.name}}</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="{{color.hex_value}}" class="bi bi-square-fill" viewBox="0 0 16 16">
+                            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2z"/>
+                          </svg>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex gap-2 justify-content-start gap-4">
+                        <a href="{% url 'cars:color_update_view' color.id %}" class="btn btn-primary">Update</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ color.id }}">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="modal fade" id="deleteModal{{ color.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ color.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModalLabel{{ color.id }}">Delete color</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete {{ color.name }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{% url 'cars:delete_color_view' color.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+    
+    
+        
+    
+</div>
+{% endblock content %}
+    
+    
