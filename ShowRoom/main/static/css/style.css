@@ -1,0 +1,13 @@
+.wrapper {
+    min-height: 100vh;
+}
+
+/*** header ***/
+
+/*** main ***/
+
+/*** footer ***/
+footer p {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
