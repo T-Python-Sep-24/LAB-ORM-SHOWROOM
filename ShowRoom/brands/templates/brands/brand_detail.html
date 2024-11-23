@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ brand.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ brand.name }}</h1>
+<img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+<p>About: {{ brand.about }}</p>
+<p>Founded At: {{ brand.founded_at }}</p>
+<p>Headquarters: {{ brand.headquarters }}</p>
+
+<h2>Cars by {{ brand.name }}</h2>
+<ul>
+    {% for car in brand.cars.all %}
+        <li><a href="{% url 'cars:car_detail' car.id %}">{{ car.name }}</a></li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'brands:update_brand' brand.id %}">Edit</a> | 
+<a href="{% url 'brands:delete_brand' brand.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+{% endblock %}

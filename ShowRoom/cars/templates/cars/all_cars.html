@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}All Cars{% endblock %}
+
+{% block content %}
+<h1>All Cars</h1>
+
+<!-- Search and Filter Form -->
+<form method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Search cars by name" value="{{ request.GET.search }}">
+    <select name="brand">
+        <option value="">All Brands</option>
+        {% for brand in brands %}
+            <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:"s" %}selected{% endif %}>{{ brand.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="color">
+        <option value="">All Colors</option>
+        {% for color in colors %}
+            <option value="{{ color.id }}" {% if request.GET.color == color.id|stringformat:"s" %}selected{% endif %}>{{ color.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Add New Car Button -->
+<div class="add-new">
+    <a href="{% url 'cars:new_car' %}" class="button">Add New Car</a>
+</div>
+
+<!-- Cars Display -->
+<div class="card-container">
+    {% for car in cars %}
+        <div class="card">
+            {% if car.photo %}
+                <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+            {% else %}
+                <img src="{% static 'images/placeholder.png' %}" alt="No Image Available">
+            {% endif %}
+            <h3>{{ car.name }}</h3>
+            <p>Brand: {{ car.brand.name }}</p>
+            <p>Model: {{ car.model }}</p>
+            <p>Price: ${{ car.price }}</p>
+            <a href="{% url 'cars:car_detail' car.id %}" class="button">View Details</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

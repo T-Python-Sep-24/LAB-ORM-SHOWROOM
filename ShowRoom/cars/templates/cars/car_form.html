@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ form.instance.pk|yesno:"Edit Car,Add New Car" }}{% endblock %}
+
+{% block content %}
+<h1>{{ form.instance.pk|yesno:"Edit Car,Add New Car" }}</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ form.instance.pk|yesno:"Update,Add" }}</button>
+</form>
+{% endblock %}

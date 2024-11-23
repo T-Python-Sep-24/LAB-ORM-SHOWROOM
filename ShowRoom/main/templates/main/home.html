@@ -1,2 +1,52 @@
-<h1>Welcome to the ShowRoom Home Page</h1>
-<p>This is the main application.</p>
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Home - ShowRoom{% endblock %}
+
+{% block content %}
+<h1>Welcome to ShowRoom</h1>
+
+<!-- All Cars Section -->
+<h2>All Cars</h2>
+<div class="card-container">
+    {% for car in all_cars %}
+        <div class="card">
+            <!-- Car Photo -->
+            {% if car.photo %}
+                <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+            {% else %}
+                <img src="{% static 'images/placeholder.png' %}" alt="No Image Available">
+            {% endif %}
+            <!-- Car Details -->
+            <h3>{{ car.name }}</h3>
+            <p><strong>Brand:</strong> {{ car.brand.name }}</p>
+            <p><strong>Model:</strong> {{ car.model }}</p>
+            <p><strong>Price:</strong> ${{ car.price }}</p>
+            <a href="{% url 'cars:car_detail' car.id %}" class="button">View Details</a>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- All Brands Section -->
+<h2>All Brands</h2>
+<div class="card-container">
+    {% for brand in all_brands %}
+        <div class="card">
+            <!-- Brand Logo -->
+            {% if brand.logo %}
+                <img src="{{ brand.logo.url }}" alt="{{ brand.name }} Logo">
+            {% else %}
+                <img src="{% static 'images/placeholder_logo.png' %}" alt="No Logo Available">
+            {% endif %}
+            <!-- Brand Details -->
+            <h3>{{ brand.name }}</h3>
+            {% if brand.founded_at %}
+                <p><strong>Founded:</strong> {{ brand.founded_at }}</p>
+            {% else %}
+                <p><strong>Founded:</strong> Not Available</p>
+            {% endif %}
+            <a href="{% url 'brands:brand_detail' brand.id %}" class="button">View Details</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

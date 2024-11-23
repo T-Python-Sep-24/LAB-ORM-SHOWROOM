@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}All Brands{% endblock %}
+
+{% block content %}
+<h1>All Brands</h1>
+
+<!-- Search Form -->
+<form method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Search brands by name" value="{{ request.GET.search }}" class="search-input">
+    <button type="submit" class="search-button">Search</button>
+</form>
+
+<!-- Add New Brand Button -->
+<div class="add-new">
+    <a href="{% url 'brands:new_brand' %}" class="button">Add New Brand</a>
+</div>
+
+<!-- Brands Display -->
+<div class="card-container">
+    {% for brand in brands %}
+        <div class="card">
+            <!-- Brand Logo -->
+            {% if brand.logo %}
+            {% else %}
+            {% endif %}
+            <!-- Brand Details -->
+            <h3>{{ brand.name }}</h3>
+            {% if brand.founded_at %}
+                <p><strong>Founded:</strong> {{ brand.founded_at }}</p>
+            {% else %}
+                <p><strong>Founded:</strong> Not Available</p>
+            {% endif %}
+            {% if brand.headquarters %}
+                <p><strong>Headquarters:</strong> {{ brand.headquarters }}</p>
+            {% else %}
+                <p><strong>Headquarters:</strong> Not Available</p>
+            {% endif %}
+            <a href="{% url 'brands:brand_detail' brand.id %}" class="button">View Details</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
