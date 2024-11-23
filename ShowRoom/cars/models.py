@@ -13,21 +13,21 @@ class Color(models.Model):
 
 class Car(models.Model):
     class Gear(models.TextChoices):
-        AUTO = "AT", "Automatic"
-        MANUAL = "MN", "Manual"
+        AUTO = "Automatic", "Automatic"
+        MANUAL = "Manual", "Manual"
 
     class Fuel(models.TextChoices):
-        ELECTRIC = "EL", "Electric"
-        GASOLINE = "GS", "Gasoline"
+        ELECTRIC = "Electric", "Electric"
+        GASOLINE = "Gasoline", "Gasoline"
     
     class BodyType(models.TextChoices):
         SUV = "SUV", "Suv"
-        SEDAN = "SED", "Sedan"
-        SPORT = "SPR", "Sport"
-        PICKUP = "PIK", "Pick-up"
-        CONVERTABLE = "CON", "Convertable"
-        COUPE = "COU", "Coupe"
-        MINIVAN = "MIV", "Minivan"
+        SEDAN = "Sedan", "Sedan"
+        SPORT = "Sport", "Sport"
+        PICKUP = "Pick-up", "Pick-up"
+        CONVERTABLE = "Convertable", "Convertable"
+        COUPE = "Coupe", "Coupe"
+        MINIVAN = "Minivan", "Minivan"
 
     model = models.CharField(max_length=1024)
     modelYear = models.SmallIntegerField()

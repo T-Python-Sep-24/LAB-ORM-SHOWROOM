@@ -116,3 +116,15 @@ def displayCarsView(request: HttpRequest, filter: str):
     response = render(request, 'cars/displayCars.html', context={'cars': cars, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages})
     
     return response
+
+def carDetailsView(request: HttpRequest, carid:int):
+    try:
+        car = Car.objects.get(pk=carid)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        carImages = Attachment.objects.filter(car=car)
+        relatedCars = Car.objects.exclude(pk=carid).filter(brand=car.brand)[0:3]
+
+        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars})
+    return response

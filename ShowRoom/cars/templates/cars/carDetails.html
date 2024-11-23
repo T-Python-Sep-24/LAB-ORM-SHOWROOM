@@ -1,0 +1,141 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{car.brand.name}} - {{car.model}}{% endblock %}
+
+{% block content %}
+<section class="container-md">
+    <div class="d-flex align-items-center">
+        <img src="{{car.brand.logo.url}}" alt="Brand logo" class="rounded-2 car-logo">
+        <h1 class="mt-3 ms-2">
+            {{car.brand.name}} - {{car.model}} {{car.modelYear}}
+        </h1>
+    </div>
+    
+    <div class="half-border mb-2"></div>
+    <div class="container-fluid">
+        <!-- Car images carousel -->
+        <div id="carDetailsCarousel" class="carousel slide my-3 rounded-3 shadow overflow-hidden carousel-fade details-carousel mx-auto" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                {% for carImg in carImages %}
+                <button type="button" data-bs-target="#carDetailsCarousel" data-bs-slide-to="{{forloop.counter0}}"
+                    class="{% if forloop.first %}active{% endif %}" aria-label="Slide {{forloop.counter}}"></button>
+                {% endfor %}
+            </div>
+            <div class="carousel-inner">
+                {% for carImg in carImages %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{carImg.image.url}}" class="d-block" alt="Car image">
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carDetailsCarousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carDetailsCarousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-lg-2 justify-content-center">
+            <div class="col">
+                <ul class="list-group list-group-flush shadow-sm rounded-2 my-2">
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/capacity.svg' %}" alt="engine">
+                                <h5 class="ms-2">Capacity</h5>
+                            </div>
+                            <p class="m-0 ms-2">{{car.capacity}} passengers</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/price.svg' %}" alt="engine">
+                                <h5 class="ms-2">Price</h5>
+                            </div>
+                            <p class="m-0 ms-2">Starts at {{car.price}}.00 SAR</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/body.svg' %}" alt="engine">
+                                <h5 class="ms-2">Body Type</h5>
+                            </div>
+                            <p class="m-0 ms-2">{{car.bodyType}}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/colors.svg' %}" alt="engine">
+                                <h5 class="ms-2">Available Colors</h5>
+                            </div>
+                            <div class="d-flex gap-2 ms-2">
+                                {% for color in car.colors.all %}
+                                <img src="{{color.image.url}}" alt="color image" class="color-img rounded-1 shadow-sm">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <ul class="list-group list-group-flush shadow-sm rounded-2 my-2">
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/engine.svg' %}" alt="engine">
+                                <h5 class="ms-2">Engine</h5>
+                            </div>
+                            <p class="m-0 ms-2">{{car.engine}}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/speed.svg' %}" alt="engine">
+                                <h5 class="ms-2">Top speed</h5>
+                            </div>
+                            <p class="m-0 ms-2">{{car.topSpeed}}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/gear.svg' %}" alt="engine">
+                                <h5 class="ms-2">Gear</h5>
+                            </div>
+                            <p class="m-0 ms-2">{{car.gear}}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start details">
+                        <div class="ms-2 me-auto">
+                            <div class="d-flex">
+                                <img src="{% static 'images/icons/fuel.svg' %}" alt="engine">
+                                <h5 class="ms-2">Fuel</h5>
+                            </div>
+                            <p class="m-0 ms-2">{{car.fuel}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container my-5">
+    <a href="" class="fs-3 mt-4 hover-underline">
+        More Cars from {{car.brand.name}}:
+    </a>
+    {% with relatedCars as cars %}        
+        {% include 'cars/components/carsList.html' %}
+    {% endwith %}
+</section>
+{% endblock %}

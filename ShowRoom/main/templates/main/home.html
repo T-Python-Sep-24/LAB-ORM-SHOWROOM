@@ -26,7 +26,7 @@
         </div>
     </a>
     <!-- Featured cars carousel -->
-    <div id="featuredCars" class="carousel slide my-5 rounded-3 shadow overflow-hidden carousel-fade"
+    <div id="featuredCars" class="carousel slide my-5 rounded-3 shadow overflow-hidden carousel-fade car-carousel"
         data-bs-ride="carousel" style="max-height: 650px;">
         <div class="carousel-indicators">
             {% for car in cars %}
@@ -43,9 +43,9 @@
                 {% endif %}
                 {% endfor %}
                 <div class="carousel-caption caption-bg">
-                    <a href="" class="fs-3 d-block">{{car.brand.name}} - {{car.model}}</a>
+                    <a href="{% url 'cars:carDetailsView' car.id %}" class="fs-3 d-block">{{car.brand.name}} - {{car.model}}</a>
                     <p class="mb-1"><span class="fw-medium text-danger">Starting at:</span> {{car.price}}.00 SAR.</p>
-                    <a href="" class="hover-underline">More..</a>
+                    <a href="{% url 'cars:carDetailsView' car.id %}" class="hover-underline">More..</a>
                 </div>
             </div>
             {% endfor %}

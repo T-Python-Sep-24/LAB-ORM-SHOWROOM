@@ -232,9 +232,56 @@
     object-fit: cover;
 }
 
-.car-carousel img {
-    height: 220px;
+.details-carousel {
+    width: 85%;
+} 
+
+.carousel img {
+    max-height: 600px;
     width: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+.details img {
+    height: 25px;
+    width: 25px;
+}
+
+.car-logo {
+    height: 64px;
+    object-fit: cover;
+}
+
+.dark .card-subtitle { 
+    color: #e6ebf7;
+}
+
+.light .card-subtitle { 
+    color: #0c1221;
+}
+
+.dark .details {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.light .details {
+    background: rgba(12, 18, 33, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.color-img {
+    height:30px;
+    width: 30px;
+}
+
+.dark .list-group-item h5,
+.dark .list-group-item p {
+    color:#e8eff7
+}
+
+.light .list-group-item h5,
+.light .list-group-item p {
+    color:#0c1221
 }
