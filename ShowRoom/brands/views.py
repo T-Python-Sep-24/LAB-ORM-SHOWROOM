@@ -60,7 +60,7 @@ def brand_update(request, brand_id):
             messages.error(request, "Error updating brand. Please check the form.")
     else:
         form = BrandForm(instance=brand)
-    return render(request, 'brands/brand_update.html', {'form': form, 'brand': brand})
+    return render(request, 'brand/brand_update.html', {'form': form, 'brand': brand})
 
 
 def brand_delete(request, brand_id):
@@ -69,4 +69,4 @@ def brand_delete(request, brand_id):
         brand.delete()
         messages.success(request, f"Brand '{brand.name}' has been successfully deleted!")
         return redirect('brands:all_brands')
-    return render(request, 'brands/brand_delete.html', {'brand': brand})
+    return render(request, 'brand/brand_delete.html', {'brand': brand})

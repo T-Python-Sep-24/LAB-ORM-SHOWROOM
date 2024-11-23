@@ -28,6 +28,7 @@
                         <p>{{ brand.about|truncatewords:10 }}</p>
                         <p><strong>Founded:</strong> {{ brand.founded_at }}</p>
                         <p><strong>Cars Available:</strong> {{ brand.cars.count }}</p>
+                        <a href="{% url 'brands:brand_detail' brand.id %}" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>

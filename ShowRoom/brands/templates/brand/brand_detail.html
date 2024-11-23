@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ brand.name }} Details</title>
+{% extends "brand/base.html" %}
+{% load static %}
+{% block title %}Brand Page{% endblock %}
+{% block content %}
 </head>
 <body>
     <header>
@@ -14,7 +12,8 @@
         <img src="{{ brand.logo.url }}" alt="{{ brand.name }} Logo" style="width: 200px; height: auto;">
         <p><strong>About:</strong> {{ brand.about }}</p>
     </div>
-
+    <a href="{% url 'brands:brand_update' brand.id %}" class="btn btn-primary">Update</a>
+    <a href="{% url 'brands:brand_delete' brand.id %}" class="btn btn-primary">Delete</a>
     <hr>
 
     <section>
@@ -29,5 +28,4 @@
             {% endfor %}
         </ul>
     </section>
-</body>
-</html>
+    {% endblock %}
