@@ -6,7 +6,7 @@
     <section class="page-container">
         <h1>ShowRoom</h1>
         <p>Every Car Has a Story... Will You Be the Hero?</p>
-        <button class="explore-button">Explore</button>
+        <button class="explore-button" onclick="window.location.href='{% url 'cars:all_cars_view' %}'">Explore</button>
     </section>
     <div class="top-brands-section">
         <div class="brands-logos">
@@ -26,7 +26,7 @@
 </div>
 <div class="home-cars-container">
     <div class="latest-cars-section">
-        <h2 class="latest-cars-title">Latest Cars</h2>
+        <h1 class="latest-cars-title">Latest Cars</h1>
         <div class="cars-list">
             {% if cars %}
                 {% include 'cars/cars_list.html' with cars=cars %}

@@ -59,7 +59,7 @@
       </div>
   </form>
    <div class="brand-list">
-      {% for car in cars %}
+      {% for car in page_obj %}
          <div class="brand-card">
             <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="brand-logo">
             <div class="car-name-container">
@@ -69,10 +69,12 @@
                {% endif %}
             </div>
             <h4>{{ car.price }} {{car.currency}}</h4>
-            <button class="more-button">
-                <a href="{% url 'cars:car_details_view' card_id=car.id %}">More</a>
+            <button class="more-button" onclick="window.location.href='{% url 'cars:car_details_view' card_id=car.id %}'">
+                More
             </button>
          </div>
+      {% empty %}
+         <p>No cars found.</p>
       {% endfor %}
    </div>
    <div class="pagination-container">

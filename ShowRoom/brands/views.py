@@ -54,7 +54,7 @@ def all_brands_view(request):
     else:
         brands = Brand.objects.all()
     
-    paginator = Paginator(brands, 1)  
+    paginator = Paginator(brands, 4)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

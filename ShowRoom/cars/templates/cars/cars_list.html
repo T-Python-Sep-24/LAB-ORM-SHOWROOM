@@ -12,9 +12,7 @@
                 {% endif %}
             </div>
             <h4>{{ car.price }} {{ car.currency }}</h4>
-            <button class="more-button">
-                <a href="{% url 'cars:car_details_view' card_id=car.id %}">More</a>
-            </button>
+            <button class="more-button" onclick="window.location.href='{% url 'cars:car_details_view' card_id=car.id  %}'">More</button>
         </div>
     {% endfor %}
 </div>

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Console</title>
+    <title>Manage Cars</title>
 
     <link rel="stylesheet" href="{% static '/css/dashboard_style.css' %}">
 
 </head>
 <body>
 
-    <h1>AutoHub</h1>
+    <h1>Manage Cars</h1>
     <div class="container">
         <div class="select-container">
             <form method="GET" action="{% url 'dashboard:dashboard_view' %}">
@@ -52,7 +52,7 @@
                     <td>{{ car.price }}</td>
                     <td>
                         <a href="{% url 'cars:update_car' car.id %}">Edit</a> |
-                        <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+                        <a href="{% url 'cars:delete_car' car.id %}" onclick="return confirmDelete();">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -80,7 +80,7 @@
                     <td><img src="{{ brand.logo.url }}" alt="{{ brand.name }}" width="50"></td>
                     <td>
                         <a href="{% url 'brands:update_brand' brand.id %}">Edit</a> |
-                        <a href="{% url 'brands:delete_brand' brand.id %}">Delete</a>
+                        <a href="{% url 'brands:delete_brand' brand.id %}" onclick="return confirmDelete();">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -107,7 +107,7 @@
                     <td>{{ color.hexadecimal_color }}</td>
                     <td>
                         <a href="{% url 'cars:update_color' color.id %}">Edit</a> |
-                        <a href="{% url 'cars:delete_color' color.id %}">Delete</a>
+                        <a href="{% url 'cars:delete_color' color.id %}" onclick="return confirmDelete();">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -115,8 +115,12 @@
         </table>
         {% endif %}
 
-        <a href="/" class="back-btn">Go Home</a>
+        <a href="/" class="back-btn">Home</a>
     </div>
-
+    <script type="text/javascript">
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this item?');
+        }
+    </script>
 </body>
 </html>

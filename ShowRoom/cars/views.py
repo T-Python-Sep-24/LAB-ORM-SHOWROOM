@@ -104,16 +104,17 @@ def all_cars_view(request):
     if color_filter:
         filter_conditions &= Q(color__name__icontains=color_filter)
 
-    cars = Car.objects.filter(filter_conditions)
+    cars = Car.objects.filter(filter_conditions).distinct()
 
     colors = Color.objects.all()
     brands = Brand.objects.all()
 
-    paginator = Paginator(cars, 4)  
+    paginator = Paginator(cars, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'cars/all_cars.html', locals())
+    return render(request, 'cars/all_cars.html',locals())
+
 
 
 def car_details_view(request, card_id=None):
