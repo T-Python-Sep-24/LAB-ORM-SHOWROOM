@@ -8,7 +8,64 @@
     <h1 class="mt-4">
         {{selected|capfirst}} Cars
     </h1>
-    <div class="half-border mb-5 mx-auto"></div>
+    <div class="half-border mb-3 mx-auto"></div>
+
+    <form action="{% url 'cars:displayCarsView' selected %}{% querystring %}" method="get" class="my-3 needs-validation"
+        novalidate>
+        <div class="input-group justify-content-center">
+            <input class="form-control focus-ring focus-ring-secondary rounded-start-2 " style="max-width: 300px;"
+                type="search" placeholder="Search for a car by its model.." aria-label="Search" name="search"
+                value="{{request.GET.search}}" minlength="2">
+            <button class="btn rounded-end-2 btn-danger" type="submit">
+                Search
+            </button>
+            <div class="invalid-feedback">
+                Please enter more than 3 letters.
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-danger mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltering"
+        aria-controls="offcanvasFiltering">
+        <span class="material-symbols-outlined">
+            filter_alt
+        </span>
+    </button>
+    <!-- Filtering offcanvas -->
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+        id="offcanvasFiltering" aria-labelledby="offcanvasFilteringLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasFilteringLabel">Filter By:</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form action="{% url 'cars:displayCarsView' selected %}{% querystring %}" method="get" class="my-3">
+                <div class="my-3">
+                    <p class="fw-medium">Color:</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        {% for color in colors %}
+                        <input type="checkbox" class="btn-check" name="colors" id="check-{{color.id}}"
+                            autocomplete="off" value="{{color.name}}" {% if color.name in request.GET.colors %}checked{% endif %}>
+                        <label class="btn btn-outline-secondary border-2 py-0 rounded-pill"
+                            for="check-{{color.id}}">{{color.name}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="my-3">
+                    <label for="brand" class="form-label fw-medium">Brand:</label>
+                    <select id="brand" name="brand" class="form-select" aria-label="Brand select">
+                        <option value="">All</option>
+                        {% for brand in brands %}
+                        <option value="{{brand.id}}" {% if request.GET.brand == brand %}selected{% endif %}>{{brand.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="py-0 px-3 my-2 rounded-1 btn btn-danger">
+                    Apply
+                </button>
+            </form>
+        </div>
+        <!-- End of filtering offcanvas -->
+    </div>
     {% include 'cars/components/carsList.html' %}
 </section>
 {% endblock %}

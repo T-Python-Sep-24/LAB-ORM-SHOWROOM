@@ -140,13 +140,24 @@ def displayCarsView(request: HttpRequest, filter: str):
 
     bodyTypes = Car.BodyType.choices
     carImages = Attachment.objects.all()
+    colors = Color.objects.all()
+    brands = Brand.objects.all()
 
     if filter == 'all':
         cars = Car.objects.all().order_by('-addedAt')
     else:
-        cars = Car.objects.filter(bodyType=filter).order_by('-addedAt')
+        cars = Car.objects.filter(bodyType__iexact=filter).order_by('-addedAt')
+    
+    if "search" in request.GET and len(request.GET["search"]) >= 2:
+        cars = cars.filter(model__contains=request.GET["search"]).order_by('-addedAt')
 
-    response = render(request, 'cars/displayCars.html', context={'cars': cars, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages})
+    if "colors" in request.GET:
+        cars = cars.filter(colors__name__in=request.GET.getlist("colors")).order_by('-addedAt')
+
+    if "brand" in request.GET and request.GET['brand'] != '':
+        cars = cars.filter(brand=request.GET["brand"])
+
+    response = render(request, 'cars/displayCars.html', context={'cars': cars, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages, 'colors': colors, 'brands': brands})
     
     return response
 

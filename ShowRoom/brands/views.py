@@ -4,6 +4,7 @@ from django.contrib import messages
 from brands.models import Brand
 from brands.forms import BrandForm
 from cars.models import Car, Attachment
+from django.db.models import Q, Count
 
 # Add brand instance
 def addBrandView(request: HttpRequest):
@@ -65,7 +66,11 @@ def deleteBrandView(request:HttpRequest, brandid:int):
 def displayBrandsView(request: HttpRequest):
     
     brands = Brand.objects.all().order_by('founded')
-    
+    brands = brands.annotate(carCount=Count("car"))
+
+    if "search" in request.GET and len(request.GET["search"]) >= 2:
+        brands = brands.filter(name__contains=request.GET["search"]).order_by('-founded')
+
     response = render(request, 'brands/displayBrands.html', context={'brands': brands})
     return response
 
@@ -76,7 +81,7 @@ def brandDetailsView(request: HttpRequest, brandid:int):
     except Exception:
         response = render(request, '404.html')
     else:
-        
+
         brandCars = Car.objects.filter(brand=brand)[0:3]
         brandCarImages = Attachment.objects.filter(car__brand__name=brand.name)
         response = render(request, 'brands/brandDetails.html', context={'brand': brand, 'brandCars': brandCars, 'carImages': brandCarImages})
