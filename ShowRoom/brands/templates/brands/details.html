@@ -1,0 +1,25 @@
+{% extends 'main/base.html'%}
+{% load static %} 
+
+{% block title %}
+   brand details
+{% endblock %}
+
+{% block content %}
+<div class="brand-details-container">
+    <h1>{{ brand.name }}</h1>
+    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+    <p><strong>Founded At:</strong> {{ brand.founded_at }}</p>
+    <p><strong>About : </strong>{{ brand.about }}</p>
+    <p><strong>Origin : </strong>{{ brand.origin}}</p>
+</div>
+<h2 class="latest-cars-title">Latest Cars from {{ brand.name }}</h2>
+    <div class="car-list">
+        {% if cars %}
+            {% include 'cars/cars_list.html' with cars=brand.cars.all %}
+        {% else %}
+            <p>No cars available for this brand.</p>
+        {% endif %}
+    </div>
+   
+{% endblock %}

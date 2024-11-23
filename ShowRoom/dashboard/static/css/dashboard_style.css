@@ -1,0 +1,105 @@
+:root {
+    --primary-color: #686d767c;        
+    --secondary-color: #f08a00;    
+    --background-color: #ffffff;     
+    --text-color: #383b40; 
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background-color: var(--primary-color);
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid var(--secondary-color);
+}
+
+.table th {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.table td {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 5px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e76d19;
+}
+
+.select-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+select {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.back-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.back-btn:hover {
+    background-color: var(--secondary-color);
+}
