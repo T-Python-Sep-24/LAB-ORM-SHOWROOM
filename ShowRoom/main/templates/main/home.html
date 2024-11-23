@@ -1,0 +1,107 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Showroom{% endblock %}
+
+{% block intro %}
+<!-- Hero -->
+<section class="d-flex justify-content-center text-start">
+    <div class="hero w-75 rounded-2 shadow-lg align-content-end p-4">
+        <h1 class="display-5 herotitle f-bebas">Find the car of your dreams..</h1>
+        <div class="d-flex flex-row ms-4 gap-3">
+            <a href="#browseCars" class="btn btn-outline-light link py-1">Browse Cars</a>
+            <a href="#browseBrands" class="btn btn-outline-light link py-1">Browse Brands</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<!-- Browse Cars -->
+<section class="container-md my-5" id="browseCars">
+    <a href="{{carsUrl}}" class="link">
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="m-0 p-0 hover-underline">Featured Cars</h2>
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </div>
+    </a>
+    <!-- Featured cars carousel -->
+    <div id="featuredCars" class="carousel slide my-5 rounded-3 shadow overflow-hidden carousel-fade car-carousel"
+        data-bs-ride="carousel" style="max-height: 650px;">
+        <div class="carousel-indicators">
+            {% for car in cars %}
+            <button type="button" data-bs-target="#featuredCars" data-bs-slide-to="{{forloop.counter0}}" class="{% if forloop.first %}active{% endif %}"
+                aria-label="Slide {{forloop.counter}}"></button>
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            {% for car in cars %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                {% for carimg in carimages %}
+                {% if carimg.car == car and "front" in carimg.image.url %}
+                <img src="{{carimg.image.url}}" class="d-block w-100 object-fit-cover" height="600" alt="car image">
+                {% endif %}
+                {% endfor %}
+                <div class="carousel-caption caption-bg">
+                    <a href="{% url 'cars:carDetailsView' car.id %}" class="fs-3 d-block">{{car.brand.name}} - {{car.model}}</a>
+                    <p class="mb-1"><span class="fw-medium text-danger">Starting at:</span> {{car.price}}.00 SAR.</p>
+                    <a href="{% url 'cars:carDetailsView' car.id %}" class="hover-underline">More..</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredCars" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredCars" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<!-- Browse Brands -->
+<section class="container-md my-5" id="browseBrands">
+    <a href="{{brandsUrl}}">
+        <div class="d-flex align-items-center justify-content-between my-5">
+            <h2 class="m-0 p-0 hover-underline">Browse Brands</h2>
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </div>
+    </a>
+    <div class="row row-cols-sm-2 row-cols-lg-3">
+        {% for brand in brands %}
+        <div class="col">
+            <div class="card card-home text-bg-dark shadow-lg text-center border-0">
+                <img src="{{brand.logo.url}}" class="card-img crd-img" alt="brand image">
+                <div class="card-img-overlay align-content-end">
+                    <a href="{% url 'brands:brandDetailsView' brand.id %}" class="card-title fs-3 hover-underline">{{brand.name}}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- About us -->
+<section class="container-lg my-5 text-start about-us" id="about">
+    <a href="" class="m-0 ms-4 p-0 fs-2">About Us</a>
+    <div class="half-border mb-4"></div>
+    <div class="row row-cols-1 row-cols-md-2 my-5">
+        <div class="col">
+            <img src="{% static 'images/aboutus-image.jpg' %}" alt="about image">
+        </div>
+        <div class="col mb-5">
+            <p class="text-dark fs-6 content px-3 py-2 py-lg-5">
+                Buying a car is an emotional experience accompanied by joy and happiness. We, at <span class="f-bebas fs-5">Showroom</span>, make sure
+                that your experience is hassle-free and it brings you complete peace of mind. We exist to bring you your
+                dream car, and all related services – like car finance, servicing, and insurance under a
+                single roof – combined with a convenient purchasing experience.
+                <a href="" class="small ps-1">
+                    Read more..    
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
