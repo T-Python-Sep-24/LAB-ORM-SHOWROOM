@@ -1,26 +1,45 @@
-from django.shortcuts import render,redirect
-from .models import Brand, Color  # Import your models
+from django.shortcuts import render, redirect
+from .models import Brand, Color, Car  # Import your models
+#from django.db import IntegrityError
+from .forms import CarForm  # Import the CarForm
+from django.contrib import messages
+from django.http import HttpRequest
 
-# Create your views here.
 def all_cars_view(request):
-   
-    return render(request, 'cars_app/all_cars.html')
-
-def car_detail_view(request):
-   
-    return render(request, 'cars_app/car_detail.html', )
-
-def new_car_view(request):
-    brands = Brand.objects.all()  # Fetch all brands
-    colors = Color.objects.all()   # Fetch all colors
-
-    return render(request, 'cars_app/new_car.html', {
-        'brands': brands,
-        'colors': colors
+    cars = Car.objects.all()
+    return render(request, 'cars_app/all_cars.html', {
+        'cars': cars,
     })
 
+def car_detail_view(request, car_id):
+    car = Car.objects.get(id=car_id)  # Fetch the specific car based on ID
+    return render(request, 'cars_app/car_detail.html', {'car': car})
+
+def new_car_view(request: HttpRequest):
+    # Fetch all brands and colors to display in the form
+    brands = Brand.objects.all()
+    colors = Color.objects.all()
+
+    if request.method == 'POST':
+        form = CarForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Car added successfully!")
+            return redirect('cars_app:all_cars_view')
+        else:
+            messages.error(request, "Please correct the errors below.")
+
+    else:
+        form = CarForm()  # Create a new instance of the form for GET requests
+
+    return render(request, 'cars_app/new_car.html', {
+        'form': form,
+        'brands': brands,  # Pass brands to the template
+        'colors': colors,  # Pass colors to the template
+    })
+
+
 def update_car_view(request):
-      
     return render(request, 'cars_app/update_car.html')
 
 def new_color_view(request):
@@ -35,14 +54,16 @@ def new_color_view(request):
         return redirect('cars_app:all_colors_view')  # Adjust the URL name as necessary
 
     return render(request, 'cars_app/new_color.html')
-      
-def update_color_view(request):
 
+def update_color_view(request):
     return render(request, 'cars_app/update_color.html')
 
-
 def all_colors_view(request):
-    colors = Color.objects.all()  # Fetch all colors from the database
+    colors = Color.objects.all()  # Complete this function as needed
     return render(request, 'cars_app/all_colors.html', {'colors': colors})
+
+
+
+
 
 

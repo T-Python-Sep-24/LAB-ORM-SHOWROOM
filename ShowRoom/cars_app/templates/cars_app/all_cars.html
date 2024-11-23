@@ -1,0 +1,60 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}All Cars{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(55, 68, 82);
+        color: aliceblue;
+    }
+    .cars-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+    .car-card {
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+    }
+    .add-car-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+    }
+    .add-car-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="cars-container">
+    <h2>All Cars</h2>
+    {% for car in cars %}
+    <div class="car-card">
+        <h3>{{ car.name }} ({{ car.model }})</h3>
+        <p><strong>Brand:</strong> {{ car.brand.name }}</p>
+        <p><strong>Colors:</strong> 
+            {% for color in car.colors.all %}
+                {{ color.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Specifications:</strong> {{ car.specs }}</p>
+        <img src="{{ car.photo.url }}" alt="{{ car.name }}" style="max-width: 100%; height: auto;">
+    </div>
+    {% empty %}
+    <p>No cars available. Please add some!</p>
+    {% endfor %}
+    
+    <a href="{% url 'cars_app:new_car_view' %}"class="add-car-button">Add New Car</a>
+</div>
+{% endblock %}
