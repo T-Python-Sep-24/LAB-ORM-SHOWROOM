@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">All Cars</h1>
+    <form method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="Search by car name">
+            </div>
+            <div class="col-md-3">
+                <select name="brand" class="form-control">
+                    <option value="">Filter by Brand</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand.id }}" {% if brand.id == brand_filter %}selected{% endif %}>{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="color" class="form-control">
+                    <option value="">Filter by Color</option>
+                    {% for color in colors %}
+                        <option value="{{ color.id }}" {% if color.id == color_filter %}selected{% endif %}>{{ color.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark w-100">Apply Filters</button>
+            </div>
+        </div>
+    </form>
+    {% if no_results %}
+    <div class="alert alert-warning">
+        No results .
+    </div>
+    <br> <br> <br> <br> <br> <br> <br>
+    {% endif %}
+
+    <div class="row">
+        {% for car in cars %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if car.photo %}
+                        <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}" style="height: 250px; object-fit: cover;">
+                    {% else %}
+                        <img src="/path/to/default-image.jpg" class="card-img-top" alt="No image available" style="height: 250px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.name }}</h5>
+                        <p class="card-text">Brand: {{ car.brand.name }}</p>
+                        <p>Colors: 
+                            {% for color in car.colors.all %}
+                                {{ color.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <a href="/cars/details/{{ car.id }}/" class="btn btn-dark">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination-container d-flex flex-column justify-content-center align-items-center mt-4">
+        <span class="text-muted mb-3">
+            Page {{ cars.number }} of {{ cars.paginator.num_pages }}
+        </span>
+
+        <div class="d-flex">
+            {% if cars.has_previous %}
+                <a class="text-dark mr-3" href="?page=1{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}{% if color_filter %}&color={{ color_filter }}{% endif %}">
+                    First
+                </a>
+                <a class="text-dark mr-3" href="?page={{ cars.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}{% if color_filter %}&color={{ color_filter }}{% endif %}">
+                    Previous
+                </a>
+            {% endif %}
+
+            {% for page_num in cars.paginator.page_range %}
+                {% if cars.number == page_num %}
+                    <span class="text-dark font-weight-bold mr-3">{{ page_num }}</span>
+                {% else %}
+                    <a class="text-dark mr-3" href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}{% if color_filter %}&color={{ color_filter }}{% endif %}">
+                        {{ page_num }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if cars.has_next %}
+                <a class="text-dark mr-3" href="?page={{ cars.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}{% if color_filter %}&color={{ color_filter }}{% endif %}">
+                    Next
+                </a>
+                <a class="text-dark" href="?page={{ cars.paginator.num_pages }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}{% if color_filter %}&color={{ color_filter }}{% endif %}">
+                    Last
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

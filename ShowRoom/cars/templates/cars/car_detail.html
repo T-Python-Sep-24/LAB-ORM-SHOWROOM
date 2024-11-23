@@ -1,0 +1,154 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 text-white bg-dark py-3 rounded-3 mb-4" style="font-family: 'Arial', sans-serif; font-weight: 700; text-transform: uppercase;">
+            {{ car.name }}
+        </h1>
+        <div class="car-image-container mb-4">
+            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="img-fluid rounded shadow-lg" style="max-height: 500px; width: 100%; object-fit: cover;">
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <p class="lead text-dark fs-4 mb-3">
+            <strong class="text-muted">Brand:</strong> <span class="font-italic text-dark">{{ car.brand.name }}</span>
+        </p>
+        
+        <p class="lead text-dark fs-4 mb-3">
+            <strong class="text-muted">Available Colors:</strong> 
+            {% for color in car.colors.all %}
+                <span class="badge bg-dark text-white p-2 m-1">{{ color.name }}</span>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="p-4 border rounded shadow-sm">
+                <h4 class="text-center text-dark mb-3">Engine</h4>
+                <p class="text-dark fs-5">{{ car.engine|linebreaksbr }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="p-4 border rounded shadow-sm">
+                <h4 class="text-center text-dark mb-3">Performance</h4>
+                <p class="text-dark fs-5">{{ car.performance|linebreaksbr }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="p-4 border rounded shadow-sm">
+                <h4 class="text-center text-dark mb-3">Cargo Space</h4>
+                <p class="text-dark fs-5">{{ car.cargoSpace|linebreaksbr }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="p-4 border rounded shadow-sm">
+                <h4 class="text-center text-dark mb-3">Infotainment</h4>
+                <p class="text-dark fs-5">{{ car.infotainment|linebreaksbr }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'cars:update_car' car.id %}" class="btn btn-warning btn-lg mx-3 rounded-pill shadow-lg button-hover">
+            <i class="fas fa-edit"></i> Update Car
+        </a>
+        <a href="{% url 'cars:delete_car' car.id %}" class="btn btn-danger btn-lg mx-3 rounded-pill shadow-lg button-hover">
+            <i class="fas fa-trash-alt"></i> Delete Car
+        </a>
+        <a href="{% url 'cars:all_cars' %}" class="btn btn-secondary btn-lg mx-3 rounded-pill shadow-lg button-hover">
+            <i class="fas fa-arrow-left"></i> Return to All Cars
+        </a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+    }
+
+   
+    .car-image-container img {
+        max-height: 500px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+  
+    .button-hover:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    
+    .btn {
+        padding: 12px 30px;
+        border-radius: 50px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+        color: #fff;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+    .btn-info {
+        background-color: grey;
+        color: #fff;
+    }
+
+    .btn i {
+        margin-right: 8px;
+    }
+
+    
+    .p-4 {
+        padding: 20px;
+    }
+
+   
+    h1, h4 {
+        font-weight: 700;
+    }
+
+    
+    .mb-5 {
+        margin-bottom: 3rem;
+    }
+
+    .mb-4 {
+        margin-bottom: 2rem;
+    }
+
+    
+    .badge {
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 20px;
+    }
+
+    
+    .rounded-3 {
+        border-radius: 15px;
+    }
+
+    
+    h1.display-5 {
+        font-size: 2.5rem; 
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h3 class="text-center">Brand Details</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        {% if brand.logo %}
+                        <div class="mb-3">
+                            <img src="{{ brand.logo.url }}" alt="Brand Logo" class="img-fluid" style="max-width: 200px;">
+                        </div>
+                        {% else %}
+                        <p>No logo available</p>
+                        {% endif %}
+                    </div>
+                    <h4><strong>Brand Name:</strong> {{ brand.name }}</h4>
+                    <p><strong>About the Brand:</strong> {{ brand.about }}</p>
+                    <p class="card-text">
+                        <strong>Number of Cars:</strong> {{ brand.car_set.count }}
+                    </p>
+                    <div class="mt-5">
+                        <h4 class="text-center"><strong>Related Cars</strong></h4>
+                        <div class="row">
+                            {% for car in brand.car_set.all|slice:":3" %}
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        {% if car.photo %}
+                                        <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}" style="height: 150px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="#" class="card-img-top" alt="No image available" style="height: 250px; object-fit: cover;">
+                                    {% endif %}
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ car.name }}</h5>
+                                            <p class="card-text">{{ car.description|truncatewords:15 }}</p>
+                                            <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-dark">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p class="text-center">No related cars available for this brand.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'brands:update_brand' brand.id %}" class="btn btn-warning btn-lg mx-3 rounded-pill shadow-lg button-hover">Update Brand</a>
+                        <a href="{% url 'brands:delete_brand' brand.id %}" class="btn btn-danger btn-lg mx-3 rounded-pill shadow-lg button-hover">Delete Brand</a>
+                        <a href="{% url 'brands:all_brands' %}" class="btn btn-secondary btn-lg mx-3 rounded-pill shadow-lg button-hover">Return to Brands List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+{% endblock %}

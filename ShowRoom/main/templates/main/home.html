@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="welcome-banner">
+        <div class="container text-center welcome-content">
+            <h1 class="display-4 mb-3">Welcome to Our Showroom!</h1>
+            <p class="lead mb-4">Discover the latest and best cars from top brands. Whether you're looking for speed, style, or luxury, we have something for every car enthusiast.</p>
+            <a href="/cars/all/" class="btn btn-light btn-lg">Explore Our Cars</a>
+        </div>
+    </section>
+
+    <section class="mb-6 mt-5 mx-5 custom-margin">
+        <h2 class="latest-title mb-2 text-center">Latest Cars</h2> 
+        <div class="text-center mb-4">
+            <a href="/cars/all/" class="btn btn-link">See all cars</a>
+        </div>
+        <div class="row justify-content-center">
+            {% for car in latest_cars %}
+                <div class="col-md-3 col-sm-4 mb-4">
+                    <div class="card">
+                        <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title h6">{{ car.name }}</h5>
+                            <p class="card-text text-sm">Brand: {{ car.brand.name }}</p>
+                            <p class="card-text text-sm">Colors: {% for color in car.colors.all %}{{ color.name }} {% endfor %}</p>
+                            <a href="/cars/details/{{ car.id }}/" class="btn btn-dark d-block mx-auto">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    
+
+    <section class="mb-6 mt-5 mx-5">
+    <h2 class="latest-title mb-2 text-center">Latest Brands</h2> 
+    <div class="text-center mt-3 mb-5">
+        <a href="/brands/all/" class="btn btn-link">See all brands</a>
+    </div>
+    <div class="row justify-content-center">
+        {% for brand in latest_brands %}
+            <div class="col-md-3 col-sm-4 mb-4">
+                <div class="card">
+                    <img src="{{ brand.logo.url }}" class="card-img-top" style="height: 150px; object-fit: contain;" alt="{{ brand.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ brand.name }}</h5>
+                        <p class="card-text text-center">{{ brand.about|slice:":50" }}...</p>
+                        <a href="/brands/details/{{ brand.id }}/" class="btn btn-dark d-block mx-auto">View Brand</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+<br><br><br>
+{% endblock %}
+

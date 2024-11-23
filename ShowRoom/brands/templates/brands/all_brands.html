@@ -1,0 +1,74 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">All Brands</h1>
+    
+    <form method="get" class="mb-4">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="Search by brand name">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark w-100">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for brand in page_obj %}
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }}" style="height: 150px; object-fit: contain;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ brand.name }}</h5>
+                    <p class="card-text">
+                        <strong>Number of Cars:</strong> {{ brand.car_set.count }}
+                    </p>
+                    <a href="{% url 'brands:brand_detail' brand.id %}" class="btn btn-dark">View Brand</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center mb-4" style="margin-left: 500px; padding-bottom: 150px; margin-top: 40px;">
+            No brands available.
+        </p>        
+        {% endfor %}
+    </div>
+    <div class="pagination-container d-flex flex-column justify-content-center align-items-center mt-4">
+        <span class="text-muted mb-3">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+    <div class="d-flex justify-content-center">
+        {% if page_obj.has_previous %}
+            <a class="text-dark mr-3" href="?page=1{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}">
+                First
+            </a>
+            <a class="text-dark mr-3" href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}">
+                Previous
+            </a>
+        {% endif %}
+
+        {% for page_num in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_num %}
+                <span class="text-dark font-weight-bold mr-3">{{ page_num }}</span>
+            {% else %}
+                <a class="text-dark mr-3" href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}">
+                    {{ page_num }}
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="text-dark mr-3" href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}">
+                Next
+            </a>
+            <a class="text-dark" href="?page={{ page_obj.paginator.num_pages }}{% if search %}&search={{ search }}{% endif %}{% if brand_filter %}&brand={{ brand_filter }}{% endif %}">
+                Last
+            </a>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}
+
