@@ -3,6 +3,8 @@ from django.http import HttpRequest, HttpResponse
 from .models import Car, Color
 from brands.models import Brand
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 
@@ -11,8 +13,33 @@ from django.contrib import messages
 
 def all_cars_view(request:HttpRequest):
 
+    search_query = request.GET.get('search', '')  
+    brand_filter = request.GET.get('brand', '')   
+    color_filter = request.GET.get('color', '')  
+
     cars = Car.objects.all()
-    return render(request, "cars/all_cars.html", {"cars": cars})
+
+    if search_query:
+        cars = cars.filter(
+            Q(car_name__icontains=search_query) |
+            Q(price__icontains=search_query)
+        )
+
+    if brand_filter:
+        cars = cars.filter(brand_id=brand_filter)   
+
+    
+    if color_filter:
+        cars = cars.filter(available_colors__id=color_filter)
+
+    paginator = Paginator(cars, 6) 
+    page_number = request.GET.get('page')
+    cars_page = paginator.get_page(page_number) 
+
+    brands = Brand.objects.all()
+    colors = Color.objects.all()        
+
+    return render(request, "cars/all_cars.html", {"cars": cars_page, "brands": brands, "colors": colors})
 
 
 

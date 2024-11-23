@@ -36,7 +36,7 @@ def add_new_brand_view(request:HttpRequest):
 
         messages.success(request, "Brand successfully added!")
 
-        return redirect("main:main_view")
+        return redirect("brands:brand_details_view", brand_id=new_brand.id)
     
     return render(request, 'brands/add_new_brand.html')
 

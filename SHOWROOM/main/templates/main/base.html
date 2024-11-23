@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   </head>
 
   <body>
@@ -68,6 +67,19 @@
             <a href="#" class="contact-button">Contact Us</a>
         </div>
     </footer>
-    
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const messageContainer = document.querySelector(".notification-container");
+      if (messageContainer) {
+        setTimeout(() => {
+          messageContainer.style.transition = "opacity 0.5s ease-out";
+          messageContainer.style.opacity = "0";
+          setTimeout(() => messageContainer.remove(), 500);
+        }, 5000);
+      }
+    });
+    </script>
+  
   </body>
 </html>

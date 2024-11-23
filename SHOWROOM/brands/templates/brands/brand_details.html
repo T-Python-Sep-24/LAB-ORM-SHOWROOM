@@ -33,7 +33,7 @@
                 <img src="{{ car.image.url }}" alt="{{ car.car_name }}" class="car-photo-2">
 
                 <div class="car-item-detail">
-                    <h3 class="car-name-2">{{ car.car_name }}</h3>
+                    <a href="{% url 'cars:car_details_view' car.id %}" class="car-detail-link">{{ car.car_name }}</a>
                     <p class="car-year-2">Model Year: {{ car.year }}</p>
                 </div>
 

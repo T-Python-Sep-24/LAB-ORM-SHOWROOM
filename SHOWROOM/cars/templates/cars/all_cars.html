@@ -11,15 +11,47 @@
         <p>Browse through our collection of luxury cars.</p>
     </section>
 
+    <section class="search-and-filters">
+        <form method="GET" class="search-form-2">
+            <input type="text" name="search" placeholder="Search cars..." value="{{ request.GET.search }}">
+            <select name="brand" class="filter-dropdown">
+                <option value="">Filter by Brand</option>
+                {% for brand in brands %}
+                <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:"s" %}selected{% endif %}>{{ brand.brand_name }}</option>
+                {% endfor %}
+            </select>
+            <select name="color" class="filter-dropdown">
+                <option value="">Filter by Color</option>
+                {% for color in colors %}
+                <option value="{{ color.id }}" {% if request.GET.color == color.id|stringformat:"s" %}selected{% endif %}>{{ color.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </section>
+
     <section class="cars-grid">
         {% for car in cars %}
         <div class="car-card">
-            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="car-image">
-            <h2 class="car-name">{{ car.name }}</h2>
-            <p class="car-price">Price: ${{ car.price }}</p>
+            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="car-image-2">
+            <h2 class="car-name-2">{{ car.car_name }}</h2>
+            <p class="car-price-2">Price: ${{ car.price }}</p>
             <a href="{% url 'cars:car_details_view' car.id %}" class="view-details-button">View Details</a>
         </div>
         {% endfor %}
     </section>
+
+    <div class="pagination">
+        {% if cars.has_previous %}
+        <a href="?page={{ cars.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}" class="pagination-button">Previous</a>
+        {% endif %}
+
+        <span class="pagination-current">Page {{ cars.number }} of {{ cars.paginator.num_pages }}</span>
+
+        {% if cars.has_next %}
+        <a href="?page={{ cars.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}" class="pagination-button">Next</a>
+        {% endif %}
+    </div>
+
 </main>
 {% endblock %}
