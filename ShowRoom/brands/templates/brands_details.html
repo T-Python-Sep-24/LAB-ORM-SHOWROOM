@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <img src="{{ brand.logo.url }}" class="img-fluid" alt="{{ brand.name }} Logo" style="max-width: 200px;">
+        <h1 class="mt-3">{{ brand.name }}</h1>
+        <p>Founded: {{ brand.founded_at|date:"Y" }}</p>
+        {% if brand.website %}
+        <a href="{{ brand.website }}" target="_blank" class="btn btn-link">Visit Website</a>
+        {% endif %}
+        <p>{{ brand.about }}</p>
+    </div>
+
+    <h2 class="text-center mb-4">Cars in This Brand</h2>
+
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ car.photos.first.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p>Model: {{ car.model }}</p>
+                    <a href="{% url 'car_details' car.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No cars found for this brand.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

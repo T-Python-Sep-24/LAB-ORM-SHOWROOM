@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Add New Brand</h1>
+<div class="container">
+    <form action="{% url 'add_brand' %}" method="POST"  enctype="multipart/form-data" >
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Brand Name" class="form-control" required>
+        <textarea name="about" placeholder="About the Brand" class="form-control mt-2" required></textarea>
+        <input type="file" name="logo" class="form-control mt-2" required>
+        <input type="date" name="founded_at" class="form-control mt-2" required>
+        <button type="submit" class="btn btn-primary mt-2">Add Brand</button>
+    </form>
+
+    
+</div>
+{% endblock %}
