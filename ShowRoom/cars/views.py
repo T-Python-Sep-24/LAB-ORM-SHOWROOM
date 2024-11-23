@@ -81,3 +81,4 @@ def delete_car(request, car_id):
         messages.success(request, f"Car '{car_name}' has been successfully deleted!")
         return redirect('cars:all_cars')
     return render(request, 'cars/delete_car.html', {'car': car})
+

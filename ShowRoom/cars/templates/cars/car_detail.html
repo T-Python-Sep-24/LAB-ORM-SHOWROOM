@@ -12,7 +12,7 @@
 <p><strong>Available Colors:</strong></p>
 <ul>
     {% for color in car.colors.all %}
-        <li>{{ color.name }}</li>
+        <li>{{ color.name }} - {{color.hex_code}}</li>
     {% endfor %}
 </ul>
 <a href="{% url 'cars:update_car' car.id %}">Edit</a>
