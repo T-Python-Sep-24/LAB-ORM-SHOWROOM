@@ -15,11 +15,11 @@
                 <div class="card shadow border-0 crd {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% endif %}">
                     <img src="{{brand.logo.url}}" class="card-img-top crd-img" alt="Brand logo">
                     <div class="card-body text-start position-relative">
-                        <a href="" class="card-title fs-3 hover-underline">{{brand.name}}</a>
+                        <a href="{% url 'brands:brandDetailsView' brand.id %}" class="card-title fs-3 hover-underline">{{brand.name}}</a>
                         <p class="card-text mb-1"><span class="fw-bold text-danger">Founder:</span> {{brand.founder}}</p>
                         <p class="card-text"><span class="fw-bold text-danger">Headquarters:</span> {{brand.headquarters}}</p>
                         <div class="d-flex position-absolute bottom-0 end-0 p-3">
-                            <a href="#" class="btn btn-danger text-white">More</a>
+                            <a href="{% url 'brands:brandDetailsView' brand.id %}" class="btn btn-danger text-white">More</a>
                         </div>
                     </div>
                 </div>

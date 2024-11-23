@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.contrib import messages
 from brands.models import Brand
 from brands.forms import BrandForm
+from cars.models import Car, Attachment
 
 # Add brand instance
 def addBrandView(request: HttpRequest):
@@ -43,10 +44,40 @@ def updateBrandView(request: HttpRequest, brandid:int):
     
     return response
 
+# Delete brand view
+def deleteBrandView(request:HttpRequest, brandid:int):
+    try:
+        brand = Brand.objects.get(pk=brandid)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        try:
+            brand.delete()
+        except Exception:
+            messages.error(request, f"'{brand.name}' wasn't deleted.", "alert-danger")
+        else: 
+            messages.success(request, f"'{brand.name}' deleted successfully.", "alert-success")    
+        
+        response = redirect('main:homeView')
+    return response
+
 # Display all brands
 def displayBrandsView(request: HttpRequest):
     
     brands = Brand.objects.all().order_by('founded')
     
     response = render(request, 'brands/displayBrands.html', context={'brands': brands})
+    return response
+
+# Brand details view
+def brandDetailsView(request: HttpRequest, brandid:int):
+    try:
+        brand = Brand.objects.get(pk=brandid)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        
+        brandCars = Car.objects.filter(brand=brand)[0:3]
+        brandCarImages = Attachment.objects.filter(car__brand__name=brand.name)
+        response = render(request, 'brands/brandDetails.html', context={'brand': brand, 'brandCars': brandCars, 'carImages': brandCarImages})
     return response

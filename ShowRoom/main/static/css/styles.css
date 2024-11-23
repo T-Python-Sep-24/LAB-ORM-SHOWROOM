@@ -222,6 +222,17 @@
     object-fit: cover;
 }
 
+/* Brand details */
+.dark .bg-color {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.light .bg-color {
+    background: rgba(12, 18, 33, 0.1);
+    backdrop-filter: blur(10px);
+}
+
 /* Cars pages styling */
 .car-card{
     height: 28rem !important;

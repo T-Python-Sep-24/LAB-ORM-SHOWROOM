@@ -43,6 +43,22 @@ def updateColorView(request:HttpRequest, clrId:int):
 
     return response
 
+def deleteColorView(request: HttpRequest, clrId:int):
+    try:
+        color = Color.objects.get(pk=clrId)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        try:
+            color.delete()
+        except Exception:
+            messages.error(request, f"'{color.name}' wasn't deleted.", "alert-danger")
+        else: 
+            messages.success(request, f"'{color.name}' deleted successfully.", "alert-success")    
+        
+        response = redirect('main:homeView')
+    return response
+
 # Add car view
 def addCarView(request: HttpRequest):
 
@@ -102,6 +118,23 @@ def updateCarView(request: HttpRequest, carid:int):
             response = redirect('main:homeView')
 
     return response
+
+def deleteCarView(request: HttpRequest, carid:int):
+    try:
+        car = Car.objects.get(pk=carid)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        try:
+            car.delete()
+        except Exception:
+            messages.error(request, f"'{car.name}' wasn't deleted.", "alert-danger")
+        else: 
+            messages.success(request, f"'{car.name}' deleted successfully.", "alert-success")    
+        
+        response = redirect('main:homeView')
+    return response
+
 
 def displayCarsView(request: HttpRequest, filter: str):
 

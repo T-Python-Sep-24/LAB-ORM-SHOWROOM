@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{brand.name}}{% endblock %}
+
+{% block content %}
+<section class="container-md">
+    <h1 class="mt-3 ms-2">
+        Know More About <span class="text-danger">{{brand.name}}</span>
+    </h1>
+    <div class="half-border mb-5"></div>
+    <div class="container-md">
+        <div class="d-flex gap-2 justify-content-end my-2">
+            <a href="{% url 'brands:updateBrandView' brand.id %}" class="btn border-2 shadow-sm {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
+                Update
+            </a>
+            <!-- Button to trigger delete modal -->
+            <button type="button" class="btn btn-outline-danger border-2 shadow-sm" data-bs-toggle="modal"
+                data-bs-target="#deleteModal">
+                Delete
+            </button>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col">
+                <img src="{{brand.logo.url}}" alt="brand logo" class="rounded-1 shadow w-100">
+            </div>
+            <div class="col">
+                <div class="d-flex flex-column bg-color h-100 rounded-1 shadow p-3">
+                    <h1 class="mb-0">
+                        {{brand.name}}
+                    </h1>
+                    <div class="half-border mb-2"></div>
+                    <p class="fs-5 my-1"><span class="fw-medium text-danger">About: </span>{{brand.about}}</p>
+                    <p class="fs-5 my-1"><span class="fw-medium text-danger">Headquarters: </span>{{brand.headquarters}}</p>
+                    <p class="fs-5 my-1"><span class="fw-medium text-danger">Founder: </span>{{brand.founder}}</p>
+                    <p class="fs-5 my-1"><span class="fw-medium text-danger">Founded at: </span>{{brand.founded}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container my-5">
+    <a href="" class="fs-3 mt-4 hover-underline">
+        Cars from {{brand.name}}:
+    </a>
+    {% with brandCars as cars %}        
+        {% include 'cars/components/carsList.html' %}
+    {% endwith %}
+</section>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Brand</h1>
+                <button type="button" class="btn-close shadow-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete '<strong>{{brand.name}}</strong>'?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'brands:deleteBrandView' brand.id %}" class="btn btn-danger shadow-sm">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
