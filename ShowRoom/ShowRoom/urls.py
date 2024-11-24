@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('main.urls')),  # Main app
     path('brands/', include('brands.urls')),  # Brands app
     path('cars/', include('cars.urls')),  # Cars app
+    path('users/',include('Users.urls')), # Users app
 ]
 # Serve media files in development
 if settings.DEBUG:
