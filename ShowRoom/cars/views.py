@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from brands.models import Brand
 from .models import Car, Color
 from .forms import CarForm, ColorForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -21,7 +22,12 @@ def all_cars_view(request: HttpRequest):
         # This checks the car_colors table where color_id =
         cars = cars.filter(colors__id=request.GET["color"])
 
-    context = {"cars": cars, "brands": brands, "colors": colors}    
+    # Paginate the cars list, show 10 cars per page
+    paginator = Paginator(cars, 10) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {"cars": page_obj.object_list, "brands": brands, "colors": colors, "page_obj": page_obj}    
 
     return render(request, "cars/all.html", context)
 

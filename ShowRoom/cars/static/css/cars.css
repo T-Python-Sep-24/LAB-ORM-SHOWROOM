@@ -27,6 +27,31 @@
     object-fit: contain !important;
 }
 
+/* paginator */
+.pagination .page-item a {
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #000;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.pagination .page-item a:hover {
+    /* color: #fff; */
+}
+
+.pagination .page-item.active a {
+    background-color: #000;
+    color: #fff;
+}
+
+.pagination .page-item.disabled a {
+    color: #ccc;
+    border-color: #ccc;
+    pointer-events: none;
+}
+
 /*** media queries ***/
 @media (max-width: 1000px) {
     form {
