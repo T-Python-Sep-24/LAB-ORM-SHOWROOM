@@ -27,7 +27,7 @@ def loginView(request:HttpRequest):
         user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
         if user:
             login(request, user)
-            messages.success(request, f"Welcome back {user.name}, your login was successfull.", "alert-success")
+            messages.success(request, f"Welcome back {user.first_name}, your login was successfull.", "alert-success")
             response = redirect(request.GET.get('next', '/'))
         else:
             messages.error(request, f"Login failed. Your credentials are incorrect.", "alert-danger")   

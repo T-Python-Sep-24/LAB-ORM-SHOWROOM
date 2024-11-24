@@ -203,11 +203,13 @@ def carDetailsView(request: HttpRequest, carid:int):
         response = render(request, '404.html')
     else:
         carImages = Attachment.objects.filter(car=car)
-        
+
         relatedCars = Car.objects.exclude(pk=carid).filter(brand=car.brand)[0:3]
         relatedCarsImages = Attachment.objects.filter(car__brand__name=car.brand.name)
 
-        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages})
+        comments = Comment.objects.filter(car=car)
+
+        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages, 'comments': comments})
     return response
 
 # Add comment
