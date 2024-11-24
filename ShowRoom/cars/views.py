@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Car, Color, Photo
+from .models import Car, Color, Photo, Review
 from brands.models import Brand
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -47,6 +47,9 @@ def car_details(request, car_id):
 
 
 def add_car(request):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
         if form.is_valid():
@@ -71,6 +74,9 @@ def add_car(request):
 
 
 def update_car(request, car_id):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     car = get_object_or_404(Car, id=car_id)
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES, instance=car)
@@ -97,6 +103,9 @@ def update_car(request, car_id):
 
 
 def delete_car(request, car_id):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     car = get_object_or_404(Car, id=car_id)
     if request.method == "POST":
         car.delete()
@@ -105,6 +114,9 @@ def delete_car(request, car_id):
     return redirect('car_detail', id=car_id)
 
 def add_color(request):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     if request.method == "POST":
         form = ColorForm(request.POST)
         if form.is_valid():
@@ -115,6 +127,9 @@ def add_color(request):
     return render(request, 'add_color.html', {'form': form})
 
 def update_color(request, color_id):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     color = get_object_or_404(Color, id=color_id)
     if request.method == "POST":
         form = ColorForm(request.POST, instance=color)
@@ -127,6 +142,9 @@ def update_color(request, color_id):
 
 
 def delete_color(request, color_id):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     color = get_object_or_404(Color, id=color_id)
     if request.method == "POST":
         color_name = color.name 
@@ -135,3 +153,23 @@ def delete_color(request, color_id):
         return redirect('add_color')  
     messages.error(request, "Invalid request to delete the color.")
     return redirect('add_color')
+
+
+
+def add_review(request, car_id: int):
+    if not request.user.is_authenticated:
+        messages.error(request, "Only registered users can add reviews")
+        return redirect("accounts:sign_in")
+
+    if request.method == "POST":
+        car_object = get_object_or_404(Car, pk=car_id)  
+        new_review = Review(
+            car=car_object,
+            user=request.user,
+            comment=request.POST["comment"],
+            rating=request.POST["rating"]
+        )
+        new_review.save()
+
+        messages.success(request, "Review added successfully!")
+    return redirect("car_details", car_id=car_id)

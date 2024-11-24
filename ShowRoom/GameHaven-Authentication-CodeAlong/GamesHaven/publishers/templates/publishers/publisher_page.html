@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{game.title}}{% endblock%}
+
+{% block content %}
+
+<div class="container d-flex flex-column gap-2">
+    <h1>{{game.title}}</h1>
+    
+    <div class="d-flex flex-column gap-2">
+        <img class="publisher-logo w-100" src="{{publisher.logo.url}}" />
+        <h1>{{publisher.name}}</h1>
+    </div>
+    <p>{{publisher.description}}</p>
+</div>
+
+
+
+<div class="container">
+    <hr/>
+    <h2>Games published by : {{publisher.name}}</h2>
+        {% with publisher.game_set.all as games %}
+            {% include 'games/games_list.html' %}
+        {% endwith %}
+</div>
+
+{% endblock %}

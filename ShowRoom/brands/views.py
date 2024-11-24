@@ -26,6 +26,9 @@ def brand_details(request, brand_id):
 
 
 def add_brand(request):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     if request.method == 'POST':
         form = BrandForm(request.POST, request.FILES)
         if form.is_valid():
@@ -40,6 +43,9 @@ def add_brand(request):
 
 
 def update_brand(request, brand_id):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     brand = get_object_or_404(Brand, id=brand_id)
     if request.method == 'POST':
         form = BrandForm(request.POST, request.FILES, instance=brand)
@@ -54,6 +60,9 @@ def update_brand(request, brand_id):
 
 
 def delete_brand(request, brand_id):
+    if not request.user.is_staff:
+        messages.error(request, "only staff can edit")
+        return redirect("home")
     brand = get_object_or_404(Brand, id=brand_id)
     if request.method == "POST":
         brand_name = brand.name  

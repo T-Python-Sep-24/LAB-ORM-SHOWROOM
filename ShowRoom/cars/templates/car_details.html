@@ -51,6 +51,53 @@
         </div>
     </div>
 </div>
+
+
+<div class="mt-5">
+    <h2>Reviews ({{ car.review_set.count }})</h2>
+
+    <div class="d-flex flex-column gap-3">
+        {% for review in car.review_set.all %}
+            <div class="d-flex flex-column p-3 shadow">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>{{ review.user.first_name }} {{ review.user.last_name }}</h4>
+                    <div class="d-flex align-items-center">
+                        <span class="material-symbols-outlined">star</span>
+                        <h5 class="m-0 p-0">{{ review.rating }}</h5>
+                    </div>
+                </div>
+                
+                <p>{{ review.comment }}</p>
+                <p class="text-muted">{{ review.created_at }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <h2 class="mt-5">Add Review</h2>
+    <form class="d-flex flex-column gap-2" action="{% url 'add_review' car.id %}" method="post">
+        {% csrf_token %}
+        <textarea class="form-control" name="comment" required minlength="3" placeholder="Comment..."></textarea>
+        <select class="form-select" name="rating" required>
+            <option value="">Rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="Add Review" />
+    </form>
+    {% else %}
+        <div class="p-3 rounded bg-warning mt-4 d-flex flex-column gap-2">
+            <p>Only registered users can add reviews</p>
+        </div>
+    {% endif %}
+</div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 {% endblock %}

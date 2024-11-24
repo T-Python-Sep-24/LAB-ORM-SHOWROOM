@@ -1,5 +1,6 @@
 from django.db import models
 from brands.models import Brand
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -28,3 +29,14 @@ class Car(models.Model):
 class Photo(models.Model):
     car = models.ForeignKey(Car, related_name="photos", on_delete=models.CASCADE)
     photo = models.ImageField(upload_to="car_photos/")
+
+
+class Review(models.Model):
+    car = models.ForeignKey("Car", on_delete=models.CASCADE, related_name="review_set")  # Link to Car model
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link to User model
+    rating = models.SmallIntegerField()  # Rating field
+    comment = models.TextField()  # Review comment
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp for creation
+
+    def __str__(self) -> str:
+        return f"{self.user.username} on {self.car.name}"
