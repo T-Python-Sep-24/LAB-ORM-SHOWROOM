@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %}All Cars{% endblock %}
+
+{% block content %}
+<h2>All Cars</h2>
+<a href="{% url 'cars:new_car' %}">Add New Car</a>
+<ul>
+    {% for car in page_obj %}
+        <li>
+            <a href="{% url 'cars:car_detail' car.id %}">{{ car.name }}</a>
+            - {{ car.brand.name }}
+            <a href="{% url 'cars:update_car' car.id %}">Update</a> |
+            <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+<div class="pagination">
+    {% for page_num in page_obj.paginator.page_range %}
+        <a href="?page={{ page_num }}">{{ page_num }}</a>
+    {% endfor %}
+</div>
+{% endblock %}

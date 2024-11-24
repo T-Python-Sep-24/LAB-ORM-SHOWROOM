@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Car Showroom{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Car Showroom</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main:home' %}">Home</a></li>
+                <li><a href="{% url 'cars:all_cars' %}">Cars</a></li>
+                <li><a href="{% url 'brands:all_brands' %}">Brands</a></li>
+                <li><a href="{% url 'cars:all_colors' %}">Colors</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Car Showroom</p>
+    </footer>
+</body>
+</html>

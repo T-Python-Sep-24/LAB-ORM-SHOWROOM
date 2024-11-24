@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Car Details{% endblock %}
+
+{% block content %}
+<h2>{{ car.name }}</h2>
+<img src="{{ car.photo.url }}" alt="{{ car.name }}">
+<p>Brand: {{ car.brand.name }}</p>
+<p>Model: {{ car.model }}</p>
+<p>Specifications: {{ car.specs }}</p>
+<p>Available Colors:</p>
+<ul>
+    {% for color in car.colors.all %}
+        <li>{{ color.name }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'cars:update_car' car.id %}">Update</a> |
+<a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+<a href="{% url 'cars:all_cars' %}">Back to All Cars</a>
+{% endblock %}

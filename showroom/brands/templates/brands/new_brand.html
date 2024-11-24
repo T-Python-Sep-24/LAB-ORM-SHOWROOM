@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Add New Brand{% endblock %}
+
+{% block content %}
+<h2>Add a New Brand</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Brand</button>
+</form>
+<a href="{% url 'brands:all_brands' %}">Back to All Brands</a>
+{% endblock %}

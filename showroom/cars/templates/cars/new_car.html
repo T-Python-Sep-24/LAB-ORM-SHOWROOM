@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block title %}New Car{% endblock %}
+
+{% block content %}
+<h2>Add a New Car</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Car</button>
+</form>
+{% endblock %}
