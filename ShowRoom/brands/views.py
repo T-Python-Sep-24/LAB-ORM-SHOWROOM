@@ -48,3 +48,10 @@ def details_brand_view(request: HttpRequest, brand_id: int):
     context = {"brand": brand, "cars": cars}
 
     return render(request, "brands/details.html", context)
+
+
+def delete_brand_view(request: HttpRequest, brand_id: int):
+    brand = Brand.objects.get(pk=brand_id)
+    brand.delete()
+
+    return redirect("brands:all_brands_view")

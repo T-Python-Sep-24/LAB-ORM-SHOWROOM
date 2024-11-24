@@ -7,10 +7,10 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/cars.css' %}">{% endblock %}
 
 {% block content %}
- <section class="container">
+<section class="container">
     <div class="row">
         <div class="col">
-            <div class="d-flex flex-column gap-2 p-2 shadow">
+            <div class="d-flex flex-column gap-2 p-3 shadow">
                 <div class="d-flex justify-content-between">
                     <h1>{{ car.name }}</h1>
                     <div class="d-flex gap-2">
@@ -43,23 +43,23 @@
             </div>
         </div>
     </div>
- </section>
- <!-- Modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting the Car</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Are you sure you want to delete the car?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
-          <a href="{% url 'cars:delete_car_view' car.id %}"><button type="button" class="btn btn-dark">Yes</button></a>
-        </div>
-      </div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting the Car</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
-  </div>
+    <div class="modal-body">
+        Are you sure you want to delete the car?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
+        <a href="{% url 'cars:delete_car_view' car.id %}"><button type="button" class="btn btn-dark">Yes</button></a>
+    </div>
+    </div>
+</div>
+</div>
 {% endblock %}
