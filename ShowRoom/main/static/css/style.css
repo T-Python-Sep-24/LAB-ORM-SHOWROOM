@@ -18,11 +18,13 @@ a:hover {
 
 /*** header ***/
 
+
 /*** main ***/
 section {
     margin-top: 2rem;
 }
 
+/* cards */
 .card-logo {
     height: 40px;
 }
@@ -47,6 +49,12 @@ section {
     width: 30px;
     height: 30px;
 }
+
+/* forms */
+form h5 {
+    margin-top: 1rem;
+}
+
 
 /*** footer ***/
 footer p {

@@ -13,7 +13,7 @@ def all_cars_view(request: HttpRequest):
     return render(request, "cars/all.html", context)
 
 
-def add_car_view(request: HttpRequest):
+def new_car_view(request: HttpRequest):
     brands = Brand.objects.all()
     colors = Color.objects.all()
     context = {"brands": brands, "colors": colors}
@@ -22,8 +22,8 @@ def add_car_view(request: HttpRequest):
         car_form = CarForm(request.POST, request.FILES)
         if car_form.is_valid():
             car_form.save()
-            return redirect("main:home_view")
+            return redirect("cars:all_cars_view")
         else:
             print("form error: ", car_form.errors)
 
-    return render(request, "cars/add.html", context)
+    return render(request, "cars/new.html", context)
