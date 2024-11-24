@@ -9,58 +9,74 @@ from django.core.paginator import Paginator
 
 # Add brand instance
 def addBrandView(request: HttpRequest):
-    
-    brandData = BrandForm()
-    response = render(request, 'brands/addBrand.html')
-    
-    if request.method == "POST":
-        brandData = BrandForm(request.POST, request.FILES)
-        if brandData.is_valid():
-            brandData.save()
-            messages.success(request, f"'{request.POST['name']}' added successfully.", "alert-success")
-        else:
-            messages.error(request, f"'{request.POST['name']}' wasn't added. {brandData.errors}", "alert-danger")
-            
+
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can add brands.", "alert-warning")
         response = redirect('main:homeView')
+    else:
+        brandData = BrandForm()
+        response = render(request, 'brands/addBrand.html')
+        
+        if request.method == "POST":
+            brandData = BrandForm(request.POST, request.FILES)
+            if brandData.is_valid():
+                brandData.save()
+                messages.success(request, f"'{request.POST['name']}' added successfully.", "alert-success")
+            else:
+                messages.error(request, f"'{request.POST['name']}' wasn't added.", "alert-danger")
+                
+            response = redirect('brands:displayBrandsView')
     
     return response
 
 # Update brand instance
 def updateBrandView(request: HttpRequest, brandid:int):
-    try:
-        brand = Brand.objects.get(pk=brandid)
-    except Exception:
-        response = render(request, '404.html')
+
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can update brands.", "alert-warning")
+        response = redirect('main:homeView')
     else:
-        response = render(request, 'brands/updateBrand.html', context={'brand': brand})
-        
-        if request.method == "POST":
-            brandData = BrandForm(request.POST, request.FILES, instance=brand)
-            if brandData.is_valid():
-                brandData.save()
-                messages.success(request, f"'{request.POST['name']}' updated successfully.", "alert-success")
-            else:
-                messages.error(request, f"'{request.POST['name']}' wasn't updated. {brandData.errors}", "alert-danger")
-                
-            response = redirect('main:homeView')
+        try:
+            brand = Brand.objects.get(pk=brandid)
+        except Exception:
+            response = render(request, '404.html')
+        else:
+            response = render(request, 'brands/updateBrand.html', context={'brand': brand})
+            
+            if request.method == "POST":
+                brandData = BrandForm(request.POST, request.FILES, instance=brand)
+                if brandData.is_valid():
+                    brandData.save()
+                    messages.success(request, f"'{request.POST['name']}' updated successfully.", "alert-success")
+                else:
+                    messages.error(request, f"'{request.POST['name']}' wasn't updated.", "alert-danger")
+                    
+                response = redirect('brands:brandDetailsView', brandid)
     
     return response
 
 # Delete brand view
 def deleteBrandView(request:HttpRequest, brandid:int):
-    try:
-        brand = Brand.objects.get(pk=brandid)
-    except Exception:
-        response = render(request, '404.html')
-    else:
-        try:
-            brand.delete()
-        except Exception:
-            messages.error(request, f"'{brand.name}' wasn't deleted.", "alert-danger")
-        else: 
-            messages.success(request, f"'{brand.name}' deleted successfully.", "alert-success")    
-        
+
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can delete brands.", "alert-warning")
         response = redirect('main:homeView')
+    else:
+    
+        try:
+            brand = Brand.objects.get(pk=brandid)
+        except Exception:
+            response = render(request, '404.html')
+        else:
+            try:
+                brand.delete()
+            except Exception:
+                messages.error(request, f"'{brand.name}' wasn't deleted.", "alert-danger")
+            else: 
+                messages.success(request, f"'{brand.name}' deleted successfully.", "alert-success")    
+            
+            response = redirect('brands:displayBrandsView')
+
     return response
 
 # Display all brands
@@ -90,4 +106,5 @@ def brandDetailsView(request: HttpRequest, brandid:int):
         brandCars = Car.objects.filter(brand=brand)[0:2]
         brandCarImages = Attachment.objects.filter(car__brand__name=brand.name)
         response = render(request, 'brands/brandDetails.html', context={'brand': brand, 'brandCars': brandCars, 'carsImages': brandCarImages})
+        
     return response

@@ -20,9 +20,10 @@
                 </div>
             </div>
         </form>
-        <a href="{% url 'brands:addBrandView' %}" class="btn btn-danger text-white align-content-center mb-4">New</a>
-        
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-gap-4 justify-content-center">
+        {% if user.is_staff %}
+        <a href="{% url 'brands:addBrandView' %}" class="btn btn-danger text-white align-content-center">New</a>
+        {% endif %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-gap-4 justify-content-center mt-4">
             {% for brand in brands %}
             <div class="col">
                 <div class="card shadow border-0 crd {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% endif %}">

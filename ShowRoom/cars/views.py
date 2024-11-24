@@ -7,137 +7,164 @@ from brands.models import Brand
 from django.core.paginator import Paginator
 from django.db.models import Count
 
-
 # Add color view
 def addColorView(request:HttpRequest):
-    colorData = ColorForm()
-    response = render(request, 'colors/addColor.html')
-    if request.method == "POST":
-        colorData = ColorForm(request.POST, request.FILES)
-        if colorData.is_valid():
-            colorData.save()
-            messages.success(request, f"Color '{request.POST['name']}' was added successfully.", "alert-success")
-        else:
-            messages.error(request, f"Color '{request.POST['name']}' wasn't added.", "alert-danger")
-            
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can add colors.", "alert-warning")
         response = redirect('main:homeView')
-
-    return response
-
-# Update color view
-def updateColorView(request:HttpRequest, clrId:int):
-
-    try:
-        color = Color.objects.get(pk=clrId)
-    except Exception:
-        response = render(request, '404.html')
     else:
-        response = render(request, 'colors/updateColor.html', context={'color': color})
+        colorData = ColorForm()
+        response = render(request, 'colors/addColor.html')
         if request.method == "POST":
-            colorData = ColorForm(request.POST, request.FILES, instance=color)
+            colorData = ColorForm(request.POST, request.FILES)
             if colorData.is_valid():
                 colorData.save()
-                messages.success(request, f"Color '{request.POST['name']}' was updated successfully.", "alert-success")
+                messages.success(request, f"Color '{request.POST['name']}' was added successfully.", "alert-success")
             else:
-                messages.error(request, f"Color '{request.POST['name']}' wasn't updated.", "alert-danger")
+                messages.error(request, f"Color '{request.POST['name']}' wasn't added.", "alert-danger")
                 
             response = redirect('main:homeView')
 
     return response
 
-def deleteColorView(request: HttpRequest, clrId:int):
-    try:
-        color = Color.objects.get(pk=clrId)
-    except Exception:
-        response = render(request, '404.html')
+# Update color view
+def updateColorView(request:HttpRequest, clrId:int):
+    
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can update colors.", "alert-warning")
+        response = redirect('main:homeView')
     else:
         try:
-            color.delete()
+            color = Color.objects.get(pk=clrId)
         except Exception:
-            messages.error(request, f"'{color.name}' wasn't deleted.", "alert-danger")
-        else: 
-            messages.success(request, f"'{color.name}' deleted successfully.", "alert-success")    
-        
+            response = render(request, '404.html')
+        else:
+            response = render(request, 'colors/updateColor.html', context={'color': color})
+            if request.method == "POST":
+                colorData = ColorForm(request.POST, request.FILES, instance=color)
+                if colorData.is_valid():
+                    colorData.save()
+                    messages.success(request, f"Color '{request.POST['name']}' was updated successfully.", "alert-success")
+                else:
+                    messages.error(request, f"Color '{request.POST['name']}' wasn't updated.", "alert-danger")
+                    
+                response = redirect('main:homeView')
+
+    return response
+
+# Delete color view
+def deleteColorView(request: HttpRequest, clrId:int):
+
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can delete colors.", "alert-warning")
         response = redirect('main:homeView')
+    else:
+        try:
+            color = Color.objects.get(pk=clrId)
+        except Exception:
+            response = render(request, '404.html')
+        else:
+            try:
+                color.delete()
+            except Exception:
+                messages.error(request, f"'{color.name}' wasn't deleted.", "alert-danger")
+            else: 
+                messages.success(request, f"'{color.name}' deleted successfully.", "alert-success")    
+            
+            response = redirect('main:homeView')
 
     return response
 
 # Add car view
 def addCarView(request: HttpRequest):
 
-    carData = CarForm()
-    colors = Color.objects.all()
-    brands = Brand.objects.all()
-    response = render(request, 'cars/addCar.html', context={'brands': brands, 'colors': colors, 'gearTypes': Car.Gear.choices, 'fuelTypes': Car.Fuel.choices, 'bodyTypes': Car.BodyType.choices})
-    
-    if request.method == "POST":
-        carData = CarForm(request.POST)
-        images = request.FILES.getlist('images')
-        if carData.is_valid():
-            car:Car = carData.save(commit=False)
-            car.save()
-            car.colors.set(request.POST.getlist("colors"))
-            for img in images:
-                Attachment.objects.create(car=car, image=img)
-            messages.success(request, f"'{request.POST['model']}' was added successfully.", "alert-success")
-        else:
-            messages.error(request, f"'{request.POST['model']}' wasn't added.", "alert-danger")
-            
-        response = redirect('cars:displayCarsView', 'all')
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can add cars.", "alert-warning")
+        response = redirect('main:homeView')
+    else:
+        carData = CarForm()
+        colors = Color.objects.all()
+        brands = Brand.objects.all()
+        response = render(request, 'cars/addCar.html', context={'brands': brands, 'colors': colors, 'gearTypes': Car.Gear.choices, 'fuelTypes': Car.Fuel.choices, 'bodyTypes': Car.BodyType.choices})
+        
+        if request.method == "POST":
+            carData = CarForm(request.POST)
+            images = request.FILES.getlist('images')
+            if carData.is_valid():
+                car:Car = carData.save(commit=False)
+                car.save()
+                car.colors.set(request.POST.getlist("colors"))
+                for img in images:
+                    Attachment.objects.create(car=car, image=img)
+                messages.success(request, f"'{request.POST['model']}' was added successfully.", "alert-success")
+            else:
+                messages.error(request, f"'{request.POST['model']}' wasn't added.", "alert-danger")
+                
+            response = redirect('cars:displayCarsView', 'all')
     
     return response
 
 # Update car view
 def updateCarView(request: HttpRequest, carid:int):
 
-    try:
-        car = Car.objects.get(pk=carid)
-    except Exception:
-        response = render(request, '404.html')
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can update cars.", "alert-warning")
+        response = redirect('main:homeView')
     else:
-        colors = Color.objects.all()
-        brands = Brand.objects.all()
-        carImages = Attachment.objects.filter(car=car)
-        response = render(request, 'cars/updateCar.html', context={'car': car, 'carImgs': carImages, 'brands': brands, 'colors': colors, 'gearTypes': Car.Gear.choices, 'fuelTypes': Car.Fuel.choices, 'bodyTypes': Car.BodyType.choices})
-        
-        if request.method == "POST":
-            carData = CarForm(request.POST, instance=car)
-            images = request.FILES.getlist('images')
-            if carData.is_valid():
-                car:Car = carData.save(commit=False)
-                car.save()
-                car.colors.set(request.POST.getlist("colors"))
-                if images:
-                    Attachment.objects.filter(car=car).delete()
-                    for img in images:
-                        Attachment.objects.create(car=car, image=img)
-                
-                messages.success(request, f"'{request.POST['model']}' was updated successfully.", "alert-success")
-            else:
-                messages.error(request, f"'{request.POST['model']}' wasn't updated.", "alert-danger")
-                
+        try:
+            car = Car.objects.get(pk=carid)
+        except Exception:
+            response = render(request, '404.html')
+        else:
+            colors = Color.objects.all()
+            brands = Brand.objects.all()
+            carImages = Attachment.objects.filter(car=car)
+            response = render(request, 'cars/updateCar.html', context={'car': car, 'carImgs': carImages, 'brands': brands, 'colors': colors, 'gearTypes': Car.Gear.choices, 'fuelTypes': Car.Fuel.choices, 'bodyTypes': Car.BodyType.choices})
+            
+            if request.method == "POST":
+                carData = CarForm(request.POST, instance=car)
+                images = request.FILES.getlist('images')
+                if carData.is_valid():
+                    car:Car = carData.save(commit=False)
+                    car.save()
+                    car.colors.set(request.POST.getlist("colors"))
+                    if images:
+                        Attachment.objects.filter(car=car).delete()
+                        for img in images:
+                            Attachment.objects.create(car=car, image=img)
+                    
+                    messages.success(request, f"'{request.POST['model']}' was updated successfully.", "alert-success")
+                else:
+                    messages.error(request, f"'{request.POST['model']}' wasn't updated.", "alert-danger")
+                    
+                response = redirect('cars:carDetailsView', carid)
+
+    return response
+
+# Delete car view
+def deleteCarView(request: HttpRequest, carid:int):
+
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can delete cars.", "alert-warning")
+        response = redirect('main:homeView')
+    else:
+        try:
+            car = Car.objects.get(pk=carid)
+        except Exception:
+            response = render(request, '404.html')
+        else:
+            try:
+                car.delete()
+            except Exception:
+                messages.error(request, f"'{car.name}' wasn't deleted.", "alert-danger")
+            else: 
+                messages.success(request, f"'{car.name}' deleted successfully.", "alert-success")    
+            
             response = redirect('cars:displayCarsView', 'all')
 
     return response
 
-def deleteCarView(request: HttpRequest, carid:int):
-    try:
-        car = Car.objects.get(pk=carid)
-    except Exception:
-        response = render(request, '404.html')
-    else:
-        try:
-            car.delete()
-        except Exception:
-            messages.error(request, f"'{car.name}' wasn't deleted.", "alert-danger")
-        else: 
-            messages.success(request, f"'{car.name}' deleted successfully.", "alert-success")    
-        
-        response = redirect('main:homeView')
-
-    return response
-
-
+# Diplay cars view
 def displayCarsView(request: HttpRequest, filter: str):
 
     bodyTypes = Car.BodyType.choices
@@ -183,11 +210,18 @@ def carDetailsView(request: HttpRequest, carid:int):
         response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages})
     return response
 
+# Add comment
 def addCommentView(request: HttpRequest, carid: int):
-    if request.method == 'POST':
-        car = Car.objects.get(pk=carid)
-        newComment = Comment(car=car, user=request.user , comment=request.POST['comment'])
-        newComment.save()
-        messages.success(request, "Your comment was added successfully.", "alert-success") 
 
-    return redirect('cars:carDetailsView', carid)
+    if not request.user.is_authenticated:
+        messages.error(request, "Only registered users can add comments.", "alert-danger")
+        response = redirect('accounts:loginView')
+    else:
+        if request.method == 'POST':
+            car = Car.objects.get(pk=carid)
+            newComment = Comment(car=car, user=request.user , comment=request.POST['comment'])
+            newComment.save()
+            messages.success(request, "Your comment was added successfully.", "alert-success") 
+
+    response = redirect('cars:carDetailsView', carid)
+    return response

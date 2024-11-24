@@ -14,6 +14,7 @@
     
     <div class="half-border mb-2"></div>
     <div class="container-fluid">
+        {% if user.is_staff %}
         <div class="d-flex gap-2 justify-content-end">
             <a href="{% url 'cars:updateCarView' car.id %}" class="btn border-2 shadow-sm {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
                 Update
@@ -24,6 +25,7 @@
                 Delete
             </button>
         </div>
+        {% endif %}
         <!-- Car images carousel -->
         <div id="carDetailsCarousel" class="carousel slide my-3 rounded-3 shadow overflow-hidden carousel-fade details-carousel mx-auto" data-bs-ride="carousel">
             <div class="carousel-indicators">
