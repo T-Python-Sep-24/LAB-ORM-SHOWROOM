@@ -87,7 +87,7 @@ def brandDetailsView(request: HttpRequest, brandid:int):
         response = render(request, '404.html')
     else:
 
-        brandCars = Car.objects.filter(brand=brand)[0:3]
+        brandCars = Car.objects.filter(brand=brand)[0:2]
         brandCarImages = Attachment.objects.filter(car__brand__name=brand.name)
         response = render(request, 'brands/brandDetails.html', context={'brand': brand, 'brandCars': brandCars, 'carImages': brandCarImages})
     return response
