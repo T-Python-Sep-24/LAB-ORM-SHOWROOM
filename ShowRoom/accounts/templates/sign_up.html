@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+
+    <h2 class="mb-4">Sign Up</h2>
+
+    <form class="d-flex flex-column gap-3 w-50" action="{% url 'accounts:sign_up' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-floating">
+            <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" name="email" required>
+            <label for="emailInput">Email address</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="usernameInput" placeholder="Username" name="username" required>
+            <label for="usernameInput">Username</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="firstNameInput" placeholder="First name" name="first_name" required>
+            <label for="firstNameInput">First name</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="lastNameInput" placeholder="Last name" name="last_name" required>
+            <label for="lastNameInput">Last name</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" class="form-control" id="passwordInput" placeholder="Password" name="password" required>
+            <label for="passwordInput">Password</label>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
+    </form>
+</div>
+{% endblock %}

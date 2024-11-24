@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}{{category_name}} Games{% endblock %}
+
+{% block content %}
+
+
+
+<h1>{{category_name}} Games</h1>
+
+<div class="d-flex justify-content-end gap-3">
+    {% for value, label in esrb_ratings %}
+    <a href="?esrb={{value}}"><img src="/static/images/esrb/{{value}}.svg" class="esrb-img {% if request.GET.esrb == value %} active-esrb {% endif %}" /></a>
+    {% endfor %}
+</div>
+{% include 'games/games_list.html' %}
+
+<div class="pagination d-flex justify-content-center align-items-center mt-5 gap-4">
+        {% if games.has_previous %}
+            <div class="d-flex gap-1">
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ games.previous_page_number }}">&laquo; previous</a>
+            </div>
+        {% endif %}
+
+        <div class="current">
+            Page {{ games.number }} of {{ games.paginator.num_pages }}
+        </div>
+
+        <div class="d-flex gap-2">
+            {% for page in games.paginator.page_range %}
+                {% if page == games.number %}
+                <a href="#" class="p-3 bg-primary rounded-4 text-white disabled">{{page}}</a>
+                {% else %}
+                <a href="?page={{ page }}" class="p-3 bg-secondary rounded-4 text-white">{{page}}</a>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+        {% if games.has_next %}
+            <div class="d-flex gap-1">
+                <a href="?page={{ games.next_page_number }}">next &raquo;</a>
+                <a href="?page={{ games.paginator.num_pages }}">last &raquo;</a>
+            </div>
+        {% endif %}
+
+
+</div>
+
+{% endblock %}
