@@ -12,9 +12,50 @@
 <p><strong>Available Colors:</strong></p>
 <ul>
     {% for color in car.colors.all %}
-        <li>{{ color.name }} - {{color.hex_code}}</li>
+        <li>{{ color.name }} - {{ color.hex_code }}</li>
     {% endfor %}
 </ul>
-<a href="{% url 'cars:update_car' car.id %}">Edit</a>
-<a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+
+<!-- Review Section -->
+<div class="mb-4">
+    <h4>Reviews</h4>
+    {% for review in car.reviews.all %}
+        <div class="border p-3 mb-3 rounded">
+            <h5>{{ review.user.username }} rated it: {{ review.rating }}/5</h5>
+            <p>{{ review.review_text }}</p>
+            <p><small>Reviewed on {{ review.created_at|date:"M d, Y, h:i a" }}</small></p>
+        </div>
+    {% empty %}
+        <p>No reviews yet. Be the first to leave a review!</p>
+    {% endfor %}
+</div>
+
+<!-- Review Form (only for authenticated users) -->
+{% if user.is_authenticated %}
+    <div class="mt-4">
+        <h5>Add a Review</h5>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_rating" class="form-label">Rating (1-5)</label>
+                <input type="number" name="rating" id="id_rating" class="form-control" min="1" max="5" value="{{ review_form.rating.value }}">
+            </div>
+            <div class="mb-3">
+                <label for="id_review_text" class="form-label">Review</label>
+                <textarea name="review_text" id="id_review_text" class="form-control">{{ review_form.review_text.value }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+{% else %}
+    <p class="mt-3">You must be logged in to leave a review.</p>
+{% endif %}
+
+
+<!-- Edit and Delete Links (only for superusers or staff) -->
+{% if user.is_superuser or user.is_staff %}
+    <a href="{% url 'cars:update_car' car.id %}">Edit</a>
+    <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+{% endif %}
+
 {% endblock %}

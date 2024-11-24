@@ -1,8 +1,8 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Car, Color
+from .models import Car, Color,Review
 from brands.models import Brand
-from .forms import CarForm
+from .forms import CarForm,ReviewForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -64,11 +64,24 @@ def create_car(request):
     
     return render(request, 'cars/create_car.html', {'form': form})
 
-
 def car_detail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    return render(request, 'cars/car_detail.html', {'car': car})
+    reviews = car.reviews.all()  # Get all reviews for this car
+    review_form = None
 
+    if request.user.is_authenticated:
+        review_form = ReviewForm()
+
+        if request.method == 'POST':
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                review = form.save(commit=False)
+                review.user = request.user  # Associate the review with the logged-in user
+                review.car = car  # Associate the review with the car
+                review.save()
+                return redirect('cars:car_detail', car_id=car.id)  # Redirect to avoid resubmitting on refresh
+
+    return render(request, 'cars/car_detail.html', {'car': car, 'reviews': reviews, 'review_form': review_form})
 
 def update_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)

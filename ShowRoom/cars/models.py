@@ -1,5 +1,7 @@
 from django.db import models
 from brands.models import Brand  # Import Brand model
+from django.contrib.auth.models import User
+
 
 # Color model
 class Color(models.Model):
@@ -31,3 +33,13 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.brand.name} {self.name} ({self.model})"
+    
+class Review(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    review_text = models.TextField()
+    rating = models.PositiveIntegerField()  # You can set a range for ratings, like 1-5
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Review by {self.user.username} on {self.car.name}'
