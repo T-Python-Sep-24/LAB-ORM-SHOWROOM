@@ -1,0 +1,13 @@
+.main-container{
+
+}
+
+.detail-p{
+    border-top: solid #ffc107 1px;
+    padding-top: 1rem;
+}
+
+.card-img-top{
+    width: 100%;
+    object-fit: cover;
+}
