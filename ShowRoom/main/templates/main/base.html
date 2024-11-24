@@ -84,8 +84,8 @@
                     <h6 class="px-2">Welcome {{user.first_name}}</h6>
                     <a class="btn py-1 btn-secondary" href="{% url 'accounts:logoutView' %}">Logout</a>
                     {% else %}
-                    <a class="btn py-1 border-2 {% if request.path == loginUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}">Login</a>
-                    <a class="btn py-1 border-2 {% if request.path == registerUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}">Register</a>
+                    <a class="btn py-1 border-2 white-shadow {% if request.path == loginUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}">Login</a>
+                    <a class="btn py-1 border-2 white-shadow {% if request.path == registerUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}">Register</a>
                     {% endif %}
                 </div>
             </div>
