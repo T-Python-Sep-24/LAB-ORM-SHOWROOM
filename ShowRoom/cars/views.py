@@ -4,6 +4,7 @@ from brands.models import Brand
 from .models import Car, Color
 from .forms import CarForm, ColorForm
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 
 # Create your views here.
@@ -48,9 +49,11 @@ def new_car_view(request: HttpRequest):
         car_form = CarForm(request.POST, request.FILES)
         if car_form.is_valid():
             car_form.save()
+            messages.success(request, "Car created successfully!")
             return redirect("cars:all_cars_view")
         else:
             print("form error: ", car_form.errors)
+            messages.error(request, "Error creating car. Please try again later")
 
     return render(request, "cars/new.html", context)
 
@@ -66,9 +69,12 @@ def update_car_view(request: HttpRequest, car_id: int):
         car_form = CarForm(instance=car, data=request.POST, files=request.FILES)
         if car_form.is_valid():
             car_form.save()
+            messages.success(request, "Car updated successfully!")
             return redirect("cars:all_cars_view")
         else:
             print("form error: ", car_form.errors)
+            messages.error(request, "Error updating car. Please try again later")
+
 
     return render(request, "cars/update.html", context)
 
@@ -76,8 +82,11 @@ def update_car_view(request: HttpRequest, car_id: int):
 def delete_car_view(request: HttpRequest, car_id: int):
     car = Car.objects.get(pk=car_id)
     car.delete()
+    messages.success(request, "Car deleted successfully!")
+    
+    return redirect("cars:all_cars_view")
 
-    return redirect("cars/all.html")
+
 
 
 def new_color_view(request: HttpRequest):
