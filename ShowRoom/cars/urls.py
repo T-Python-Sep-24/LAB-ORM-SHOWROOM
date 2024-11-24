@@ -8,4 +8,5 @@ urlpatterns = [
     path("new/", views.new_car_view, name="new_car_view"),
     path("update/<car_id>/", views.update_car_view, name="update_car_view"),
     path("details/<car_id>/", views.details_car_view, name="details_car_view"),
+    path("delete/<car_id>/", views.delete_car_view, name="delete_car_view"),
 ]

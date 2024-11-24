@@ -65,3 +65,10 @@ def update_car_view(request: HttpRequest, car_id: int):
             print("form error: ", car_form.errors)
 
     return render(request, "cars/update.html", context)
+
+
+def delete_car_view(request: HttpRequest, car_id: int):
+    car = Car.objects.get(pk=car_id)
+    car.delete()
+
+    return redirect("cars/all.html")
