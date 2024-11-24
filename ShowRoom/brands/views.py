@@ -10,6 +10,7 @@ from .models import Brand
 from cars.models import Car
 # Create your views here.
 
+
 def all_brands_view(request: HttpRequest):
 
     brands = Brand.objects.annotate(car_count=Count('car'))
@@ -27,6 +28,7 @@ def all_brands_view(request: HttpRequest):
                 Q(about__contains=keyword) |
                 Q(founded_at__contains=keyword)
             )
+            brands = brands.annotate(car_count=Count('car'))
 
     return render(request, 'all_brands.html', context={'brands': brands, 'page_obj': page_obj})
 
