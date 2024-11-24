@@ -7,8 +7,10 @@ from .forms import CarForm
 
 # Create your views here.
 def all_cars_view(request: HttpRequest):
+    cars = Car.objects.all()
+    context = {"cars": cars}    
 
-    return render(request, "cars/all.html")
+    return render(request, "cars/all.html", context)
 
 
 def add_car_view(request: HttpRequest):
