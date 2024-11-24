@@ -18,7 +18,7 @@ def addColorView(request:HttpRequest):
             colorData.save()
             messages.success(request, f"Color '{request.POST['name']}' was added successfully.", "alert-success")
         else:
-            messages.error(request, f"Color '{request.POST['name']}' wasn't added. {colorData.errors}", "alert-danger")
+            messages.error(request, f"Color '{request.POST['name']}' wasn't added.", "alert-danger")
             
         response = redirect('main:homeView')
 
@@ -39,7 +39,7 @@ def updateColorView(request:HttpRequest, clrId:int):
                 colorData.save()
                 messages.success(request, f"Color '{request.POST['name']}' was updated successfully.", "alert-success")
             else:
-                messages.error(request, f"Color '{request.POST['name']}' wasn't updated. {colorData.errors}", "alert-danger")
+                messages.error(request, f"Color '{request.POST['name']}' wasn't updated.", "alert-danger")
                 
             response = redirect('main:homeView')
 
@@ -59,6 +59,7 @@ def deleteColorView(request: HttpRequest, clrId:int):
             messages.success(request, f"'{color.name}' deleted successfully.", "alert-success")    
         
         response = redirect('main:homeView')
+
     return response
 
 # Add car view
@@ -82,8 +83,7 @@ def addCarView(request: HttpRequest):
         else:
             messages.error(request, f"'{request.POST['model']}' wasn't added.", "alert-danger")
             
-        #response = redirect('cars:carsDisplayView', 'all')
-        response = redirect('main:homeView')
+        response = redirect('cars:displayCarsView', 'all')
     
     return response
 
@@ -116,8 +116,7 @@ def updateCarView(request: HttpRequest, carid:int):
             else:
                 messages.error(request, f"'{request.POST['model']}' wasn't updated.", "alert-danger")
                 
-            #response = redirect('cars:carsDisplayView', 'all')
-            response = redirect('main:homeView')
+            response = redirect('cars:displayCarsView', 'all')
 
     return response
 
@@ -141,7 +140,7 @@ def deleteCarView(request: HttpRequest, carid:int):
 def displayCarsView(request: HttpRequest, filter: str):
 
     bodyTypes = Car.BodyType.choices
-    carImages = Attachment.objects.all()
+    carsImages = Attachment.objects.all()
     colors = Color.objects.all()
     brands = Brand.objects.all()
 
@@ -165,7 +164,7 @@ def displayCarsView(request: HttpRequest, filter: str):
     pageNumber = request.GET.get('page', 1)
     page_obj = paginator.get_page(pageNumber)
 
-    response = render(request, 'cars/displayCars.html', context={'cars': page_obj, 'selected': filter, 'bodyTypes': bodyTypes, 'carImages': carImages, 'colors': colors, 'brands': brands, "filteredColors":request.GET.getlist("colors")})
+    response = render(request, 'cars/displayCars.html', context={'cars': page_obj, 'selected': filter, 'bodyTypes': bodyTypes, 'carsImages': carsImages, 'colors': colors, 'brands': brands, "filteredColors":request.GET.getlist("colors")})
     
     return response
 
@@ -178,5 +177,7 @@ def carDetailsView(request: HttpRequest, carid:int):
         carImages = Attachment.objects.filter(car=car)
         relatedCars = Car.objects.exclude(pk=carid).filter(brand=car.brand)[0:3]
 
-        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars})
+        relatedCarsImages = Attachment.objects.filter(car__brand__name=car.brand.name)
+
+        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages})
     return response

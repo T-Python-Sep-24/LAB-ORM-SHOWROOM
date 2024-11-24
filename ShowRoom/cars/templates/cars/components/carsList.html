@@ -2,7 +2,7 @@
     {% for car in cars %}
     <div class="col">
         <div class="card shadow border-0 car-card {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% endif %}">
-            {% for carImg in carImages %}
+            {% for carImg in carsImages %}
             {% if carImg.car == car and "front" in carImg.image.url %}
             <img src="{{carImg.image.url}}" class="card-img-top" alt="Car logo">
             {% endif %}
