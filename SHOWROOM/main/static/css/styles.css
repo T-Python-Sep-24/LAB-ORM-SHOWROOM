@@ -1,0 +1,2279 @@
+body {
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background-color: #1c1c1c;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+
+h1, h2, h5 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1.2rem 2.2rem;
+    background-color: #222;
+}
+
+.header-container h5{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: #fff;
+}
+
+.navigation a, .contact-button {
+    color: #fff;
+    margin-left: 1rem;
+    text-decoration: none;
+    gap: 5px;
+}
+
+.header-container .navigation {
+    justify-content: center;
+    padding-left: 200px;
+}
+
+.navigation a {
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+}
+
+.navigation a:hover {
+    color: #ff5722; 
+
+}
+
+.navigation .active {
+    color: #ff5722;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* All Buttons */
+
+.hrader-links{
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+    align-items: center;
+    z-index: 20;
+}
+
+.adds-links{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+
+}
+
+.contact-button {
+    padding: 5px 15px;
+    margin-right: 20px;
+    background-color: #444; 
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-button:hover {
+    background-color: #ff5722; 
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+.auth-logout{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5;
+}
+
+.auth-logout h6 {
+    font-size: 1.4rem;
+    color: white;
+}
+
+.auth-button {
+    margin-left: 15px;
+    padding: 5px 15px;
+    background-color: #ff5722;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+.all-auth-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #ff5722; 
+    text-decoration: none;
+    border: none;
+}
+
+
+/* Hero Section */
+
+.hero-main{
+    background-color: #1c1c1c;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem;
+    width: 100vw;
+    height: 100vh; 
+    background-color: #1c1c1c;
+}
+
+.hero-content {
+    max-width: 100%;
+    max-height: 100%;
+    justify-content: space-around;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+    margin-bottom: 4rem;
+}
+
+.hero-content .learn-more-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #fff;
+    color: #1c1c1c;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.hero-content .learn-more-button:hover{
+    color: #ff5722;
+    text-decoration: none;
+}
+
+.car-image-1 {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    height: 60%;
+    object-fit: cover;
+   
+}
+
+.car-image-1 img {
+    max-width: 100%;
+    height: 650px;
+    margin-top: 30px; 
+    z-index: 0; 
+}
+
+/* Latest Cars Header */
+.latest-cars-header {
+    display: flex;
+    justify-content: space-between; 
+    gap: 10px;
+    align-items: center; 
+    margin-bottom: 20px;
+    padding: 0 20px; 
+    background-color: #1c1c1c;
+}
+
+.latest-cars-title {
+    font-size: 1.9rem; 
+    color: white; 
+}
+
+.latest-cars-more a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ff5722; 
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.latest-cars-more a:hover {
+    color: #e64a19; 
+}
+
+.latest-cars-more .material-symbols-outlined {
+    margin-left: 5px; 
+    font-size: 1.2rem;
+}
+
+
+
+/* Cars Grid */
+.cars-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 20px;
+    background-color: #1c1c1c;
+
+}
+
+.car-card-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #403f3fbb;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    height: 100%;
+}
+
+
+.car-image-2-2 {
+    max-width: 100%;
+    height: 180px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid #333;
+    margin-bottom: 1rem;
+}
+
+.car-card-2 .car-name-2-2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.car-price-2-2 {
+    font-size: 1.2rem;
+    color: #ff5722;
+    margin-bottom: 1rem;
+}
+
+.view-details-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ff5722;
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-button:hover {
+    background-color: #e64a19;
+    color: white;
+}
+
+/* Car Details Section */
+.car-details {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    background-color: #111;
+    color: #fff;
+}
+
+.car-stats {
+    text-align: center;
+}
+
+.car-stats h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.car-stats p {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #222; 
+    padding: 1.5rem 2rem;
+    color: #fff;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: #fff;
+}
+
+.footer-social-media {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social-media a {
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-social-media a:hover {
+    color: #ff5722; 
+}
+
+
+/* All Cars Page */
+.all-cars-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.cars-header {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.cars-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.cars-header p {
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+.search-form-2 {
+    margin: 20px auto;
+    margin-bottom: 40px;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.search-form-2 input[type="text"] {
+    flex: 2;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    background-color: #f1f1f1; 
+    color: black; 
+    border-radius: 5px;
+}
+
+.search-form-2 input[type="text"]::placeholder {
+    color: black; 
+}
+
+.search-form-2 .filter-dropdown {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f1f1f1;
+    font-size: 1.1rem;
+    color: black;
+}
+
+.search-button {
+    background-color: #ff5722; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #e64a19;
+}
+
+/* Cars Grid */
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 1.5rem;
+    padding: 20px;
+}
+
+.car-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    min-height: 400px;
+}
+
+
+.car-image-2 {
+    width: auto;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid #333;
+    margin-bottom: 1rem;
+}
+
+.car-card .car-name-2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.car-price-2 {
+    font-size: 1.2rem;
+    color: #ff5722;
+    margin-bottom: 1rem;
+}
+
+.view-details-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ff5722;
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-button:hover {
+    background-color: #e64a19;
+    color: white;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 80px;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.pagination-button {
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+.pagination-current {
+    font-size: 1rem;
+    color: white;
+}
+
+
+/* Add Car Page */
+
+.add-car-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.add-car-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.add-car-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.add-car-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.add-car-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.add-car-form input[type="file"] {
+    width: 760px;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.add-car-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 50%; 
+    border: 1px solid #ccc; 
+}
+
+.checkbox-item input[type="checkbox"]:checked + label .color-box {
+    border: 2px solid #ff6600; 
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.5); 
+}
+
+.color-red {
+    background-color: #FF0000;
+}
+
+.color-blue {
+    background-color: #0000FF;
+}
+
+.color-green {
+    background-color: #00FF00;
+}
+
+.color-black {
+    background-color: #000000;
+}
+
+.color-white {
+    background-color: #FFFFFF;
+}
+
+.color-default {
+    background-color: #ccc; 
+}
+
+.submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e64a19;
+}
+
+
+
+/* Update Car Page */
+
+.update-car-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.update-car-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.update-car-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.update-car-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.update-car-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.update-car-form input[type="file"] {
+    width: 760px;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.update-img-2 {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.update-car-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 50%; 
+    border: 1px solid #ccc; 
+}
+
+.checkbox-item input[type="checkbox"]:checked + label .color-box {
+    border: 2px solid #ff6600; 
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.5); 
+}
+
+.color-red {
+    background-color: #FF0000;
+}
+
+.color-blue {
+    background-color: #0000FF;
+}
+
+.color-green {
+    background-color: #00FF00;
+}
+
+.color-black {
+    background-color: #000000;
+}
+
+.color-white {
+    background-color: #FFFFFF;
+}
+
+.color-default {
+    background-color: #ccc; 
+}
+
+
+.update-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-top: 60px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.update-submit-button:hover {
+    background-color: #e64a19;
+}
+
+
+
+
+/* Add Brand Page */
+
+.add-brand-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.add-brand-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.add-brand-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.add-brand-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.add-brand-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.add-brand-form input[type="file"] {
+    width: 760px;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.update-img {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 40px;
+    border-radius: 10px;
+}
+
+.add-brand-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+.brand-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e64a19;
+}
+
+/* Update Brand Page */
+
+.update-brand-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.update-brand-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.update-brand-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.update-brand-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.update-brand-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.update-brand-form input[type="file"] {
+    width: 760px;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.update-img {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.update-brand-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+.update-brand-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-top: 60px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e64a19;
+}
+
+/* Car Details */
+
+.car-details-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.car-image-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.car-image-3 {
+    max-width: 80%;
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.car-availability {
+    font-size: 1.5rem;
+    color: #ff5722;
+
+}
+
+.car-name {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 5rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.car-details-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.detail-box {
+    text-align: center;
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.detail-value {
+    font-size: 3rem;
+    color: #000;
+}
+
+.detail-value span {
+    font-size: 1.4rem;
+    color: #777;
+}
+
+.detail-label {
+    margin-top: 0.5rem;
+    font-size: 1.6rem;
+    color: #ff5722;
+}
+
+.car-brand {
+    margin-top: 10px;
+    font-size: 2rem;
+    color: #ff5722;
+    margin-top: 30px;
+}
+
+.car-brand .brand-link {
+    text-decoration: none;
+    color: #ff5722;
+    font-weight: bold;
+}
+
+.car-brand .brand-link:hover {
+    color: #e64a19;
+    text-decoration: none;
+}
+
+.color-header{
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+
+}
+
+.color-header h6{
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+
+}
+
+.color-circle-large {
+    display: flex;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+    margin-left: 5px;
+    border: 1px solid #333;
+}
+
+[data-color-2="#FF0000"] {
+    background-color: #FF0000;
+}
+
+[data-color-2="#0000FF"] {
+    background-color: #0000FF;
+}
+
+[data-color-2="#00FF00"] {
+    background-color: #00FF00;
+}
+
+[data-color-2="#000000"] {
+    background-color: #000000;
+}
+
+[data-color-2="#FFFFFF"] {
+    background-color: #FFFFFF;
+    border: 1px solid #ddd; 
+}
+
+
+
+/* Update and Delete Buttons */
+.update-button,
+.delete-button {
+    display: inline-block;
+    margin: 10px 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: 40px;
+}
+
+.update-button {
+    background-color: #ff5722; 
+    color: #fff;
+    border: 1px solid #ff5722;
+}
+
+.update-button:hover {
+    background-color: #e64a19; 
+    border-color: #e64a19;
+    transform: scale(1.05); 
+    color: white;
+    text-decoration: none;
+}
+
+.delete-button {
+    background-color: #dc3545; 
+    color: #fff;
+    border: 1px solid #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #b21f2d; 
+    transform: scale(1.05);
+    color: white;
+    text-decoration: none; 
+}
+
+.action-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+
+/* colors */
+.car-color {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.color-header {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.car-color h6 {
+    font-size: 1.2em;
+    margin: 0;
+    color: #333;
+    white-space: nowrap;
+}
+
+.color-circle {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc; 
+}
+
+.color-circle[data-color] {
+    background-color: var(--dynamic-color);
+}
+
+.color-circle[data-color]:not([data-color=""]) {
+    background-color: attr(data-color);
+}
+
+.tileColor {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.tileColor_1 {
+    display: inline-block;
+
+}
+
+.tileColor_1 span:first-child {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc; 
+}
+
+/* Brand Details page */
+
+.brand-details-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+    font-family: Arial, sans-serif;
+}
+
+.brand-image-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.brand-logo-2 {
+    max-width: 500px;
+    width: auto;
+    height: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.brand-image-section .brand-name {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #000;
+    padding-top: 80pc;
+    margin-bottom: 30px;
+}
+
+.brand-description {
+    font-size: 1.6rem;
+    margin: 5px 0;
+    text-align: justify;
+}
+
+.brand-details-section {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 80%; 
+    max-width: 1000px; 
+    padding: 1.5rem; 
+    border-radius: 10px; 
+    padding-top: 80px;
+    margin: 20px auto; 
+}
+
+.brand-detail-box {
+    text-align: center; 
+    flex: 1; 
+    padding: 0 1rem; 
+}
+
+.brand-detail-value {
+    font-size: 3rem; 
+    color: #000; 
+    font-weight: bold; 
+}
+
+.brand-detail-label {
+    margin-top: 0.5rem; 
+    font-size: 1.6rem; 
+    color: #ff5722; 
+}
+
+
+.brand-cars-section {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 40px;
+    border-top: 1px solid #ddd; 
+    padding-top: 20px; 
+}
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.cars-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.car-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 350px;
+}
+
+.car-photo-2 {
+    max-width: 100%;
+    width: auto;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 15px;
+
+
+}
+
+.car-item-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.car-detail-link {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    min-height: 40px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: black;
+}
+
+.car-detail-link:hover {
+    color: #ff5722;
+    text-decoration: none;
+}
+
+.car-year-2 {
+    font-size: 1rem;
+    color: #555;
+    margin-top: auto;
+}
+
+/* All Brands Page */
+
+.all-brands-page {
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.brands-header {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.brands-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    
+}
+
+.brands-header p {
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+.search-form {
+    margin: 20px auto;
+    margin-bottom: 40px;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.search-form input[type="text"] {
+    width: 90%;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    padding: 10px;
+    background-color: #f1f1f1; 
+    color: black; 
+    border-radius: 5px;
+}
+
+.search-form input[type="text"]::placeholder {
+    color: black; 
+}
+
+.search-button {
+    background-color: #ff5722; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #e64a19; 
+}
+
+
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.brand-card {
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: scale(1.05);
+}
+
+.brand-card .brand-logo{
+    max-width: 400px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+
+}
+
+.brand-logo {
+    width: 100%;
+    height: 200px;
+    object-fit:cover;
+    margin-bottom: 20px;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    padding-top: 10px !important;
+    border-top: 1px solid #333 !important;
+    margin-bottom: 0.5rem;
+}
+
+.brand-car-count {
+    font-size: 1.2rem;
+    color: #ff5722;
+    margin-bottom: 1rem;
+}
+
+.view-details-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ff5722;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+/* Messages for user */
+
+.notification-container {
+    position: fixed;
+    top: 10px;
+    left: 40%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+    max-width: 90%;
+  }
+  
+  .notification {
+    padding: 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease;
+  }
+  
+  .notification.success {
+    background-color: #4caf50;
+  }
+  
+  .notification.error {
+    background-color: #f44336;
+  }
+  
+  .notification.info {
+    background-color: #2196f3;
+  }
+  
+  .notification.warning {
+    background-color: #ff9800;
+  }
+  
+  
+
+/* Add Color Page */
+
+.add-color-page {
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.add-color-header {
+    text-align: center;
+    margin-bottom: 2rem; 
+    margin-top: 0; 
+}
+
+.add-color-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.add-color-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.add-color-form {
+    width: 90%; 
+    max-width: 600px;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.add-color-form input[type="file"] {
+    width: 100%;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.color-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.add-color-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+.color-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.color-submit-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+/* Update color */
+
+.update-color-page {
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.update-color-header {
+    text-align: center;
+    margin-bottom: 2rem; 
+    margin-top: 0; 
+}
+
+.update-color-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.update-color-form {
+    width: 90%; 
+    max-width: 600px;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.update-color-form input[type="file"] {
+    width: 100%;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.color-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.update-color-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+.color-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.color-submit-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+
+/* Sign up form */
+
+.signup-page {
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 2rem; 
+    margin-top: 0; 
+}
+
+.signup-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.signup-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.signup-form {
+    width: 90%; 
+    max-width: 600px;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.signup-form input[type="file"] {
+    width: 100%;
+    font-size: 1.2rem;
+    border: 1px solid #c1c0c0;
+}
+
+.signup-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signup-submit-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+
+/* Login form */
+
+.login-page {
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem; 
+    margin-top: 0; 
+}
+
+.login-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.login-header p {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.login-form {
+    width: 90%; 
+    max-width: 600px;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.login-form select {
+    color: #222;
+    font-size: 1.2rem;
+}
+
+.login-submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-submit-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;
+}
+
+/* separate reviews from car details */
+.review-separator {
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+
+/* Car Review */
+
+.car-reviews {
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start; 
+    text-align: left;
+    margin: 20px;
+    margin-right: 1000px;
+}
+
+.car-reviews h2 {
+    font-size: 3rem;
+    color: black;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.car-reviews ul {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    list-style: none; 
+    width: 100%;
+}
+
+.car-reviews li {
+    flex: 1 1 calc(50% - 20px); 
+    max-width: calc(50% - 20px);
+    min-width: 300px;
+    margin-bottom: 1.5rem;
+    padding: 2rem 6rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.car-reviews li p strong {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.car-reviews li p {
+    margin: 0.5rem 0;
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.car-reviews li small {
+    font-size: 1rem;
+    color: #777;
+}
+
+.write-review-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 15px;
+    background-color: #ff5722;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.write-review-button:hover {
+    background-color: #ff5722; 
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+.write-review-login {
+    color: #ff5722;
+    text-decoration: none;
+}
+
+.write-review-login:hover {
+    color: #ff5722;
+    text-decoration: none;
+}
+
+
+
+/* Add Review Page */
+.add-review-page {
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem;
+    background-color: #1c1c1c;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+.add-review-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 0; 
+
+}
+
+.add-review-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+}
+
+.add-review-form {
+    width: 90%; 
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    background-color: #333;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+    color: #c1c0c0;
+    font-size: 1.2rem;
+}
+
+.form-group textarea {
+    height: 120px;
+    resize: none;
+}
+
+.submit-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e64a19;
+    color: white;
+    text-decoration: none;}
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-car-page {
+        padding: 1rem;
+    }
+
+    .add-car-form {
+        padding: 1.5rem;
+    }
+
+    .add-car-header h1 {
+        font-size: 2rem;
+    }
+
+    .add-car-header p {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .car-details-section {
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        .detail-box {
+            margin-bottom: 1.5rem;
+        }
+    
+        .detail-box:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+

@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}All Brands{% endblock %}
+
+{% block content %}
+
+<main class="all-brands-page">
+    <section class="brands-header">
+        <h1>All Brands</h1>
+        <p>Discover a Wide Range of Car Brands Available in Our Collection.</p>
+        <form method="get" class="search-form">
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Search by brand name" class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </section>
+
+    <section class="brands-grid">
+        {% for brand in brands %}
+        <div class="brand-card">
+            <img src="{{ brand.logo.url }}" alt="{{ brand.brand_name }}" class="brand-logo">
+            <h2 class="brand-name">{{ brand.brand_name }}</h2>
+            <p class="brand-car-count">{{ brand.car_count }} car(s)</p>
+            <a href="{% url 'brands:brand_details_view' brand.id %}" class="view-details-button">View Details</a>
+        </div>
+        {% empty %}
+        <p>No brands found.</p>
+        {% endfor %}
+    </section>
+</main>
+
+{% endblock %}

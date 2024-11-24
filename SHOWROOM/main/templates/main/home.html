@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Home{%endblock %}
+
+{% block content %}
+
+<main class="hero-main">
+    <section class="hero">
+        <div class="hero-content">
+            <h1>LUXURY PERFORMANCE CARS AT YOUR DESTINATION</h1>
+            <p>Discover Luxury Cars in Our Showroom</p>
+            {% if car %}
+                <a href="{% url 'cars:car_details_view' car.id %}" class="learn-more-button">Learn More</a>
+            {% else %}
+                <p>No cars available. Add a car to view details!</p>
+            {% endif %}
+        </div>
+        <div class="car-image-1">
+            <img src="{% static 'images/p-1-2.png' %}" alt="Porsche Car">
+        </div>
+    </section>
+    
+    <section class="car-details">
+        <div class="car-stats">
+            <h2>Base Price</h2>
+            <p>$120,100</p>
+        </div>
+        <div class="car-stats">
+            <h2>394</h2>
+            <p>545 HP</p>
+        </div>
+        <div class="car-stats">
+            <h2>Engine</h2>
+            <p>3.0-liter twin</p>
+        </div>
+    </section> 
+
+    <div class="latest-cars-header">
+        <h3 class="latest-cars-title">Latest Cars</h3>
+        <div class="latest-cars-more">
+            <a href="{% url 'cars:all_cars_view' %}">
+                <span class="more-link">More</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+    
+    
+
+    <section class="cars-grid-2">
+        {% for car in cars %}
+        <div class="car-card-2">
+            <img src="{{ car.image.url }}" alt="{{ car.car_name }}" class="car-image-2-2">
+            <h2 class="car-name-2-2">{{ car.car_name }}</h2>
+            <p class="car-price-2-2">Price: ${{ car.price }}</p>
+            <a href="{% url 'cars:car_details_view' car.id %}" class="view-details-button">View Details</a>
+        </div>
+        {% endfor %}
+        
+
+    </section>
+    
+    <!--{
+    % include 'cars/all_cars.html' %}-->
+
+</main>
+
+{% endblock %}
