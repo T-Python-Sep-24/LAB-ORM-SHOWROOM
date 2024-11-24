@@ -5,4 +5,5 @@ app_name = "cars"
 
 urlpatterns = [
     path("all/", views.all_cars_view, name="all_cars_view"),
+    path("add/", views.add_car_view, name="add_car_view"),
 ]

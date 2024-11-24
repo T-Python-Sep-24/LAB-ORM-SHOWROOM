@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Add Car{% endblock %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'css/cars.css' %}">{% endblock %}
+
+{% block content %}
+ <section class="container">
+    <h1>Add a New Car</h1>
+    <div class="row">
+        <div class="col-8">
+            <form action="{% url 'cars:add_car_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <input type="text" name="name" class="form-control" placeholder="Name" required />
+                <select name="brand" class="form-select" required>
+                    <option value="">Select a brand</option>
+                {% for brand in brands %}
+                    <option value="{{ brand.id }}">{{ brand.name }}</option>
+                {% endfor %}
+                </select>
+                <h5>Colors:</h5>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                {% for color in colors %}
+                    <div>
+                        <input type="checkbox" name="colors" value="{{ color.id }}" id="color-{{ color.id }}" class="form-check-input" />
+                        <label for="color-{{ color.id }}" class="color-label" style="text-decoration-color: {{ color.hexadecimal }}">{{ color.name }}</label>
+                    </div>
+                {% endfor %}
+                </div>
+                <div>
+                    <h5>Photo:</h5>
+                    <input type="file" name="image" class="form-control" accept="images/*" required>
+                </div>
+                <textarea name="specs" class="form-control" placeholder="Car specs" required></textarea>
+                <input type="number" name="model" min="0" step="1" placeholder="Model year" class="form-control" required>
+                <input type="submit" class="btn btn-dark">
+            </form>
+        </div>
+    </div>
+ </section>
+{% endblock %}
