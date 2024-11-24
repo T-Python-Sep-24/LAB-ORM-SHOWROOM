@@ -1,23 +1,21 @@
 from django.shortcuts import render ,redirect
 from django.http import HttpRequest
 from .forms import CarForm , ColorForm
-from .models import Car , VehiclePhoto , Color
+from .models import Car , VehiclePhoto , Color ,Review
 from brands.models import Brand
 from django.template.loader import get_template
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test , login_required
 
 # Create your views here.
 
-def admin_only(user):
 
-    return user.is_superuser
-
-@login_required
-@user_passes_test(admin_only)
 def manage_car_view(request, car_id=None):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to access this page.")  
+        return redirect('/')
+    
     car = None
     if car_id:
         try:
@@ -52,9 +50,12 @@ def manage_car_view(request, car_id=None):
 
     return render(request, 'cars/manage_car.html',locals())
 
-@login_required
-@user_passes_test(admin_only)
+
 def delete_car(request, car_id):
+    
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to access this page.")  
+        return redirect('/')
     try:
         car = Car.objects.get(pk=car_id)
         car.delete()
@@ -63,9 +64,12 @@ def delete_car(request, car_id):
         messages.error(request, "The car you are trying to delete does not exist.")
     return redirect('cars:all_cars_view')
 
-@login_required
-@user_passes_test(admin_only)
+
 def manage_color_view(request, color_id=None):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to access this page.")  
+        return redirect('/')
+    
     color = None
     if color_id:
         try:
@@ -92,9 +96,12 @@ def manage_color_view(request, color_id=None):
 
     return render(request, 'cars/colors/manage_color.html', {'form': form, 'color': color})
 
-@login_required
-@user_passes_test(admin_only)
+
 def delete_color(request, color_id):
+    
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to access this page.")  
+        return redirect('/')
     try:
         color = Color.objects.get(pk=color_id)
         color.delete()
@@ -129,12 +136,47 @@ def all_cars_view(request):
     return render(request, 'cars/all_cars.html',locals())
 
 
-
+'''
 def car_details_view(request, card_id=None):
+
     try:
         car = Car.objects.get(pk=card_id)
     except Car.DoesNotExist:
 
         return redirect('cars:all_cars_view')
     
-    return render(request, 'cars/car_details.html', {'car': car})
+    reviews = car.reviews.all()
+    
+    return render(request, 'cars/car_details.html', {'car': car})'''
+
+def car_details_view(request, card_id=None):
+    try:
+        car = Car.objects.get(pk=card_id)
+    except Car.DoesNotExist:
+        return redirect('cars:all_cars_view')
+
+  
+    reviews = car.reviews.all()
+    for review in reviews:
+        review.filled_stars = range(review.rating)
+        review.empty_stars = range(5 - review.rating)
+    if request.method == "POST":
+        review_content = request.POST.get('review_content')
+        review_rating = request.POST.get('review_rating')
+
+        
+        if review_content and review_rating:
+            Review.objects.create(
+                user=request.user,
+                car=car,
+                content=review_content,
+                rating=review_rating
+            )
+            messages.success(request, "Your review has been added successfully!")
+          
+            return redirect('cars:car_details_view', card_id=car.id)
+
+    return render(request, 'cars/car_details.html', {
+        'car': car,
+        'reviews': reviews,
+    })

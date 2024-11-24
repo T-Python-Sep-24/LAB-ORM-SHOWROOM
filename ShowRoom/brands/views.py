@@ -5,20 +5,18 @@ from .forms import BrandForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test , login_required
 
 # Create your views here.
 
 
 
-def admin_only(user):
-    return user.is_superuser
-
-@login_required
-@user_passes_test(admin_only)
 def manage_brand_view(request, brand_id=None):
-    brand = None
 
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to access this page.")  
+        return redirect('/')
+    
+    brand = None
     if brand_id:
         try:
             brand = Brand.objects.get(pk=brand_id)
@@ -43,9 +41,12 @@ def manage_brand_view(request, brand_id=None):
         form = BrandForm(instance=brand)
 
     return render(request, 'brands/manage_brand.html', {'form': form, 'brand': brand})
-@login_required
-@user_passes_test(admin_only)
+
+
 def delete_brand(request, brand_id):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to access this page.")  
+        return redirect('/')
     try:
         brand = Brand.objects.get(pk=brand_id)
         brand.delete()

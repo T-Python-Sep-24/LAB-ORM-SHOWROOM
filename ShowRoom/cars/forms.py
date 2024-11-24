@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car, Color, VehiclePhoto
+from .models import Car, Color, VehiclePhoto ,Review
 from django.forms import inlineformset_factory
 
 
@@ -26,6 +26,14 @@ VehiclePhotoInlineFormSet = inlineformset_factory(
 )
 
 
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['content', 'rating']
+
+    content = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write your review...', 'rows': 4}))
+    rating = forms.ChoiceField(choices=[(i, f"{i} Star{'s' if i > 1 else ''}") for i in range(1, 6)], widget=forms.Select)
+    
 class ColorForm(forms.ModelForm):
     class Meta:
         model = Color
@@ -36,4 +44,3 @@ class ColorForm(forms.ModelForm):
                 'class': 'form-control'  
             }),
         }
-

@@ -2,11 +2,15 @@
 {% load static %} 
 
 {% block title %}
-   brand details
+   Brand Details
 {% endblock %}
 
+
 {% block content %}
+
+
 <div class="car-details-container">
+
     <h1>{{ car.name }}</h1>
     <img src="{{ car.photo.url }}" alt="{{ car.name }}">
     <p><strong>Brand:</strong> {{ car.brand }}</p>
@@ -23,7 +27,169 @@
         {% else %}
           No colors assigned.
         {% endif %}
-      </p>
-    <p><strong>price : </strong>{{ car.price}} {{car.currency}}</p>
+    </p>
+    <p><strong>Price : </strong>{{ car.price }} {{ car.currency }}</p>
 </div>
+<hr class="my-4">
+
+<div class="reviews-container">
+    <h2 class="my-4 text-center">Reviews</h2>
+
+    {% if reviews %}
+        <div class="reviews-list">
+            {% for review in reviews %}
+            <div class="review-card card mb-3" style="border: 2px solid #dee2e6; border-radius: 8px;">
+                <div class="card-header" style="background-color: #f8f9fa; border-radius: 8px 8px 0 0;">
+                    <h5 class="card-title mb-0">{{ review.user.username }} - 
+                        <small class="text-muted">{{ review.created_at|date:"F j, Y" }}</small>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="stars mb-3">
+                        <span>{{ review.rating }} </span>
+                        <span class="fa fa-star checked"></span>
+                    </div>
+                    <p class="card-text">{{ review.content }}</p>
+                </div>
+            </div>
+            {% endfor %}        
+        </div>
+    {% else %}
+        <p class="text-center">No reviews yet. Be the first to review this car!</p>
+    {% endif %}
+
+    <hr class="my-4">
+
+    <!-- add review -->
+    {% if user.is_authenticated %}
+    <h3 class="my-4 text-center">Add Your Review</h3>
+    <form method="POST" action="{% url 'cars:car_details_view' card_id=car.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="review_content" class="form-label">Your Review</label>
+            <textarea class="form-control" name="review_content" id="review_content" rows="4" placeholder="Write your review..." required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="review_rating" class="form-label">Rating</label>
+            <div class="stars-rating">
+                <span class="fa fa-star" data-index="1"></span>
+                <span class="fa fa-star" data-index="2"></span>
+                <span class="fa fa-star" data-index="3"></span>
+                <span class="fa fa-star" data-index="4"></span>
+                <span class="fa fa-star" data-index="5"></span>
+                <input type="hidden" name="review_rating" id="review_rating" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Review</button>
+    {% else %}
+        <p class="text-center">Please log in to submit a review.</p>
+    {% endif %}
+    </form>
+</div>
+<style>
+    .reviews-container {
+        background-color: #f1f1f1;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        max-width: 95%;
+        margin: 50px auto;
+        background-color: ffffff;
+        border-radius: 20px;
+        box-shadow: 0 11px 11px rgba(0, 0, 20, 70);
+    }
+
+    .reviews-container h2, .reviews-container h3 {
+        color: #333;
+    }
+
+    .reviews-list {
+        margin-bottom: 20px;
+    }
+
+    .review-card {
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .stars {
+        font-size: 20px;
+        color: #ffd700;
+    }
+
+    .stars-rating {
+        font-size: 30px;
+        color: #d3d3d3;
+        cursor: pointer;
+    }
+
+    .stars-rating span.checked {
+        color: #ffd700;
+    }
+
+    .stars-rating span:hover {
+        color: #ffd700;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.stars-rating span');
+        const reviewRatingInput = document.getElementById('review_rating');
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function () {
+                const index = parseInt(star.getAttribute('data-index'));
+                setStars(index);
+            });
+
+            star.addEventListener('mouseout', function () {
+                const selected = reviewRatingInput.value;
+                setStars(selected ? selected : 0);
+            });
+
+            star.addEventListener('click', function () {
+                const index = parseInt(star.getAttribute('data-index'));
+                reviewRatingInput.value = index;
+                setStars(index);
+            });
+        });
+
+        function setStars(rating) {
+            stars.forEach(star => {
+                if (parseInt(star.getAttribute('data-index')) <= rating) {
+                    star.classList.add('checked');
+                } else {
+                    star.classList.remove('checked');
+                }
+            });
+        }
+    });
+
+</script>
+
 {% endblock %}
+
