@@ -8,7 +8,7 @@
     <h1 class="mt-3 ms-2">
         Know More About <span class="text-danger">{{brand.name}}</span>
     </h1>
-    <div class="half-border mb-5"></div>
+    <div class="half-border mb-3"></div>
     <div class="container-md">
         <div class="d-flex gap-2 justify-content-end my-2">
             <a href="{% url 'brands:updateBrandView' brand.id %}" class="btn border-2 shadow-sm {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
