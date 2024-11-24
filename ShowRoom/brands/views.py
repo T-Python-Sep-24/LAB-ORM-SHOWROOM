@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from .models import Brand
 from .forms import BrandForm
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def all_brands(request):
     query = request.GET.get('q', '')  # Search query
@@ -30,6 +30,12 @@ def all_brands(request):
     return render(request, 'brand/all_brands.html', {'brands': brands, 'query': query, 'sort': sort})
 
 def create_brand(request):
+     # Debugging line: Check if the user is staff
+    print(f"User is staff: {request.user.is_staff}")  # For debugging
+    # Check if the user is either a superuser or staff
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.error(request, "Only admins and staff can add cars.", "alert-warning")
+        return redirect("main:index_view")
     if request.method == 'POST':
         form = BrandForm(request.POST, request.FILES)
         if form.is_valid():
@@ -50,6 +56,10 @@ def brand_detail(request, brand_id):
 
 def brand_update(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
+    # Check if the user is either a superuser or staff
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.error(request, "Only admins and staff can add cars.", "alert-warning")
+        return redirect("main:index_view")
     if request.method == 'POST':
         form = BrandForm(request.POST, request.FILES, instance=brand)
         if form.is_valid():
@@ -65,6 +75,10 @@ def brand_update(request, brand_id):
 
 def brand_delete(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
+    # Check if the user is either a superuser or staff
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.error(request, "Only admins and staff can add cars.", "alert-warning")
+        return redirect("main:index_view")
     if request.method == 'POST':
         brand.delete()
         messages.success(request, f"Brand '{brand.name}' has been successfully deleted!")

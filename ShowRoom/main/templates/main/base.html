@@ -29,33 +29,35 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'brands:all_brands' %}">All Brands</a></li>
                     </ul>
                 </div>
-                
-                {% if user.is_superuser and user.is_staff %}
-                <a href="{% url 'cars:create_car' %}">Add Car</a>
-                <a href="{% url 'cars:update_car' car.id %}">Edit</a>
-                <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+
+                {% if user.is_superuser or user.is_staff %}
+                <div class="d-flex gap-3">
+                    <a href="{% url 'cars:create_car' %}" class="btn btn-primary">Add Car</a>
+                    <a href="{% url 'brands:create_brand' %}" class="btn btn-secondary">Add Brand</a>
+                </div>
             {% endif %}
             
-                <ul>
-                    <li class="nav-item">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
                     {% if request.user.is_authenticated %}
-                    <div class="d-flex gap-1 align-items-center">
-                    <h6 class="p-0 m-0 text-black">welcome {{ request.user.username }}, </h6>
-                    <a  class="nav-link" href="{% url 'Users:log_out' %}?next={{request.path}}">Log out</a>
-                    </div>
+                        <div class="d-flex gap-1 align-items-center">
+                            <h6 class="p-0 m-0 text-black">Welcome, {{ request.user.username }} </h6>
+                            <a class="btn btn-outline-danger btn-sm" href="{% url 'Users:log_out' %}?next={{request.path}}">Log out</a>
+                        </div>
                     {% else %}
-                    <div class="dropdown bg-transparent">
-                    <a class="btn nav-link dropdown-toggle p-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Sign up/ Sign in
-                    </a>
-                    <ul class="dropdown-menu p-3">
-                    <li><a class="dropdown-item" href="{% url 'Users:sign_up' %}?next={{request.path}}">Sign up</a></li>
-                    <li><a class="dropdown-item" href="{% url 'Users:sign_in' %}?next={{request.path}}">Sign in</a></li>
-                    </ul>
-                </div>
-                {% endif %}
+                        <div class="dropdown">
+                            <a class="btn nav-link dropdown-toggle p-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sign up / Sign in
+                            </a>
+                            <ul class="dropdown-menu p-3">
+                                <li><a class="dropdown-item" href="{% url 'Users:sign_up' %}?next={{request.path}}">Sign up</a></li>
+                                <li><a class="dropdown-item" href="{% url 'Users:sign_in' %}?next={{request.path}}">Sign in</a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
                 </li>
-                </ul>
+            </ul>
+            
             </div>
         </nav>
     </header>

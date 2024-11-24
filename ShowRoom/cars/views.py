@@ -72,10 +72,9 @@ def car_detail(request, car_id):
 
 def update_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-
-    # Check if the user is both superuser and staff
-    if not (request.user.is_superuser and request.user.is_staff):
-        messages.error(request, "Only admin and staff can update cars.", "alert-warning")
+ # Check if the user is either a superuser or staff
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.error(request, "Only admins and staff can add cars.", "alert-warning")
         return redirect("main:index_view")
     
     if request.method == 'POST':
@@ -94,9 +93,9 @@ def update_car(request, car_id):
 def delete_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
-    # Check if the user is both superuser and staff
-    if not (request.user.is_superuser and request.user.is_staff):
-        messages.error(request, "Only admin and staff can delete cars.", "alert-warning")
+    # Check if the user is either a superuser or staff
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.error(request, "Only admins and staff can add cars.", "alert-warning")
         return redirect("main:index_view")
 
     if request.method == 'POST':
