@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'brands',
     'cars',
     'dashboard',
+    'accounts',
 ]
 
 MIDDLEWARE = [

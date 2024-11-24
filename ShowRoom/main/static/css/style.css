@@ -68,7 +68,24 @@ nav a {
 nav a:hover{
     color: var(--secondary-color);
 }
+.nav-toggle {
+    display: none; 
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px; 
+    position: relative; 
+    z-index: 1000;
+}
 
+
+.nav-toggle div {
+    width: 30px;
+    height: 4px;
+    background-color: var(--text-color); 
+    border-radius: 4px;
+}
 .footer-container{
     margin-top: auto; 
     display: flex;
@@ -551,4 +568,254 @@ nav a:hover{
 .alert-error {
     background-color: #f8d7da; 
     border: 1px solid #f5c6cb;  
+}
+nav.open {
+    display: flex;
+    background-color: rgba(56, 59, 64, 0.9); 
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    
+    nav {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: var(--background-color); 
+        z-index: 999; 
+    }
+
+    
+    .nav-toggle {
+        display: flex;
+    }
+
+    
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+
+    .nav-center {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-center li {
+        text-align: center;
+        margin: 10px 0;
+    }
+}
+@media (max-width: 1200px) {
+    header {
+        width: 95%;
+    }
+
+    .main-container {
+        padding: 0 50px;
+    }
+
+    .home-cars-container {
+        padding: 0 50px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer-section {
+        margin: 10px 0;
+    }
+
+    .page-container h1 {
+        font-size: 5rem;
+    }
+
+    .page-container p {
+        font-size: 1.5rem;
+    }
+
+    .brand-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .brand-card {
+        width: 100%;
+    }
+
+    .brand-details-container img {
+        max-height: 250px;
+    }
+
+    .car-details-container img {
+        max-height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        width: 100%;
+        margin: 10px;
+    }
+
+    .header-container {
+        padding: 0 10px;
+    }
+
+    nav {
+        font-size: 16px;
+        gap: 10px;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    .page-container h1 {
+        font-size: 4rem;
+    }
+
+    .page-container p {
+        font-size: 1.5rem;
+    }
+
+    .page-container button {
+        padding: 15px 15px;
+    }
+
+    .home-cars-container {
+        padding: 0 20px;
+        margin-left: 0;
+    }
+
+    .top-brands-section {
+        margin-top: 100px;
+    }
+
+    .brand-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .brand-card {
+        width: 100%;
+    }
+
+    .car-details-container p {
+        font-size: 18px;
+    }
+
+    .brand-details-container p {
+        font-size: 18px;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .brand-form, .car-form {
+        padding: 15px;
+    }
+
+    .btn-submit, .btn-back {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .footer-container {
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    nav {
+        font-size: 14px;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .main-container {
+        padding: 0 20px;
+        flex-direction: column;
+    }
+
+    .page-container h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    .page-container p {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .page-container button {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 18px;
+    }
+
+    .home-cars-container {
+        flex-direction: column;
+        padding: 0;
+        margin-left: 0;
+    }
+
+    .brand-card {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .brand-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .brand-details-container img {
+        width: 100%;
+        max-height: 200px;
+    }
+
+    .brand-details-container p {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .search-input {
+        width: 80%;
+    }
+
+    .search-button {
+        padding: 10px;
+    }
+
+    .pagination-container {
+        margin-top: 10px;
+    }
+}
+nav.open {
+    display: flex !important;
 }

@@ -1,63 +1,79 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
-        <title>{% block title %}ShowRoom{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    </head>
-    <body>
-        <header>
-            <div class="header-container">
-                <div class="navbar">
-                    <nav>
-                        <ul class="nav-center">
-                            <li><a href="{% url 'main:home_view' %}">Home</a></li>
-                            <li><a href="{% url 'brands:all_brands_view' %}">Car Brands</a></li>
-                            <li><a href="{% url 'cars:all_cars_view' %}">Browse Cars</a></li>
-                            <li><a href="{% url 'dashboard:dashboard_view' %}">Manage Cars</a></li>
-                        </ul>
-                    </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <title>{% block title %}ShowRoom{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="navbar">
+                <div class="nav-toggle">
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
-                <div class="header-image">
-                </div>
-            </div>
-        </header>
-        <main>
-            {% block content%}
-            {% endblock %}
-        </main>
-        <footer>
-            <div class="footer-container">
-                <div class="footer-section company-links">
-                    <h3>COMPANY</h3>
-                    <ul>
+                <nav>
+                    <ul class="nav-center">
                         <li><a href="{% url 'main:home_view' %}">Home</a></li>
-                        <li><a href="{% url 'cars:all_cars_view' %}">Car Lounge</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section location-links">
-                    <h3>LOCATION</h3>
-                    <ul>
-                        <li><a href="#">Our Showrooms</a></li>
-                        <li class="address">
-                            <span>King Fahd Road</span>
-                            <span class="separator">|</span>
-                            <span><a href="https://www.google.com/maps?q=King+Fahd+St,+Riyadh" target="_blank">Riyadh, Saudi Arabia</a></span>
-                        </li>
-                        <li class="address">
-                            <span>Eastern Ring Road</span>
-                            <span class="separator">|</span>
-                            <span><a href="https://www.google.com/maps?q=King+Abdullah+Rd,+Riyadh" target="_blank">Riyadh, Saudi Arabia</a></span>
+                        <li><a href="{% url 'brands:all_brands_view' %}">Car Brands</a></li>
+                        <li><a href="{% url 'cars:all_cars_view' %}">Browse Cars</a></li>
+                        <li>{% if request.user.is_superuser %}
+                            <a href="{% url 'dashboard:dashboard_view' %}">Manage Cars</a>
+                            {% endif %}
                         </li>
                     </ul>
-                </div>
+                </nav>
             </div>
-        </footer>
-    </body>
+            <div class="header-image">
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content%}
+        {% endblock %}
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section company-links">
+                <h3>COMPANY</h3>
+                <ul>
+                    <li><a href="{% url 'main:home_view' %}">Home</a></li>
+                    <li><a href="{% url 'cars:all_cars_view' %}">Car Lounge</a></li>
+                </ul>
+            </div>
+            <div class="footer-section location-links">
+                <h3>LOCATION</h3>
+                <ul>
+                    <li><a href="#">Our Showrooms</a></li>
+                    <li class="address">
+                        <span>King Fahd Road</span>
+                        <span class="separator">|</span>
+                        <span><a href="https://www.google.com/maps?q=King+Fahd+St,+Riyadh" target="_blank">Riyadh, Saudi Arabia</a></span>
+                    </li>
+                    <li class="address">
+                        <span>Eastern Ring Road</span>
+                        <span class="separator">|</span>
+                        <span><a href="https://www.google.com/maps?q=King+Abdullah+Rd,+Riyadh" target="_blank">Riyadh, Saudi Arabia</a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const nav = document.querySelector('nav');
+
+        navToggle.addEventListener('click', () => {
+            nav.classList.toggle('open'); 
+        });
+    </script>
+</body>
 </html>

@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from cars.models import Car, Brand, Color
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 # Create your views here.
 
-from django.shortcuts import render
 
+def admin_only(user):
+    return user.is_superuser
+
+@login_required
+@user_passes_test(admin_only)
 def dashboard_view(request):
 
     table = request.GET.get('table', 'cars')

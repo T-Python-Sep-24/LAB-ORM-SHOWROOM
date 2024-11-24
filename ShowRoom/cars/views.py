@@ -7,9 +7,16 @@ from django.template.loader import get_template
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test , login_required
 
 # Create your views here.
 
+def admin_only(user):
+
+    return user.is_superuser
+
+@login_required
+@user_passes_test(admin_only)
 def manage_car_view(request, car_id=None):
     car = None
     if car_id:
@@ -45,6 +52,8 @@ def manage_car_view(request, car_id=None):
 
     return render(request, 'cars/manage_car.html',locals())
 
+@login_required
+@user_passes_test(admin_only)
 def delete_car(request, car_id):
     try:
         car = Car.objects.get(pk=car_id)
@@ -54,6 +63,8 @@ def delete_car(request, car_id):
         messages.error(request, "The car you are trying to delete does not exist.")
     return redirect('cars:all_cars_view')
 
+@login_required
+@user_passes_test(admin_only)
 def manage_color_view(request, color_id=None):
     color = None
     if color_id:
@@ -81,6 +92,8 @@ def manage_color_view(request, color_id=None):
 
     return render(request, 'cars/colors/manage_color.html', {'form': form, 'color': color})
 
+@login_required
+@user_passes_test(admin_only)
 def delete_color(request, color_id):
     try:
         color = Color.objects.get(pk=color_id)
