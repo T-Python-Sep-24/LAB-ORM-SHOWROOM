@@ -25,8 +25,23 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'brands:all_brands_view' %}">All Brands</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'main:about_view' %}">About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'main:contact_view' %}">Contact Us</a></li>
-                    <li class="nav-item dropdown">
-                </ul>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link">Welcome {{ request.user.first_name }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:log_out' %}">Log out</a></li>
+
+                    {% else %}
+                    <div class="dropdown gap-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Sign Up
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'users:sign_up' %}">SignUp</a></li>
+                          <li><a class="dropdown-item" href="{% url 'users:sign_in' %}">Already have an account?</a></li>
+                          <li><a class="dropdown-item" href="{% url 'users:log_out' %}">Logout</a></li>
+                        </ul>
+                      </div> 
+                    {% endif %}
+                     </ul>
             </div>
         </div>
     </nav>
