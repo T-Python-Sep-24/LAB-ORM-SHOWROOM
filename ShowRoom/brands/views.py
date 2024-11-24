@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import Brand
+from cars.models import Car
 from .forms import BrandForm
 
 # Create your views here.
@@ -39,3 +40,11 @@ def update_brand_view(request: HttpRequest, brand_id: int):
             print("form error: ", brand_form.errors)
 
     return render(request, "brands/update.html", context)
+
+
+def details_brand_view(request: HttpRequest, brand_id: int):
+    brand = Brand.objects.get(pk=brand_id)
+    cars = Car.objects.all().filter(brand=brand)
+    context = {"brand": brand, "cars": cars}
+
+    return render(request, "brands/details.html", context)

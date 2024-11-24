@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Add Car{% endblock %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'css/brands.css' %}">{% endblock %}
+
+{% block content %}
+
+<section class="container">
+    <div class="row row-cols-1">
+        <div class="col">
+            <div class="d-flex flex-column shadow p-2 gap-2">
+                <h1>{{ brand.name }}</h1>
+                <div class="details-card-image">
+                    <img src="{{ brand.logo.url }}" alt="{{ brand.name }} logo">
+                </div>
+                <div>
+                    <h5>Founded: {{ brand.founded_at }}</h5>
+                </div>
+                <p>{{ brand.about }}</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section>
+    <div class="container">
+        <h1>Brand Cars</h1>
+        {% include 'cars/components/cars_list.html' %}
+    </div>
+</section>
+
+{% endblock %}

@@ -25,7 +25,7 @@
       <div class="col p-0">
          <div class="car-card d-flex flex-column shadow mx-2 my-2 p-2 gap-2">
             <div>
-                  <h5>{{ brand.name }}</h5>
+                  <a href="{% url 'brands:details_brand_view' brand.id %}" class="main-link"><h5>{{ brand.name }}</h5></a>
             </div>
             <div class="card-image">
                   <img src="{{ brand.logo.url }}" alt="{{ brand.name }} logo" />

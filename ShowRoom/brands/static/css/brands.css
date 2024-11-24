@@ -1,4 +1,4 @@
-/* cards */
+/* brands cards */
 .card-image {
     height: 250px !important;
     padding-bottom: 1rem;
@@ -8,6 +8,16 @@
     object-fit: contain;
 }
 
+/* details cards */
+.details-card-image {
+    height: 300px !important;
+}
+
+.details-card-image img {
+    width: 100% !important;
+    height: 100%;
+    object-fit: contain !important;
+}
 
 /* forms */
 .update-image-thumb {
