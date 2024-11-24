@@ -1,24 +1,23 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
-{% block title %}All cars Page{% endblock %}
+{% block title %}All Cars{% endblock %}
 {% block content %}
-
 <div class="container mx-auto my-8">
-    <h1 class="text-3xl font-bold mb-4">All Cars</h1>
+    <h2 class="text-2xl font-bold mb-4">All Cars</h2>
+    <a href="{% url 'cars_app:new_car_view' %}" class="bg-blue-600 text-white py-2 px-4 rounded mb-4 inline-block">Add New Car</a>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for car in cars %}
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="w-full h-32 object-cover rounded-t-lg">
-            <h3 class="font-semibold mt-2">{{ car.name }}</h3>
-            <p>Brand: {{ car.brand.name }}</p>
-            <p>Model: {{ car.model }}</p>
-            <a href="{% url 'car_detail' car.id %}" class="text-blue-600 hover:underline">View Details</a>
-            <a href="{% url 'car_update' car.id %}" class="text-yellow-600 hover:underline ml-4">Update</a>
-            <form action="{% url 'car_delete' car.id %}" method="post" class="inline">
-                {% csrf_token %}
-                <button type="submit" class="text-red-600 hover:underline ml-4">Delete</button>
-            </form>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="font-semibold text-lg">{{ car.name }}</h3>
+                <p>Brand: {{ car.brand_id.name }}</p>
+                <p>Model Year: {{ car.model_year }}</p>
+                <a href="{% url 'cars_app:car_detail_view' car.id %}" class="text-blue-600 hover:underline">View Details</a>
+            </div>
         </div>
+        {% empty %}
+        <p class="col-span-full text-center text-gray-500">No cars available.</p>
         {% endfor %}
     </div>
 </div>

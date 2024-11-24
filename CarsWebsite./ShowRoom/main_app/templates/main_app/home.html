@@ -20,12 +20,12 @@
 <!-- Latest Cars Section -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
     <h2 class="text-2xl font-bold mb-4">Latest Cars</h2>
-    {% for car in latest_cars %}
+    {% for car in cars %}
     <div class="bg-white rounded-lg shadow-md p-4">
         <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-image w-full rounded-t-lg">
         <h3 class="font-semibold mt-2">{{ car.name }}</h3>
-        <p>Brand: {{ car.brand.name }}</p>
-        <a href="{% url 'car_detail' car.id %}" class="text-blue-600 hover:underline">View Details</a>
+        <p>Brand: {{ car.brand_id }}</p>
+        <a href="{% url 'cars_app:car_detail_view' car.id %}" class="text-blue-600 hover:underline">View Details</a>
     </div>
     {% endfor %}
 </div>
@@ -34,15 +34,20 @@
 <div class="mt-8">
     <h2 class="text-2xl font-bold mb-4">Latest Brands</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {% for brand in latest_brands %}
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="card-image w-full rounded-t-lg">
-            <h3 class="font-semibold mt-2">{{ brand.name }}</h3>
-            <p>{{ brand.about|truncatewords:15 }}</p>
-            <p>Cars Available: {{ brand.car_set.count }}</p>
-            <a href="{% url 'brand_detail' brand.id %}" class="text-blue-600 hover:underline">View Details</a>
+        {% for brand in brands %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="font-semibold text-lg mt-2">{{ brand.name }}</h3>
+                <p class="text-gray-700">{{ brand.about|truncatewords:15 }}</p>
+                <p class="text-sm text-gray-500">Cars Available: {{ brand.car_count }}</p>
+                <a href="{% url 'brands_app:brand_detail_view' brand.id %}" class="text-blue-600 hover:underline mt-2 inline-block">View Details</a>
+            </div>
         </div>
+        {% empty %}
+        <p class="col-span-full text-center text-gray-500">No brands available.</p>
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
