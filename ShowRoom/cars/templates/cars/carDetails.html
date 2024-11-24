@@ -63,7 +63,7 @@
                                 <img src="{% static 'images/icons/capacity.svg' %}" alt="engine">
                                 <h5 class="ms-2">Capacity</h5>
                             </div>
-                            <p class="m-0 ms-2">{{car.capacity}} passengers</p>
+                            <p class="m-0 ms-2">{{car.capacity}} Passengers</p>
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start details">
@@ -174,11 +174,11 @@
 </section>
 
 <!-- Comment section -->
-<section class="container">
+<section class="container my-5">
     <!-- Display comments -->
     <div class="row justify-content-center">
-        <p class="fs-3 fw-medium">
-            Comments <span class="fs-4 fw-medium">({{comments.count}}):</span>
+        <p class="fs-3 fw-medium my-0">
+            Comments ({{comments.count}}):
         </p>
         <div class="d-flex flex-column gap-2 mb-5 mx-2">
             {% for comment in comments %}
@@ -205,7 +205,7 @@
     <div class="row justify-content-center">
         <div class="col col-lg-8 shadow rounded-2 py-3 px-4 bg-opacity-50 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}bg-dark{% else %}bg-light{% endif %}">
             {% if user.is_authenticated %}
-            <p class="fs-4">
+            <p class="fs-4 fw-medium">
                 Add your comment:
             </p>
             <form action="{% url 'cars:addCommentView' car.id %}" class="form-floating d-flex flex-column gap-2 mt-3 px-2 needs-validation" method="post" novalidate>
