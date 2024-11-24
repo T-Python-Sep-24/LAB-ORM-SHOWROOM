@@ -11,5 +11,6 @@ urlpatterns = [
     path('colors/all/', views.all_colors, name='all_colors'), 
     path('colors/new/', views.add_color, name='add_color'),  
     path('colors/update/<int:color_id>/', views.update_color, name='update_color'),  
-     path('colors/delete/<int:color_id>/', views.delete_color, name='delete_color'), 
+    path('colors/delete/<int:color_id>/', views.delete_color, name='delete_color'), 
+    path('delete_review/<int:review_id>/', views.delete_review, name='delete_review'),
 ]

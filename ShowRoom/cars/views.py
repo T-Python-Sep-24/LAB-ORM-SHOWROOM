@@ -1,8 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Car, Color , Brand 
-from .forms import CarForm  , ColorForm
+from .models import Car, Color , Brand , Review
+from .forms import CarForm  , ColorForm , ReviewForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import user_passes_test
+from django.http import Http404
+
+def is_admin(user):
+    return user.is_superuser
 
 def all_cars(request):
     cars = Car.objects.all()
@@ -41,12 +46,34 @@ def all_cars(request):
         }
     )
 
-
 def car_detail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    return render(request, 'cars/car_detail.html', {'car': car})
+    
+    reviews = car.reviews.all()
 
+    form = ReviewForm()
 
+    for review in reviews:
+        review.full_stars = [1] * review.rating 
+        review.empty_stars = [1] * (5 - review.rating)
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.car = car
+            review.save()
+            return redirect('cars:car_detail', car_id=car.id)  
+
+    return render(request, 'cars/car_detail.html', {
+        'car': car,
+        'reviews': reviews,
+        'form': form,
+        'is_authenticated': request.user.is_authenticated  
+    })
+
+@user_passes_test(is_admin)
 def new_car(request):
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
@@ -65,6 +92,7 @@ def new_car(request):
 
     return render(request, 'cars/new_car.html', {'form': form})
 
+@user_passes_test(is_admin)
 def update_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     if request.method == 'POST':
@@ -77,7 +105,7 @@ def update_car(request, car_id):
         form = CarForm(instance=car)
     return render(request, 'cars/update_car.html', {'form': form, 'car': car})
 
-
+@user_passes_test(is_admin)
 def delete_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     
@@ -88,6 +116,7 @@ def delete_car(request, car_id):
     
     return render(request, 'cars/delete_car.html', {'car': car})
 
+@user_passes_test(is_admin)
 def add_color(request):
     if request.method == 'POST':
         form = ColorForm(request.POST)
@@ -99,10 +128,13 @@ def add_color(request):
         form = ColorForm()
     return render(request, 'cars/add_color.html', {'form': form})
 
+@user_passes_test(is_admin)
 def all_colors(request):
     colors = Color.objects.all()
     return render(request, 'cars/all_colors.html', {'colors': colors})
 
+
+@user_passes_test(is_admin)
 def update_color(request, color_id):
     color = get_object_or_404(Color, id=color_id)
     
@@ -117,6 +149,7 @@ def update_color(request, color_id):
 
     return render(request, 'cars/update_color.html', {'form': form})
 
+@user_passes_test(is_admin)
 def delete_color(request, color_id):
     color = get_object_or_404(Color, id=color_id)
     
@@ -126,3 +159,16 @@ def delete_color(request, color_id):
         return redirect('cars:all_colors')  
     
     return render(request, 'cars/delete_color.html', {'color': color})
+
+
+@user_passes_test(is_admin)
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if not request.user.is_superuser:
+        raise Http404("You do not have permission to delete this review.")
+    
+    review.delete()
+    messages.success(request, "Review deleted successfully!")
+
+    return redirect('cars:car_detail', car_id=review.car.id)
