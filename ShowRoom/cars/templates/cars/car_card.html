@@ -1,24 +1,26 @@
 <!-- <div class="row mt-2 row-cols-1 row-cols-md-3 g-5 ms-3"> -->
-<div class="col-11 d-flex flex-column justify-content-between align-items-center align-items-lg-start ms-5 me-5">
-     <div class="d-flex flex-column flex-lg-row flex-lg-wrap justify-content-start align-items-baseline gap-5">
+<div class="col-12 d-flex flex-column justify-content-between align-items-center align-items-lg-start ms-5 me-5">
+     <div class="d-flex flex-row flex-wrap justify-content-center justify-content-lg-start align-items-baseline gap-5">
         {% for car in cars %}
-        <div class="col">
-            <div class="car_box d-flex flex-column justify-content-start align-items-start  p-4 gap-2">
-                <img src="{{car.image.url}}" class="w-100 object-fit-cover car_box_img"/>
+        <div class="col  col-md-10 col-lg-4 col-sm-10">
+            <div class="car_box d-flex flex-column justify-content-start align-items-start p-4 gap-2">
+                <img src="{{car.image.url}}" class="w-100 object-fit-contain car_box_img"/>
                 <div class="line"></div>
                 <a class="mb-3" href="{% url 'cars:car_detail_view' car.id %}"><h3>{{car.name}}</h3></a>
                 <div class="mb-4">
                     <h4 class="text-secondary">Avaliable Colors:</h4>
-                    <div class="row mt-2 row-cols-1 row-cols-md-3 g-2">
+                    <div class="row mt-2 row-cols-6 g-1">
                         {% for color in car.colors.all %}
-                            <div class="color_box" style="background-color: {{ color.hex_value }};"></div>
+                            <a href="{% url 'cars:all_cars_view' color.name %}">
+                                <div class="color_box" style="background-color: {{ color.hex_value }};"></div>
+                            </a>
                         {% endfor %}
                     </div>
                 </div>
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <div class="d-flex align-items-center gap-1 ">
                             <img src="{{car.brand.logo.url}}" class="rounded-circle overflow-hidden brand_small_logo " />
-                            <a href=""><h5 class="m-0 p-0">{{car.brand.name}}</h5></a>
+                            <a href="{% url 'brands:brand_detail_view' car.brand.id %}"><h5 class="m-0 p-0">{{car.brand.name}}</h5></a>
                         </div>
                     </div>
             </div>

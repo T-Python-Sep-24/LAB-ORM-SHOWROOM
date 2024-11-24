@@ -56,7 +56,7 @@
             </a>
     
             <a href="{% url 'cars:car_delete_view' car.id %}">
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Car</button>
+                <button type="button" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the car {{ car.name }}?');">Delete Car</button>
             </a>
         </div>
     </div>

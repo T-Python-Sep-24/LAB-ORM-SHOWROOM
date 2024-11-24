@@ -8,7 +8,7 @@
 
 <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center justify-content-lg-between align-items-lg-center mb-5 ms-lg-5 me-lg-5 gap-sm-2 gap-md-3">
     <h1>
-        {% if filter == 'all' %} All Avaliable Cars {% else %} Cars with {{filter}} Color {% endif %}
+        {% if request.GET.filter_brand == 'filter_brand' %} {{filter_by}} Cars {% elif request.GET.filter_color == 'filter_color' %} Cars With Color: {{filter_by}} {% else %} All Avaliable Cars {{filter_by}} {% endif %}
     </h1>
 
     <form action="{% url 'cars:search_cars_view' %}" method="GET" >
@@ -21,7 +21,7 @@
             <select name="filter_brand" class="form-select">
                 <option value="">Filter By Brand</option>
                 {% for brand in brands %}
-                    <option value="{{brand.id}}" {% if request.GET.filter_brand == brand.name %} selected {% endif %}>{{ brand.name }}</option>
+                    <option value="{{ brand.id }}" {% if request.GET.filter_brand == brand.name %} selected {% endif %}>{{ brand.name }}</option>
                 {% endfor %}
             </select>
 
@@ -38,25 +38,5 @@
 </div>
 
 {% include 'cars/car_card.html' %}
-
-<div class="pagination d-flex justify-content-center align-items-center mt-5 gap-4">
-    {% if cars.has_previous %}
-        <div class="d-flex gap-1">
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ cars.previous_page_number }}">&laquo; previous</a>
-        </div>
-    {% endif %}
-
-    <div class="current">
-        Page {{ cars.number }} of {{ cars.paginator.num_pages }}
-    </div>
-
-    {% if cars.has_next %}
-        <div class="d-flex gap-4">
-            <a href="?page={{ cars.next_page_number }}">next &raquo;</a>
-            <a href="?page={{ cars.paginator.num_pages }}">last &raquo;</a>
-        </div>
-    {% endif %}
-</div>
 
 {% endblock %}

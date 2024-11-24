@@ -34,10 +34,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="{% url 'cars:all_cars_view' %}">All Cars</a>
+                      <a class="nav-link" href="{% url 'cars:all_cars_view' 'all' %}">All Cars</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'cars:new_car_view' %}">Add Car</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'brands:all_brands_view' %}">All Brands</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'brands:new_brand_view' %}">Add Brand</a>
@@ -49,8 +52,8 @@
                         <a class="nav-link" href="{% url 'main:contact_view' %}">Contact Us</a>
                     </li>
                   </ul>
-                  <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <form class="d-flex" role="search" method="get" action="{% url 'cars:search_cars_view' %}">
+                    <input  class="form-control me-2" type="search" placeholder="Search For Car" aria-label="Search" name="search" value="{{request.GET.search}}" required minlength="3">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                   </form>
                 </div>

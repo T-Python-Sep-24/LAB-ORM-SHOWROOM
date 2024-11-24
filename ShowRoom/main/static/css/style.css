@@ -23,6 +23,15 @@ h1, h2 {
     word-spacing: 6px;
 }
 
+nav h2 {
+    transition: transform 0.3s ease;
+}
+
+nav h2:hover {
+    transform: scale(1.02); 
+    color:#4834dc;
+}
+
 main {
     min-height: 70vh;
     /* flex: 1; */
@@ -71,7 +80,6 @@ footer hr {
 
 .car_box_img {
     height: 16rem;
-    width: auto;
     transition: transform 0.3s ease;
 }
 
@@ -152,4 +160,13 @@ footer hr {
     color:#4834dc;
 }
 
+.brand_box_img {
+    height: 12rem;
+    width: 12rem;
+    transition: transform 0.3s ease;
+}
 
+@media (max-width: 992px) {
+
+
+}

@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Cars ShowRoom {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="d-flex flex-column flex-lg-row justify-content-center align-items-center justify-content-lg-between align-items-lg-center mb-5 ms-lg-5 me-lg-5 gap-sm-2 gap-md-3">
+    <h1>
+        All Avaliable Brands
+    </h1>
+
+    <form class="d-flex" role="search" method="get" action="{% url 'brands:search_brands_view' %}">
+        <input  class="form-control me-2" type="search" placeholder="Search For Brand" aria-label="Search" name="search" value="{{request.GET.search}}" required minlength="3">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+</div>
+
+{% include 'brands/brand_card.html' %}
+
+{% endblock %}

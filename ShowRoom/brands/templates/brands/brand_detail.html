@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %} {{brand.name}} Details {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<h1 class="mb-4 d-flex flex-column justify-content-center align-items-center">
+    {{brand.name}} Brand Details
+</h1>
+
+<div class="container d-flex flex-column align-items-center">
+    <div class="d-flex flex-column justify-content-start align-items-center brand_detail">
+        <img class=" align-self-center fit-cover" src="{{brand.logo.url}}"/>
+        <div class="line"></div>
+        <div class="d-flex flex-column justify-content-start align-items-start w-100 p-5 gap-4">
+            <div class="d-flex flex-row flex-warp justify-content-start align-items-center gap-4 w-100">
+                <h2>{{brand.name}}</h2>
+                <img src="{{brand.logo.url}}" class="rounded-circle brand_small_logo" />
+            </div>
+            <div class="">
+                <h3 class="text-dark mb-3">
+                    Brand Info
+                </h3>
+                <ul class="d-flex flex-column justify-content-start align-items-start gap-5 p-3">
+                    <li>
+                        <span>{{brand.about}}</span>
+                    </li>
+                    <li >
+                        The Brand Founded At <span>{{brand.founded_at}}</span> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1 class="mb-5 ms-5 d-flex flex-column justify-content-lg-start align-items-lg-start justify-content-sm-center align-items-sm-center">
+    Cars For The brand {{brand.name}}
+</h1>
+
+{% include 'cars/car_card.html' %}
+
+{% endblock %}

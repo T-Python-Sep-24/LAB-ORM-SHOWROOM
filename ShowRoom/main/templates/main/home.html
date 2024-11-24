@@ -6,8 +6,20 @@
 
 {% load static %}
 
-<h1 class="mb-5 ms-5 d-flex flex-column justify-content-lg-start align-items-lg-start justify-content-sm-center align-items-sm-center">Avaliable Cars</h1>
+<h1 class="mb-5 ms-5 d-flex flex-column justify-content-lg-start align-items-lg-start justify-content-sm-center align-items-sm-center">
+    Latest Cars
+</h1>
 
 {% include 'cars/car_card.html' %}
+
+<div class="line mt-5"></div>
+
+<div class="d-flex flex-column flex-lg-row justify-content-center align-items-center justify-content-lg-between align-items-lg-center mt-5 mb-5 ms-lg-5 me-lg-5 gap-sm-2 gap-md-3">
+    <h1>
+        Latest Brands
+    </h1>
+</div>
+
+{% include 'brands/brand_card.html' %}
 
 {% endblock %}
