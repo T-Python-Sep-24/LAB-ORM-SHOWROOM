@@ -20,14 +20,21 @@
 <!-- Latest Cars Section -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
     <h2 class="text-2xl font-bold mb-4">Latest Cars</h2>
-    {% for car in cars %}
+    {% for car in cars|slice:":4" %}  <!-- Display only the first four cars -->
     <div class="bg-white rounded-lg shadow-md p-4">
         <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-image w-full rounded-t-lg">
         <h3 class="font-semibold mt-2">{{ car.name }}</h3>
-        <p>Brand: {{ car.brand_id }}</p>
+        <p>Brand: {{ car.brand_id.name }}</p>  <!-- Access brand name correctly -->
         <a href="{% url 'cars_app:car_detail_view' car.id %}" class="text-blue-600 hover:underline">View Details</a>
     </div>
+    {% empty %}
+    <p class="text-gray-500">No cars available.</p>  <!-- Message if no cars -->
     {% endfor %}
+</div>
+
+<!-- Button to View All Cars -->
+<div class="mt-4">
+    <a href="{% url 'cars_app:all_cars_view' %}" class="bg-blue-600 text-white py-2 px-4 rounded">View All Cars</a>
 </div>
 
 <!-- Latest Brands Section -->

@@ -23,10 +23,10 @@ def new_brand_view(request: HttpRequest):
         if form.is_valid():
             form.save() 
             messages.success(request, "Brand created successfully!")
-            return redirect('all_brands') 
+        return redirect('brands_app:all_brands_view') 
     else:
 
-        form = BrandForm()  
+      form = BrandForm()  
 
     return render(request, 'brands_app/add_new_brand.html', {'form': form})  
 

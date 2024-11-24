@@ -8,7 +8,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded">Update Car</button>
-        <a href="{% url 'car_detail' car.id %}" class="bg-gray-300 text-gray-800 py-2 px-4 rounded ml-2">Cancel</a>
+        <a href="{% url 'cars_app:car_detail_view' car.id %}" class="bg-gray-300 text-gray-800 py-2 px-4 rounded ml-2">Cancel</a>
     </form>
 </div>
 {% endblock %}

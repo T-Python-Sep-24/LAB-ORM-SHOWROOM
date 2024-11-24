@@ -38,7 +38,7 @@ def update_car_view(request: HttpRequest, car_id: int):
         if form.is_valid():
             form.save()  
             messages.success(request, "Car updated successfully!")
-            return redirect('car_detail', car_id=car.id)  
+            return redirect('cars_app:car_detail_view', car_id=car.id)  
     else:
         form = CarForm(instance=car)
     
@@ -50,6 +50,6 @@ def delete_car_view(request: HttpRequest, car_id: int):
     if request.method == 'POST':
         car.delete()  
         messages.success(request, "Car deleted successfully!")
-        return redirect('all_cars')  
+        return redirect('cars_app:all_cars_view')  
 
-    return render(request, 'cars_app/delete_car.html', {'car': car})
+        return render(request, 'cars_app/delete_car.html', {'car': car})
