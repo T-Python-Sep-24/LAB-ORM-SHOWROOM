@@ -1,0 +1,24 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block title %}All Cars{% endblock %}
+{% block content %}
+<div class="container mx-auto my-8">
+    <h2 class="text-2xl font-bold mb-4">All Cars</h2>
+    <a href="{% url 'cars_app:new_car_view' %}" class="bg-blue-600 text-white py-2 px-4 rounded mb-4 inline-block">Add New Car</a>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for car in cars %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="w-full h-68 object-cover">
+            <div class="p-4">
+                <h3 class="font-semibold text-lg">{{ car.name }}</h3>
+                <p>Brand: {{ car.brand_id.name }}</p>
+                <p>Model Year: {{ car.model_year }}</p>
+                <a href="{% url 'cars_app:car_detail_view' car.id %}" class="text-white rounded-lg bg-blue-500 p-2 mb-4">View Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="col-span-full text-center text-gray-500">No cars available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

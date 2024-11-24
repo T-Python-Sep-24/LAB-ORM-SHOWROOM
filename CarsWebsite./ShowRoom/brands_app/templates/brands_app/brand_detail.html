@@ -1,0 +1,17 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block title %}{{ brand.name }} Details{% endblock %}
+{% block content %}
+<div class="container mx-auto my-8">
+    <h1 class="text-3xl font-bold mb-4">{{ brand.name }}</h1>
+    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="w-50 object-cover mb-4 rounded-lg shadow-md items-center bg-white">
+    <p class="text-lg"><strong>About:</strong> {{ brand.about }}</p>
+    <p class="text-lg"><strong>Founded:</strong> {{ brand.founded_at }}</p>
+    <p class="text-lg"><strong>Brand Type:</strong> {{ brand.get_brand_type_display }}</p>
+    <p class="text-lg"><strong>Number of Cars:</strong> {{ brand.car_count }}</p>
+    <div class="mt-4">
+        <a href="{% url 'brands_app:update_brand_view' brand.id %}" class="inline-block px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600">Edit Brand</a>
+        <a href="{% url 'brands_app:all_brands_view' %}" class="inline-block px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 ml-2">Back to All Brands</a>
+    </div>
+</div>
+{% endblock %}
