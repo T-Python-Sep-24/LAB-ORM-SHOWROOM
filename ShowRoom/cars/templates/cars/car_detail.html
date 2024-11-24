@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+
+{% block title %}{{ car.name }} Details{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+<div class="container mt-5">
+    <h1>{{ car.name }}</h1>
+    <div class="mb-4 text-center">
+        <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="img-fluid" style="max-width: 600px; object-fit: cover;">
+    </div>
+    <div class="mb-3">
+        <h4>Brand:</h4>
+        <p>{{ car.brand.name }}</p>
+    </div>
+    <div class="mb-3">
+        <h4>Color:</h4>
+        <p>{% for color in car.colors.all %}{{ color.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    </div>
+    <div class="mb-3">
+        <h4>Specifications:</h4>
+        <p>{{ car.specs }}</p>
+    </div>
+    <div class="mb-3">
+        <h4>Model Year:</h4>
+        <p>{{ car.model_year|date:"Y-m-d" }}</p>
+    </div>
+    <div class="mt-4">
+        <a href="{% url 'cars:update_car_view' car.id %}" class="btn btn-warning mb-4" >Update</a>
+    </div>
+</div>
+</div>
+{% endblock %}

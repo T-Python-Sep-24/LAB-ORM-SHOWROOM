@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+
+{% block title %}Update {{ car.name }}{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container mt-5">
+    <h1 class="text-center">Update {{ car.name }}</h1>
+    <form method="post" enctype="multipart/form-data" action="{% url 'cars:update_car_view' car.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Car Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ car.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="brand" class="form-label">Brand</label>
+            <input type="text" class="form-control" id="brand" name="brand" value="{{ car.brand.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="color" class="form-label">Color</label>
+            <input type="text" class="form-control" id="color" name="colors" value="{{ car.colors.name}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="photo" class="form-label">Car Photo</label>
+            <input type="file" class="form-control" id="photo" name="photo">
+            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="img-thumbnail mt-3" style="width: 200px; height: auto;">
+        </div>
+        <div class="mb-3">
+            <label for="specs" class="form-label">Specifications</label>
+            <textarea class="form-control" id="specs" name="specs" rows="4">{{ car.specs }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="model_year" class="form-label">Year and Month</label>
+            <input type="date" class="form-control" id="model_year" name="model_year" value="{{ car.model_year|date:'Y-m-d' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Update Car</button>
+    </form>
+</div>
+{% endblock %}
