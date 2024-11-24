@@ -89,20 +89,23 @@
                         <input type="text" class="form-control" id="engine" name="engine" required>
                     </div>
                 </div>
-                <div class="row"> 
-
+                <div class="row">
                     <div class="mb-3 col-md-12 col-sm-12">
                         <label for="colors" class="form-label">Colors</label>
-                        <div class="d-flex align-items-center justify-content-start mx-4 checkbox-container">
-                        {% for color in colors%}
-                            <input type="checkbox" class="form-check" id="check-{{color.id}}" name="colors" value="{{color.id}}"/>
-                            <label class="color-lable d-flex justify-content-center text-center align-items-center" for="check-{{color.id}}"> {{color.name}}
-                             <span style="background-color: {{ color.hex_code }};"  class="rounded"></span></label>
-                        {%endfor%}
+                        <div class="d-flex flex-wrap align-items-center justify-content-start mx-4 checkbox-container">
+                            {% for color in colors %}
+                                <div class="form-check me-3 mb-2">
+                                    <input type="checkbox" class="form-check-input" id="check-{{color.id}}" name="colors" value="{{color.id}}"/>
+                                    <label class="color-lable d-flex justify-content-center text-center align-items-center" for="check-{{color.id}}">
+                                        {{color.name}}
+                                        <span style="background-color: {{ color.hex_code }};" class="rounded ms-2"></span>
+                                    </label>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                   
-                </div> 
+                </div>
+                
                 <div class="row">
                  <div class="mb-3 col-md-12 col-sm-12">
                         <label for="photos" class="form-label">Car Photos</label>

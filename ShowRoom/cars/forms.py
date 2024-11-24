@@ -6,7 +6,7 @@ from cars.models import Color,Photo,Car
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = "__all__"
+        fields = ['name', 'model', 'engine', 'year', 'seats', 'doors', 'price', 'specs', 'brand', 'fuel']
 
 class PhotoForm(forms.ModelForm):
     class Meta:

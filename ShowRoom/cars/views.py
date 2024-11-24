@@ -70,11 +70,13 @@ def update_car_view(request:HttpRequest,car_id):
         if request.method=="POST":
             print(request.POST.getlist('colors')) 
             car_form=CarForm(request.POST,request.FILES,instance=car)
-            if request.POST.getlist('colors'):
-                car.colors.set(request.POST.getlist('colors'))
+            if request.POST.getlist('colors'): 
+                    selected_colors = request.POST.getlist('colors') 
+                    car.colors.set(selected_colors)
+
+
             if car_form.is_valid():
-                car=car_form.save()
-                
+                car_form.save()
                 if request.FILES.getlist('photos'):
                     car.photos.all().delete()#clear previose images
                     photos = request.FILES.getlist('photos')

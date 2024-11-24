@@ -93,7 +93,7 @@
 
                     <div class="mb-3 col-md-12 col-sm-12">
                         <label for="colors" class="form-label">Colors</label>
-                        <div class="d-flex align-items-center justify-content-start mx-4 checkbox-container">
+                        <div class="d-flex flex-wrap align-items-center justify-content-start mx-4 checkbox-container">
                         {% for color in colors%}
                         {% if  color in car_colors%}
                         <input type="checkbox" checked class="form-check" id="check-{{color.id}}" name="colors" value="{{color.id}}"/>
