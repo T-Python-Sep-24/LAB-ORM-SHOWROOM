@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.contrib import messages
-from cars.models import Car, Attachment, Color
+from cars.models import Car, Attachment, Color, Comment
 from cars.forms import CarForm, ColorForm
 from brands.models import Brand
 from django.core.paginator import Paginator
@@ -134,6 +134,7 @@ def deleteCarView(request: HttpRequest, carid:int):
             messages.success(request, f"'{car.name}' deleted successfully.", "alert-success")    
         
         response = redirect('main:homeView')
+
     return response
 
 
@@ -175,9 +176,18 @@ def carDetailsView(request: HttpRequest, carid:int):
         response = render(request, '404.html')
     else:
         carImages = Attachment.objects.filter(car=car)
+        
         relatedCars = Car.objects.exclude(pk=carid).filter(brand=car.brand)[0:3]
-
         relatedCarsImages = Attachment.objects.filter(car__brand__name=car.brand.name)
 
         response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages})
     return response
+
+def addCommentView(request: HttpRequest, carid: int):
+    if request.method == 'POST':
+        car = Car.objects.get(pk=carid)
+        newComment = Comment(car=car, user=request.user , comment=request.POST['comment'])
+        newComment.save()
+        messages.success(request, "Your comment was added successfully.", "alert-success") 
+
+    return redirect('cars:carDetailsView', carid)

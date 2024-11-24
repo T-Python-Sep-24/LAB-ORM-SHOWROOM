@@ -140,14 +140,6 @@
         </div>
     </div>
 </section>
-<section class="container my-5">
-    <a href="" class="fs-3 mt-4 hover-underline">
-        More Cars from {{car.brand.name}}:
-    </a>
-    {% with relatedCars as cars %}        
-        {% include 'cars/components/carsList.html' %}
-    {% endwith %}
-</section>
 
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -168,4 +160,74 @@
         </div>
     </div>
 </div>
+
+<!-- Related cars -->
+<section class="container my-3">
+    <p class="fs-3 fw-medium mt-3">
+        More Cars from <a href="{% url 'brands:brandDetailsView' car.brand.id %}" class="hover-underline">{{car.brand.name}}:</a>
+    </p>
+    {% with relatedCars as cars %}        
+        {% include 'cars/components/carsList.html' %}
+    {% endwith %}
+</section>
+
+<!-- Comment section -->
+<section class="container">
+    <!-- Display comments -->
+    <div class="row justify-content-center">
+        <p class="fs-3 fw-medium">
+            Comments <span class="fs-4 fw-medium">({{comments.count}}):</span>
+        </p>
+        <div class="d-flex flex-column gap-2 mb-5 mx-2">
+            {% for comment in comments %}
+            <div class="card p-1 my-2 text-start shadow rounded-2" style="max-width:40rem;">
+                <div class="card-body d-flex flex-column gap-1">
+                    <p class="card-text fs-5 fw-medium text-danger">
+                        {{comment.user.first_name}} {{comment.user.last_name}}
+                    </p>
+                    <p class="card-text fw-medium">
+                        {{comment.comment}}
+                    </p>
+                    <p class="card-text small fw-medium text-danger">
+                        {{comment.createdAt}}
+                    </p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="fs-5 fw-medium text-secondary">No comments yet..</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Add comment -->
+    <div class="row justify-content-center">
+        <div class="col col-lg-8 shadow rounded-2 py-3 px-4 bg-opacity-50 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}bg-dark{% else %}bg-light{% endif %}">
+            {% if user.is_authenticated %}
+            <p class="fs-4">
+                Add your comment:
+            </p>
+            <form action="" class="form-floating d-flex flex-column gap-2 mt-3 px-2 needs-validation" method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="comment" class="fw-medium">Comment</label>
+                    <textarea class="form-control focus-ring focus-ring-danger" placeholder="..."
+                        name="comment" id="comment" style="height: 100px;" minlength="2" required></textarea>
+                    <div class="invalid-feedback">
+                        Comment cant be empty.
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="w-50 btn btn-danger border-2" type="submit">
+                        Add Comment
+                    </button>
+                </div>
+            </form>
+            {% else %}
+            <p class="fs-4 fw-medium text-danger text-center">
+                Login to add a comment!
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -27,8 +27,8 @@ def loginView(request:HttpRequest):
         user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
         if user:
             login(request, user)
-            messages.success(request, f"Welcome back {user.username}, your login was successfull.", "alert-success")
-            response = redirect('main:homeView')
+            messages.success(request, f"Welcome back {user.name}, your login was successfull.", "alert-success")
+            response = redirect(request.GET.get('next', '/'))
         else:
             messages.error(request, f"Login failed. Your credentials are incorrect.", "alert-danger")   
     
@@ -39,6 +39,6 @@ def logoutView(request:HttpRequest):
     
     logout(request)
     messages.success(request, "Logged out successfully.", "alert-success")
-    response = redirect('main:homeView')
+    response = redirect(request.GET.get('next', '/'))
     
     return response

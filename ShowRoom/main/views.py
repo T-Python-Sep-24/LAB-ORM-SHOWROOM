@@ -5,15 +5,12 @@ from brands.models import Brand
 
 # Home page view
 def homeView(request: HttpRequest):
-    cars = Car.objects.all().order_by('addedAt')[0:3]
+    cars = Car.objects.all().order_by('-addedAt')[0:3]
     brands = Brand.objects.all().order_by('founded')[0:3]
     carimages = Attachment.objects.all()
     
     response = render(request, 'main/home.html', context={'cars':cars, 'brands': brands, 'carimages': carimages})
     return response
-
-#Contact us view
-
 
 #Mode change view
 def modeView(request: HttpRequest, mode):
