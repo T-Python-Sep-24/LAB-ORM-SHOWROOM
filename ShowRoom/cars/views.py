@@ -75,6 +75,17 @@ def deleteColorView(request: HttpRequest, clrId:int):
 
     return response
 
+def allColorsView(request:HttpRequest):
+    
+    if not request.user.is_staff:
+        messages.warning(request, "Only staff can view registered colors.", "alert-warning")
+        response = redirect('main:homeView')
+    else:
+        colors = Color.objects.all()
+        response = render(request, 'colors/allColors.html', {'colors': colors})
+    
+    return response
+
 # Add car view
 def addCarView(request: HttpRequest):
 

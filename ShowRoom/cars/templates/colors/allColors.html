@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}All Colors{% endblock %}
+
+{% block content %}
+<section class="container-md text-center">
+    <h1 class="mt-4">
+        All colors
+    </h1>
+    <div class="half-border mb-3 mx-auto"></div>
+    <a href="{% url 'cars:addColorView' %}" class="btn btn-danger text-white align-content-center">New</a>
+    <div class="row row-cols-2 row-cols-md-5 justify-content-center gap-2 mt-4">
+        {% for color in colors %}
+        <div class="card g-0 colors-crd border-0 shadow-sm">
+            <img src="{{color.image.url}}" class="card-img-top" alt="color image">
+            <div class="card-body p-1 pb-2">
+                <h5 class="card-title">{{color.name}}</h5>
+                <p class="card-text fw-medium mb-1">#{{color.hexCode}}</p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <button type="button" class="btn btn-outline-danger border-2 shadow-sm py-0" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{color.id}}">
+                        Delete
+                    </button>
+                    <a href="{% url 'cars:updateColorView' color.id %}" class="btn border-2 shadow-sm py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}btn-outline-light{% else %}btn-outline-dark{% endif %}">
+                        Update
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{color.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Color</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete '<strong>{{color.name}}</strong>'?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary shadow-sm"
+                            data-bs-dismiss="modal">Close</button>
+                        <a href="{% url 'cars:deleteColorView' color.id %}" class="btn btn-danger shadow-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="fs-5 fw-medium text-secondary">No colors yet..</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

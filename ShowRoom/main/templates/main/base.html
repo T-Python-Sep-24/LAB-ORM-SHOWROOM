@@ -19,8 +19,7 @@
 <body class="{% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}dark{% else %}light{% endif %}">
     <header class="container-fluid sticky-top">
         <!-- This navbar expands at large screens, screens smaller than that toggle the collapse property -->
-        <nav
-            class="navbar navbar-expand-lg shadow-sm rounded-3 nav m-3 py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}navbar-dark{% endif %}">
+        <nav class="navbar navbar-expand-lg shadow-sm rounded-3 nav m-3 py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}navbar-dark{% endif %}">
             <div class="container mx-0 justify-content-evenly">
                 <!-- Brand name -->
                 <a class="navbar-brand px-2 justify-content-center" href="/">
@@ -32,7 +31,7 @@
                 </a>
 
                 <!-- Toggle button to display navbar on small screens -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler order-4" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapseItems" aria-controls="navbarCollapseItems" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -65,20 +64,7 @@
                             <a class="hover-underline white-shadow" href="#">Contact</a>
                         </li>
                     </ul>
-
-                    <!-- Mode switch -->
-                    <div class="d-flex justify-content-center gap-1">
-                        <a href="{% url 'main:modeView' 'light' %}?next={{request.get_full_path|urlencode}}"
-                            class="rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'light' %}activeicon{% endif %}">
-                            <span class="material-symbols-outlined p-1 hoverEffect white-shadow">light_mode</span>
-                        </a>
-                        <a href="{% url 'main:modeView' 'dark' %}?next={{request.get_full_path|urlencode}}"
-                            class="rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}activeicon{% endif %}">
-                            <span class="material-symbols-outlined p-1 hoverEffect white-shadow">dark_mode</span>
-                        </a>
-                    </div>
                 </div>
-                
                 <div class="nav-item p-1 d-flex flex-row gap-2 mx-3 align-items-end">
                     {% if user.is_authenticated %}
                     <h6 class="px-2">Welcome {{user.first_name}}</h6>
@@ -87,6 +73,17 @@
                     <a class="btn py-1 border-2 white-shadow {% if request.path == loginUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}?next={{request.path}}">Login</a>
                     <a class="btn py-1 border-2 white-shadow {% if request.path == registerUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}?next={{request.path}}">Register</a>
                     {% endif %}
+                </div>
+                <!-- Mode switch -->
+                <div class="d-flex justify-content-center gap-1">
+                    <a href="{% url 'main:modeView' 'light' %}?next={{request.get_full_path|urlencode}}"
+                        class="rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'light' %}activeicon{% endif %}">
+                        <span class="material-symbols-outlined p-1 hoverEffect white-shadow">light_mode</span>
+                    </a>
+                    <a href="{% url 'main:modeView' 'dark' %}?next={{request.get_full_path|urlencode}}"
+                        class="rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}activeicon{% endif %}">
+                        <span class="material-symbols-outlined p-1 hoverEffect white-shadow">dark_mode</span>
+                    </a>
                 </div>
             </div>
         </nav>

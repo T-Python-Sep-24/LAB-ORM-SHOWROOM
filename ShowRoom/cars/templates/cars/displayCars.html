@@ -26,6 +26,7 @@
     </form>
     <div class="d-flex justify-content-center gap-2 mb-4">
         {% if user.is_staff %}
+        <a href="{% url 'cars:allColorsView' %}" class="btn btn-danger text-white align-content-center">All colors</a>
         <a href="{% url 'cars:addCarView' %}" class="btn btn-danger text-white align-content-center">New</a>
         {% endif %}
         <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltering"
