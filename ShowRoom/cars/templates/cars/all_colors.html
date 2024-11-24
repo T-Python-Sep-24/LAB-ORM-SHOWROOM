@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">All Colors</h2>
+    <div class="row">
+        {% for color in colors %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm " id="colorCard{{ color.id }}">
+                <div class="card-body text-center text-white">                    
+                    <h5 class="card-title">{{ color.hex_code }}</h5>
+                    <h5 class="card-title">{{ color.name }}</h5>
+                    <a href="{% url 'cars:update_color' color.id %}" class="btn btn-warning btn-sm mb-2 btn-lg mx-2 rounded-pill shadow-lg button-hover">Edit</a>
+                    <a href="{% url 'cars:delete_color' color.id %}" class="btn btn-danger btn-sm mb-2 btn-lg mx-2 rounded-pill shadow-lg button-hover">Delete</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            var colorCode = "{{ color.hex_code }}";
+            if (!colorCode.startsWith("#")) {
+                colorCode = "#" + colorCode;   
+            }
+            document.getElementById('colorCard{{ color.id }}').style.backgroundColor = colorCode;
+        </script>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>No colors available</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

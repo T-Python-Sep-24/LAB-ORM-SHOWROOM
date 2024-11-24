@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<br>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h3 class="text-danger">Delete Color</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead text-dark text-center">
+                        Are you sure you want to delete the color <strong>{{ color.name }}</strong>?
+                    </p>
+                    <p class="text-muted text-center">This action cannot be undone.</p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-danger btn-lg mx-3 rounded-pill shadow-lg button-hover" style="margin-right: 20px;">Yes, Delete</button>
+                            <a href="{% url 'cars:all_colors' %}" class="btn btn-secondary btn-lg mx-3 rounded-pill shadow-lg button-hover" style="margin-left: 20px;">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br>
+{% endblock %}

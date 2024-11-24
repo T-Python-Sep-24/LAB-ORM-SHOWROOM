@@ -1,0 +1,160 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<br><br><br>
+  <div class="form-container">
+    <div class="form-card">
+      <h2 class="text-center text-dark">Register</h2>
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <ul>
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      
+      <form method="POST" class="register-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="email" class="text-dark">Email</label>
+          {{ form.email }}
+        </div>
+        
+        <div class="form-group">
+          <label for="username" class="text-dark">Username</label>
+          {{ form.username }}
+        </div>
+        
+        <div class="form-group">
+          <label for="password1" class="text-dark">Password</label>
+          {{ form.password1 }}
+        </div>
+        
+        
+        <div class="form-group">
+          <label for="password2" class="text-dark">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+
+        <button type="submit" class="btn btn-dark">Register</button>
+      </form>
+      
+      <div class="login-link text-center">
+        <p class="text-dark">Already have an account? <a href="{% url 'main:login' %}" class="text-dark">Login</a></p>
+      </div>
+    </div>
+  </div>
+
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .form-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    .form-card {
+      background-color: #fff; 
+      border-radius: 8px;
+      padding: 20px; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px; 
+      height: auto; 
+      min-height: 400px; 
+    }
+
+    h2 {
+      font-size: 1.5rem; 
+      margin-bottom: 15px; 
+      color: #333; 
+      text-align: center;
+    }
+
+    .text-dark {
+      color: #333 !important; 
+    }
+
+    .form-group {
+      margin-bottom: 15px; 
+    }
+
+    .form-group label {
+      font-size: 1rem; 
+      color: #333; 
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px; 
+      font-size: 1rem; 
+      border-radius: 6px;
+      border: 1px solid #ccc; 
+      margin-bottom: 12px;
+      transition: border-color 0.3s;
+      background-color: #f7f7f7; 
+      color: #333; 
+    }
+
+    .form-group input:focus {
+      border-color: #000; 
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+      background-color: #000; 
+      color: white;
+      font-size: 1.1rem; 
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #444; 
+    }
+
+    .login-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .login-link a {
+      color: #000; 
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .alert-danger {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+      padding: 10px; 
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+  </style>
+  
+{% endblock %}

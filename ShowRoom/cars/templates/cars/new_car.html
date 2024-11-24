@@ -1,0 +1,96 @@
+{% extends 'main/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h3 class="text-center">Add New Car</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Car Name:</label>
+                    {{ form.name|add_class:"form-control" }}
+                    {% for error in form.name.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.brand.id_for_label }}">Brand:</label>
+                    {{ form.brand|add_class:"form-control" }}
+                    {% for error in form.brand.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.colors.id_for_label }}">Colors:</label>
+                    <div>
+                        {% for color in form.colors %}
+                            <div class="form-check form-check-inline ml-1">
+                                {{ color }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% for error in form.colors.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.engine.id_for_label }}">Engine:</label>
+                    {{ form.engine|add_class:"form-control" }}
+                    {% for error in form.engine.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.performance.id_for_label }}">Performance:</label>
+                    {{ form.performance|add_class:"form-control" }}
+                    {% for error in form.performance.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.cargoSpace.id_for_label }}">Cargo Space (cubic feet):</label>
+                    {{ form.cargoSpace|add_class:"form-control" }}
+                    {% for error in form.cargoSpace.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.infotainment.id_for_label }}">Infotainment:</label>
+                    {{ form.infotainment|add_class:"form-control" }}
+                    {% for error in form.infotainment.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.photos.id_for_label }}">Car Photos:</label>
+                    <div>
+                        {{ form.photo|add_class:"form-control-file" }}
+                    </div>
+                    {% for error in form.photos.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark btn-lg mx-3 rounded-pill shadow-lg button-hover">Add Car</button>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'cars:all_cars' %}" class="btn btn-secondary btn-lg mx-3 rounded-pill shadow-lg button-hover">Return to All Cars</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
