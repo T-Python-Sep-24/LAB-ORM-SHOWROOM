@@ -35,9 +35,9 @@
                           Sign Up
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{% url 'users:sign_up' %}">SignUp</a></li>
-                          <li><a class="dropdown-item" href="{% url 'users:sign_in' %}">Already have an account?</a></li>
-                          <li><a class="dropdown-item" href="{% url 'users:log_out' %}">Logout</a></li>
+                          <li><a class="dropdown-item" href="{% url 'users:sign_up' %}?next{{request.path}}">SignUp</a></li>
+                          <li><a class="dropdown-item" href="{% url 'users:sign_in' %}?next{{request.path}}">Already have an account?</a></li>
+                          <li><a class="dropdown-item" href="{% url 'users:log_out' %}?next{{request.path}}">Logout</a></li>
                         </ul>
                       </div> 
                     {% endif %}

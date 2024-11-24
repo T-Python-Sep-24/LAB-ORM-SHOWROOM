@@ -1,14 +1,15 @@
 {% extends 'main/base.html' %}
-{% load static %}
 
 {% block title %}Sing in{% endblock %}
 {% block style %}
 {% endblock %}
 {% block content %} 
+{% load static %}
+
 <div class="container d-flex justify-content-center mt-5">
     <div class="card shadow-sm p-4" style="width: 100%; max-width: 600px; border-radius: 8px;">
       <h2 class="text-center mb-4">Sign Up</h2>
-      <form method="POST" action="{% url 'users:sign_up' %}">
+      <form method="POST" action="{% url 'users:sign_up' %}?next={{request.GET.next}}">
         {% csrf_token %}
         
         <div class="form-group mb-3">

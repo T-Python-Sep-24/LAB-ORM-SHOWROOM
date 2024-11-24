@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from django.http import HttpRequest,HttpResponse
 from django.core.paginator import Paginator
-from .models import Car , Color
+from .models import Car , Color ,Review
 from brands.models import Brand
 # Create your views here.
 
@@ -53,7 +53,8 @@ def all_cars_view(request):
 
 def detail_view(request:HttpRequest, car_id:int):
     car = Car.objects.get(pk=car_id)
-    return render(request,"cars/detail.html",{"car":car})
+    reviews = Review.objects.filter(car = car)
+    return render(request,"cars/detail.html",{"car":car,"reviews":reviews})
 
 def update_view(request: HttpRequest, car_id: int):
     car_detail = get_object_or_404(Car, pk=car_id)
@@ -107,3 +108,10 @@ def update_color(request: HttpRequest, color_id: int):
         return redirect("colors:all_colors_view")
     return render(request, "colors/update_color.html", {"color": color})
 
+def add_review_view(request:HttpRequest,car_id:int):
+    car_object = Car.objects.get(pk=car_id)
+    if request.method == "POST":
+        car_object = Car.objects.get(pk=car_id)
+        new_review = Review(car=car_object ,user=request.user,comment=request.POST["comment"])
+        new_review.save()
+    return redirect("cars:detail_view",car_id=car_id)

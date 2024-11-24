@@ -7,7 +7,9 @@
 <div class="container text-center mt-5">
     <h1>Brands</h1>
     <div class="text-center mt-5">
+        {% if request.user.is_staff %}
         <a href="{% url 'brands:add_brand_view' %}" class="btn btn-dark w-40">Add</a>
+        {% endif %}
     </div>
     <hr style="width: 80px; border-top: 3px solid #1d3557; margin: 0 auto 2rem;">
 </div>

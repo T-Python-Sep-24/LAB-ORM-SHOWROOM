@@ -33,9 +33,12 @@
             </div>
         </div>
     </form>
+    {% if request.user.is_staff %}
+
     <div class="col-md-2 mt-3">
         <a href="{% url 'cars:add_car_view' %}" class="btn btn-dark w-50">Add</a>
     </div>
+    {% endif %}
 </div>
 
 <div class="container mt-5">

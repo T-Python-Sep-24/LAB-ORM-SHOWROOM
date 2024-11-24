@@ -34,11 +34,13 @@
         <div class="mt-3">
             <a href="{{ brand.website }}" target="_blank" class="btn btn-dark">Visit Website</a>
         </div>
-
+        {% if request.user.is_staff %}
         <div class="mt-4 d-flex justify-content-between">
             <a href="{% url 'brands:brand_update_view' brand.id %}" class="btn btn-dark">Update</a>
             <a href="{% url 'brands:brand_delete_view' brand.id %}" class="btn btn-danger">Delete</a>
         </div>
+        {% endif %}
+
 
         <div class="mt-3 text-center">
             <a href="{% url 'brands:all_brands_view' %}" class="btn btn-dark">Back to All Brands</a>
