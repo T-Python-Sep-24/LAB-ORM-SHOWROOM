@@ -6,7 +6,7 @@ from .forms import BrandForm
 # Create your views here.
 def all_brands_view(request: HttpRequest):
     brands = Brand.objects.all()
-    if "search" in request.GET and len(request.GET["search"]) >= 3:
+    if "search" in request.GET:
         brands = brands.filter(name__contains=request.GET["search"])
 
     context = {"brands": brands}    

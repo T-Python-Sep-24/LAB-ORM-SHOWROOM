@@ -9,7 +9,27 @@
 {% block content %}
  <section class="container">
    <div>
-      <h1>All Cars</h1>
+      <div class="d-flex justify-content-between">
+        <h1>All Cars</h1>
+        <div>
+          <form action="{% url 'cars:all_cars_view' %}" method="get" class="d-flex gap-2">
+            <select name="brand" class="form-select">
+              <option value="">Select a brand</option>
+              {% for brand in brands %}
+                <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:'s' %} selected {% endif %}>{{ brand.name }}</option>
+              {% endfor %}
+            </select>
+            <select name="color" class="form-select">
+              <option value="">Select a color</option>
+              {% for color in colors %}
+                <option value="{{ color.id }}" {% if request.GET.color == color.id|stringformat:'s' %} selected {% endif %}>{{ color.name }}</option>
+              {% endfor %}
+            </select>
+            <input type="search" name="search" value="{{ request.GET.search }}" placeholder="search" />
+            <input type="submit" class="btn btn-dark">
+          </form>
+        </div>
+      </div>
       {% include 'cars/components/cars_list.html' %}
    </div>
  </section>
