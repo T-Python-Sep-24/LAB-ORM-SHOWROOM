@@ -27,4 +27,32 @@
         </div>
     </div>
 </section>
+<section class="container">
+    <h3>Want to Delete the Color Instead?</h3>
+    <p>If you would like to delete the color completely use the following button:</p>
+    <!-- Button trigger modal -->
+    <a href="#">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Delete
+        </button>
+    </a>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting the Car</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete the color?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
+                <a href="{% url 'cars:delete_color_view' color.id %}"><button type="button" class="btn btn-dark">Yes</button></a>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

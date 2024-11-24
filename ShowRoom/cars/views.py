@@ -99,3 +99,10 @@ def update_color_view(request: HttpRequest, color_id: int):
             print("form error: ", color_form.errors)
 
     return render(request, "cars/update_color.html", context)
+
+
+def delete_color_view(request: HttpRequest, color_id: int):
+    color = Color.objects.get(pk=color_id)
+    color.delete()
+
+    return redirect("cars:all_cars_view")

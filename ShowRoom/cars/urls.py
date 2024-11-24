@@ -11,4 +11,5 @@ urlpatterns = [
     path("delete/<car_id>/", views.delete_car_view, name="delete_car_view"),
     path("colors/new/", views.new_color_view, name="new_color_view"),
     path("colors/update/<color_id>/", views.update_color_view, name="update_color_view"),
+    path("colors/delete/<color_id>/", views.delete_color_view, name="delete_color_view"),
 ]
