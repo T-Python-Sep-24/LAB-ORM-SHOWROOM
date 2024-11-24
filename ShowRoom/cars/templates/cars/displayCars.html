@@ -24,12 +24,16 @@
             </div>
         </div>
     </form>
-    <button class="btn btn-danger mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltering"
+    <div class="d-flex justify-content-center gap-2 mb-4">
+        <a href="{% url 'cars:addCarView' %}" class="btn btn-danger text-white align-content-center">New</a>
+        <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltering"
         aria-controls="offcanvasFiltering">
-        <span class="material-symbols-outlined">
-            filter_alt
-        </span>
-    </button>
+            <span class="material-symbols-outlined">
+                filter_alt
+            </span>
+        </button>
+    </div>
+    
     <!-- Filtering offcanvas -->
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
         id="offcanvasFiltering" aria-labelledby="offcanvasFilteringLabel">
