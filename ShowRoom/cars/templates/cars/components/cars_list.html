@@ -3,7 +3,7 @@
     <div class="col p-0">
         <div class="car-card d-flex flex-column shadow mx-2 my-2 p-2 gap-2">
             <div class="d-flex justify-content-between">
-                <h5>{{ car.name }}</h5>
+                <a href="{% url 'cars:details_car_view' car.id %}" class="main-link"><h5>{{ car.name }}</h5></a>
                 <div class="card-logo"><img src="{{ car.brand.logo.url }}" alt="{{car.brand.name}} logo"></div>
             </div>
             <div class="card-image">

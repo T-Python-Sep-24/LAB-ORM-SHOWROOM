@@ -26,6 +26,13 @@ def all_cars_view(request: HttpRequest):
     return render(request, "cars/all.html", context)
 
 
+def details_car_view(request: HttpRequest, car_id: int):
+    car = Car.objects.get(pk=car_id)
+    context = {"car": car}
+
+    return render(request, "cars/details.html", context)
+
+
 def new_car_view(request: HttpRequest):
     brands = Brand.objects.all()
     colors = Color.objects.all()

@@ -1,3 +1,15 @@
+/* details card */
+.details-card-image {
+    height: 300px !important;
+}
+
+.details-card-image img {
+    width: 100% !important;
+    height: 100%;
+    object-fit: contain !important;
+}
+
+
 /*** form ***/
 .color-label {
     text-decoration: underline;

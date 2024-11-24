@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Cars{% endblock %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'css/cars.css' %}">{% endblock %}
+
+{% block content %}
+ <section class="container">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex flex-column gap-2 shadow">
+                <h1>{{ car.name }}</h1>
+                <div class="details-card-image">
+                    <img src="{{ car.photo.url }}" alt="{{ car.name }} logo">
+                </div>         
+            </div>
+        </div>
+    </div>
+ </section>
+{% endblock %}
