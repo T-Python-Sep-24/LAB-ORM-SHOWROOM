@@ -4,6 +4,7 @@ from .models import Car, Color
 from brands.models import Brand
 from .forms import CarForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def all_cars(request):
     query = request.GET.get('q', '')  # Search query
@@ -40,12 +41,16 @@ def all_cars(request):
         'brand_filter': brand_filter,
         'color_filter': color_filter,
     })
+
+@login_required
 def create_car(request):
-    # Check if the user is staff
-    if not request.user.is_staff:
-        messages.error(request, "Only staff can add a car.", "alert-warning")
+    # Debugging line: Check if the user is staff
+    print(f"User is staff: {request.user.is_staff}")  # For debugging
+    # Check if the user is either a superuser or staff
+    if not request.user.is_superuser and not request.user.is_staff:
+        messages.error(request, "Only admins and staff can add cars.", "alert-warning")
         return redirect("main:index_view")
-    
+
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
         if form.is_valid():
@@ -53,10 +58,12 @@ def create_car(request):
             messages.success(request, "Car has been successfully added!")
             return redirect('cars:all_cars')
         else:
-            messages.error(request, "Error adding car. Please check the form and try again.")
+            messages.error(request, "Error adding car. Please check the form.")
     else:
         form = CarForm()
+    
     return render(request, 'cars/create_car.html', {'form': form})
+
 
 def car_detail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
@@ -65,9 +72,12 @@ def car_detail(request, car_id):
 
 def update_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    if not request.user.is_staff:
-        messages.error(request, "Only staff can update a car.", "alert-warning")
-        return redirect('main:index_view')
+
+    # Check if the user is both superuser and staff
+    if not (request.user.is_superuser and request.user.is_staff):
+        messages.error(request, "Only admin and staff can update cars.", "alert-warning")
+        return redirect("main:index_view")
+    
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES, instance=car)
         if form.is_valid():
@@ -75,22 +85,27 @@ def update_car(request, car_id):
             messages.success(request, "Car has been successfully updated!")
             return redirect('cars:car_detail', car_id=car.id)
         else:
-            messages.error(request, f"Error updating car: {form.errors}. Please check the form.")
+            messages.error(request, "Error updating car. Please check the form.")
     else:
         form = CarForm(instance=car)
+    
     return render(request, 'cars/update_car.html', {'form': form, 'car': car})
-
 
 def delete_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    # Permission check
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can delete cars.", "alert-warning")
-        return redirect("main:home_view")
+
+    # Check if the user is both superuser and staff
+    if not (request.user.is_superuser and request.user.is_staff):
+        messages.error(request, "Only admin and staff can delete cars.", "alert-warning")
+        return redirect("main:index_view")
+
     if request.method == 'POST':
         car_name = car.name
         car.delete()
         messages.success(request, f"Car '{car_name}' has been successfully deleted!")
         return redirect('cars:all_cars')
+    
     return render(request, 'cars/delete_car.html', {'car': car})
+
+
 

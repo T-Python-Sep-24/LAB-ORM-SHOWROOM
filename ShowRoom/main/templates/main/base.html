@@ -29,14 +29,13 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'brands:all_brands' %}">All Brands</a></li>
                     </ul>
                 </div>
-                {% if request.user.is_staff %}
-                <li class="nav-item">
-                <a class="nav-link {% if request.path == create_brand %} active {% endif %}" href="{% url 'brands:create_brand' %}" >Add Brand</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link {% if request.path == create_car %} active {% endif %}" href="{% url 'cars:create_car' %}" >Add Car</a>
-                </li>
-                {% endif %}
+                
+                {% if user.is_superuser and user.is_staff %}
+                <a href="{% url 'cars:create_car' %}">Add Car</a>
+                <a href="{% url 'cars:update_car' car.id %}">Edit</a>
+                <a href="{% url 'cars:delete_car' car.id %}">Delete</a>
+            {% endif %}
+            
                 <ul>
                     <li class="nav-item">
                     {% if request.user.is_authenticated %}
