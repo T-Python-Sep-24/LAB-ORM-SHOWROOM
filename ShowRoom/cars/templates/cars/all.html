@@ -12,7 +12,7 @@
       <div class="d-flex justify-content-between">
         <h1>All Cars</h1>
         <div>
-          <form action="{% url 'cars:all_cars_view' %}" method="get" class="d-flex gap-2">
+          <form action="{% url 'cars:all_cars_view' %}" method="get" class="d-flex gap-2 ">
             <select name="brand" class="form-select">
               <option value="">Select a brand</option>
               {% for brand in brands %}
@@ -25,8 +25,8 @@
                 <option value="{{ color.id }}" {% if request.GET.color == color.id|stringformat:'s' %} selected {% endif %}>{{ color.name }}</option>
               {% endfor %}
             </select>
-            <input type="search" name="search" value="{{ request.GET.search }}" placeholder="search" />
-            <input type="submit" class="btn btn-dark">
+            <input type="search" name="search" value="{{ request.GET.search }}" placeholder="search" class="form-select" />
+            <input type="submit" class="btn btn-dark ms-auto" />
           </form>
         </div>
       </div>

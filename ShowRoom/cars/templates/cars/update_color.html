@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Add Car{% endblock %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'css/cars.css' %}">{% endblock %}
+
+{% block content %}
+<section class="container">
+    <div class="d-flex align-items-center gap-3">
+        <h1>Update Color</h1>
+        <div class="color-box" style="background-color: {{ color.hexadecimal }};"></div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <form action="{% url 'cars:update_color_view' color.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <h5>Color Name:</h5>
+                <input type="text" name="name" class="form-control" placeholder="Metallic Silver" value="{{ color.name }}" required />
+                <div>
+                    <h5>Hexadecimal Code:</h5>
+                    <input type="text" name="hexadecimal" class="form-control" placeholder="#999da0" value="{{ color.hexadecimal }}" required />
+                </div>
+                <input type="submit" class="btn btn-dark">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

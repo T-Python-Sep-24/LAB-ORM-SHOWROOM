@@ -25,10 +25,16 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'main:home_view' %}">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cars:all_cars_view' %}">Cars</a>
+                        <a class="nav-link" href="{% url 'cars:all_cars_view' %}">All Cars</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cars:new_car_view' %}">New Car</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="{% url 'brands:all_brands_view' %}">Brands</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'brands:new_brand_view' %}">New Brand</a>
                       </li>
                     </ul>
                   </div>

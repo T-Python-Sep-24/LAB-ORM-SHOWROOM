@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from brands.models import Brand
 from .models import Car, Color
-from .forms import CarForm
+from .forms import CarForm, ColorForm
 
 
 # Create your views here.
@@ -72,3 +72,30 @@ def delete_car_view(request: HttpRequest, car_id: int):
     car.delete()
 
     return redirect("cars/all.html")
+
+
+def new_color_view(request: HttpRequest):
+    if request.method == "POST":
+        color_form = ColorForm(request.POST)
+        if color_form.is_valid():
+            color_form.save()
+            return redirect("cars:all_cars_view")
+        else:
+            print("form error: ", color_form.errors)
+
+    return render(request, "cars/new_color.html")
+
+
+def update_color_view(request: HttpRequest, color_id: int):
+    color = Color.objects.get(pk=color_id)
+    context = {"color": color}
+
+    if request.method == "POST":
+        color_form = ColorForm(instance=color, data=request.POST)
+        if color_form.is_valid():
+            color_form.save()
+            return redirect("cars:all_cars_view")
+        else:
+            print("form error: ", color_form.errors)
+
+    return render(request, "cars/update_color.html", context)
