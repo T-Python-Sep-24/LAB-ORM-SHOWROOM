@@ -40,3 +40,21 @@ def new_car_view(request: HttpRequest):
             print("form error: ", car_form.errors)
 
     return render(request, "cars/new.html", context)
+
+
+def update_car_view(request: HttpRequest, car_id: int):
+    brands = Brand.objects.all()
+    colors = Color.objects.all()
+    car = Car.objects.get(pk=car_id)
+    context = {"brands": brands, "colors": colors, "car": car}
+
+    if request.method == "POST":
+        # updating an existing object (car) not creating new one
+        car_form = CarForm(instance=car, data=request.POST, files=request.FILES)
+        if car_form.is_valid():
+            car_form.save()
+            return redirect("cars:all_cars_view")
+        else:
+            print("form error: ", car_form.errors)
+
+    return render(request, "cars/update.html", context)
