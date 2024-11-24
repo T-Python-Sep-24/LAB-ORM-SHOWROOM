@@ -12,7 +12,9 @@
     
     <div class="d-flex justify-content-between gap-2 me-4 align-content-center">
         <h1>Colors</h1>
+        {% if request.user.is_superuser  %}
         <a href="{% url 'cars:new_color_view' %}" class="btn btn-primary h-50 mt-3">Add a new Color +</a>
+        {% endif %}
     </div>
     <div class="row mt-4 ">
         {% for color in colors  %}
@@ -26,16 +28,16 @@
                           </svg>
                     </div>
                 </div>
+                {% if request.user.is_superuser  %}
                 <div class="card-footer">
                     <div class="d-flex gap-2 justify-content-start gap-4">
                         <a href="{% url 'cars:color_update_view' color.id %}" class="btn btn-primary">Update</a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ color.id }}">Delete</button>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
-        
-        
         <div class="modal fade" id="deleteModal{{ color.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ color.id }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -53,6 +55,8 @@
                 </div>
             </div>
         </div>
+       
+            
         {% endfor %}
         
     </div>

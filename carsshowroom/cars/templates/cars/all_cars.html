@@ -34,7 +34,9 @@
                     <input type="submit" value="apply" class="btn btn-primary"/>
                 </div>
             </form>
+            {% if request.user.is_superuser  %}
             <a href="{% url 'cars:new_car_view' %}" class="btn btn-primary">Add a new Car +</a>
+            {% endif %}
         </div>
 
         {% include 'cars/car_list.html' %}

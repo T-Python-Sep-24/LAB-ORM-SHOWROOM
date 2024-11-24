@@ -21,10 +21,12 @@
             <img src="{{ brand.logo.url }}" class="img-fluid rounded-start" alt="{{ brand.name }}">
         </div>
     </div>
+    {% if request.user.is_superuser  %}
     <div class="d-flex gap-2 justify-content-start gap-4">
         <a href="{% url 'brands:brand_update_view' brand.id %}" class="btn btn-primary">Update</a>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ brand.id }}">Delete</button>
     </div>
+    {% endif %}
     <div class="modal fade" id="deleteModal{{ brand.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ brand.id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

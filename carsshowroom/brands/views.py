@@ -22,18 +22,21 @@ def all_brands_view(request:HttpRequest):
     return render(request,"brands/all_brands.html",context={"brands":brand_page})
 
 def new_brand_view(request:HttpRequest):
+    if request.user.is_superuser:
+        brand_form=BrandForm()
 
-    brand_form=BrandForm()
-
-    if request.method =='POST':
-        brand_form=BrandForm(request.POST,request.FILES)
-        if brand_form.is_valid():
-            brand_form.save()
-            messages.success(request,"brand has been added successfully ","alert-success")
-            return redirect("brands:all_brands_view")
-        else:
-            messages.error(request,brand_form.errors,"alert-danger")
-    return render(request,"brands/new_brand.html",context={'brand_form':brand_form,})
+        if request.method =='POST':
+            brand_form=BrandForm(request.POST,request.FILES)
+            if brand_form.is_valid():
+                brand_form.save()
+                messages.success(request,"brand has been added successfully ","alert-success")
+                return redirect("brands:all_brands_view")
+            else:
+                messages.error(request,brand_form.errors,"alert-danger")
+        return render(request,"brands/new_brand.html",context={'brand_form':brand_form,})
+    else:
+        messages.error(request,"access denid you should be the manager to access this page!!","alert-danger")
+        return redirect('main:home_view')
 
 def brand_detail_view(request:HttpRequest,brand_id:int):
     brand=Brand.objects.get(pk=brand_id)
@@ -43,26 +46,35 @@ def brand_detail_view(request:HttpRequest,brand_id:int):
     return render(request,"brands/brand_detail.html",{"brand":brand,"cars":cars})
 
 def brand_update_view(request:HttpRequest,brand_id:int):
+    if request.user.is_superuser:
+        brand=Brand.objects.get(pk=brand_id)
     
-    brand=Brand.objects.get(pk=brand_id)
-   
-    if request.method =='POST':
-        brand_form=BrandForm(instance=brand,data=request.POST,files=request.FILES)
-        if brand_form.is_valid():
-            brand_form.save()
-            messages.success(request,"brand has been updated successfully ","alert-success")
-            return redirect("brands:brand_detail_view", brand_id=brand.id)
-        else:
-            messages.error(request,brand_form.errors,"alert-danger")
-    return render(request,"brands/update_brand.html",context={'brand':brand})
+        if request.method =='POST':
+            brand_form=BrandForm(instance=brand,data=request.POST,files=request.FILES)
+            if brand_form.is_valid():
+                brand_form.save()
+                messages.success(request,"brand has been updated successfully ","alert-success")
+                return redirect("brands:brand_detail_view", brand_id=brand.id)
+            else:
+                messages.error(request,brand_form.errors,"alert-danger")
+        return render(request,"brands/update_brand.html",context={'brand':brand})
+    else:
+        messages.error(request,"access denid you should be the manager to access this page!!","alert-danger")
+        return redirect('main:home_view')
+
 
 
 def delete_brand_view(request:HttpRequest,brand_id:int):
-    try:
-        brand=Brand.objects.get(pk=brand_id)
-        brand.delete()
-        messages.success(request, f"Deleted {brand.name} successfully", "alert-success")
-    except Exception as e:
-        print(e)
-        messages.error(request, f"Couldn't Delete {brand.name} ", "alert-danger")
-    return redirect ("brands:all_brands_view")
+    if request.user.is_superuser:
+        try:
+            brand=Brand.objects.get(pk=brand_id)
+            brand.delete()
+            messages.success(request, f"Deleted {brand.name} successfully", "alert-success")
+        except Exception as e:
+            print(e)
+            messages.error(request, f"Couldn't Delete {brand.name} ", "alert-danger")
+        return redirect ("brands:all_brands_view")
+    else:
+        messages.error(request,"access denid you should be the manager to access this page!!","alert-danger")
+        return redirect('main:home_view')
+    

@@ -10,8 +10,9 @@
         <form action="{% url 'brands:all_brands_view' %}" method="get">
             <input type="search" class="form-control " placeholder="search for a specfic brand" value="{{request.GET.search}}" name="search"  />
         </form>
-        
+        {% if request.user.is_superuser  %}
         <a href="{% url 'brands:new_brand_view' %}" class="btn btn-primary">Add a new brand +</a>
+        {% endif %}
     </div>
     <div class="container mt-3">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">

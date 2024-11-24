@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block title %}
+    Sign in
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class="container mt-5" style="height: 79.5vh;">
+        <div class="row">
+            <form action="{% url 'accounts:signin_view' %}" method="post" class="col-6  d-flex  flex-column gap-3">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="col-sm-2 col-form-label">User Name</label>
+                    <div class="col-sm-10">
+                      <input type="text"  class="form-control" id="username"  name="username">
+                    </div>
+                </div>
+                  <div class="mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" name="password">
+                        </div>
+                  </div>
+                  <div class="mb-3">
+                    <input type="submit" value="Sign UP" class="btn btn-primary mt-4" />
+                  </div>
+            </form>
+             </div>
+        
+        
+    </div>
+{% endblock content %}
+    
