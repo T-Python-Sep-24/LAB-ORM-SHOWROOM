@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>{{ car.name }}</h1>
+    <div class="car-detail">
+        <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+
+        <div class="car-info">
+            <p><strong>Brand:</strong> {{ car.brand.name }}</p>
+            <p><strong>Year:</strong> {{ car.model_year }}</p>
+            <p><strong>about:</strong> {{ car.space }}</p>
+
+            <p><strong>Available Colors:</strong></p>
+            <ul>
+                {% for color in car.colors.all %}
+                    {{car.color}}
+                 
+                {% endfor %}
+            </ul>
+            <a href="{% url 'cars:update_car_view' car.id %}" class="btn btn-warning">Edit</a>
+                <form method="POST" action="{% url 'cars:delete_car_view' car.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+{% endblock %}
