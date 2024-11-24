@@ -103,12 +103,13 @@ def details_car_view(request, car_id):
 
 
 def new_color_view(request: HttpRequest):
-    color_name = request.POST.get("name", "").strip()
-    hex_value = request.POST.get("hex_value", "").strip()
-                
-    color, created = Color.objects.get_or_create(name__iexact=color_name, defaults={"hex_value": hex_value})
-    if not created:
-        color.hex_value = hex_value
+
+    if request.method == "POST":
+        color_name = request.POST.get("name", "").strip()
+        hex_value = request.POST.get("hex_value", "").strip()
+                    
+        #color, created = Color.objects.get_or_create(name__iexact=color_name, defaults={"name", "hex_value": hex_value})
+        color = Color(name=color_name, hex_value=hex_value)
         color.save()
 
         messages.success(request, f"Color '{color.name}' has been added or updated.")

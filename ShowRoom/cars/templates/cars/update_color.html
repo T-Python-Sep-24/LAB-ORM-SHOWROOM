@@ -15,7 +15,7 @@
 
 <div class="container mt-5">
     <h1 class="text-center">Update Color</h1>
-    <form method="post">
+    <form method="post" action="{% url 'cars:update_color_view' %}" >
         {% csrf_token %}
         <div class="mb-3">
             <label for="name" class="form-label">Color Name</label>

@@ -12,9 +12,9 @@
     {% endfor %}
 </div>
 {% endif %}
-<div class="container mt-5">
+<div class="container mt-5" style="min-height: 90vh;">
     <h1>Add a New Color</h1>
-    <form method="post">
+    <form method="post"  action="{% url 'cars:new_color_view' %}">
         {% csrf_token %}
         <div class="mb-3">
             <label for="name" class="form-label">Color Name</label>
@@ -24,7 +24,7 @@
             <label for="hex_value" class="form-label">Hexadecimal Value</label>
             <input type="text" class="form-control" id="hex_value" name="hex_value" placeholder="#FFFFFF" required>
         </div>
-        <button type="submit" class="btn btn-primary">Add Color</button>
+        <button type="submit" class="btn btn-primary ">Add Color</button>
     </form>
 </div>
 {% endblock %}
