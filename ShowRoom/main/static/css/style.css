@@ -57,3 +57,8 @@ footer p {
 
 
 /*** media queries ***/
+@media (min-width: 1000px) {
+    .card-image {
+        height: 230px !important;
+    }
+}
