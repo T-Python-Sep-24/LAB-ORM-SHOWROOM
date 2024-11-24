@@ -19,20 +19,32 @@
                 {% endfor %}
             </div>
         {% endif %}
-                            <h1 class="space-grotesk text-white">All Brands</h1>
-    <div class="main-container py-4 rounded-4 d-flex flex-column justify-content-center mt-2">
+        <div class="row justify-content-between">
+            <h1 class="col-md-3 space-grotesk text-white mb-5">All Brands</h1>
+            <form class=" col-md-6" method="get" action="{% url 'brands:all_brands_view' %}">
+                <div class="filtring-and-search  gap-3 d-flex justify-content-center ">
+                    <input type="search" class="form-control" placeholder="Search" value="{{request.GET.search}}" name="search" minlength="1"/>
+                    <input type="submit" class="btn btn-success text-white " value="Search"/>
+                    <a href="{% url 'brands:all_brands_view' %}" class="btn btn-danger text-white " value="clear">Clear </a>
+                </div>
+            </form>
+           </div>
+    
+                           
+    <div class="main-container py-4 rounded-4 d-flex flex-column justify-content-start mt-2">
             <div class="p-0 container gap-4 d-flex ">
-                <div class="row  d-flex justify-content-start">  
+                <div class="row  d-flex justify-content-content align-items-center">  
                 {%for brand in brands %} 
-                   <div class="card mb-3 col-md-3 col-sm-12 p-0" style="width: 18rem; border: 1px solid #f0ad4e;">
+                   <div class="card mb-3 mx-1 col-md-3 col-sm-12 p-0" style="width: 18rem; border: 1px solid #f0ad4e;">
                     <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }} logo" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">{{ brand.name }}</h5>
                         <p class="card-text m-0">{{ brand.about|truncatechars:50 }}</p>
                         <small class="text-muted">{{ brand.found_at }}</small>
                     </div>
-                    <div class="card-body pt-0">
+                    <div class="card-body d-flex justify-content-between align-items-center pt-0">
                         <a href="{% url 'brands:details_brand_view' brand.id %}" class="btn btn-dark">View Details</a>
+                        <h6 class="text-center"><i class="fa-solid fa-car-side"></i> {{brand.cars.count}}</h6>
                     </div>
                     </div>
 
@@ -41,7 +53,63 @@
             </div>
     </div>
 
-
+    <br/><br/>
+          <navbar aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            
+                {% if brands.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true"> First</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ brands.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true"> First</span>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                    </li>
+                {% endif %}
+    
+                {% for num in brands.paginator.page_range %}
+                    {% if num == brands.number %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if brands.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ brands.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ brands.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">Last </span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">Last</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </navbar>
             
 
     

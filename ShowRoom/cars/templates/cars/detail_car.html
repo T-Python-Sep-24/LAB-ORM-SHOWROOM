@@ -1,0 +1,152 @@
+{% extends 'main/base.html'%}
+{%load static%}
+
+   
+    {%block head%}
+    <link href="{% static 'css/brands.css' %}" rel="stylesheet" />
+
+    {%endblock%}
+    {%block title%}<title>Car | {{car.name}}</title>{%endblock%}
+
+     {%block content%}
+
+        {% if messages %}
+            <div class="messages">
+         {% for message in messages %}
+             <div class="alert {{ message.tags }}">
+                 {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div class="main-container py-4 rounded-4 d-flex flex-column justify-content-center mt-2">
+            <div class="p-0 container gap-4 d-flex flex-column justify-content-center align-items-center ">
+                <div class="row  d-flex justify-content-center">   
+
+                <div class=" col-md-6 d-flex flex-column justify-content-center mb-3">
+                <div class="bg-warning rounded-4 p-3 mb-3">
+                    <h1 class="space-grotesk "><span class="text-white">|</span> {{car.name}} ({{car.year}})</h1>
+                    <p class="fw-bold">- {{car.model}} </p>
+                </div> 
+                <div class=" d-flex flex-column gap-2 text-start mb-3">
+                    <p class="detail-p my-2 text-white">{{car.specs}}</p>
+                 </div>           
+
+
+             
+
+                </div>
+
+                <div class="col-md-6  rounded-4 p-0 carousel-container ">
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="{{car.photos.first.image.url}}" class="w-100 rounded-4" style="height: 20rem; object-fit: cover;" alt="...">
+                          </div>
+                          {% for photo in car_photos%}
+                          <div class="carousel-item rounded-4">
+                            <img src="{{photo.image.url}}" class="w-100 rounded-4" style="height: 20rem; object-fit: cover;" alt="...">
+                          </div>
+                          {%endfor%}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                </div>       
+                </div>
+
+                <div class=" container mt-3">
+                    <div class="row d-flex justify-content-center align-items-center">
+                    <div class="row col-md-6 d-flex justify-content-center gap-3">
+                        <div class="num-info col-md-2 col-sm-12 align-items-center rounded-4 d-flex flex-column bg-light gap-3 p-2">
+                            <i class="fa-solid fa-car-side fs-3" style="color: #a7a7a7;"></i>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="m-0">{{ car.doors }}</h6>
+                                <small class="text-muted fw-normal">Doors</small>
+                            </div>
+                        </div>
+                        <div class="num-info col-md-2 col-sm-12 align-items-center rounded-4 d-flex flex-column bg-light gap-3 p-2">
+                            <i class="fa-solid fa-users-between-lines fs-3" style="color: #a7a7a7;"></i>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="m-0">{{ car.seats }}</h6>
+                                <small class="text-muted fw-normal">Seats</small>
+                            </div>
+                        </div>
+                        <div class="num-info col-md-2 col-sm-12 align-items-center rounded-4 d-flex flex-column bg-light gap-3 p-2">
+                            <i class="fa-solid fa-gear fs-3" style="color: #a7a7a7;"></i>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="m-0">{{ car.engine }}</h6>
+                                <small class="text-muted fw-normal">Engine</small>
+                            </div>
+                        </div>
+                        <div class="num-info col-md-2 col-sm-12 align-items-center rounded-4 d-flex flex-column bg-light gap-3 p-2">
+                            <i class="fa-solid fa-gas-pump fs-3" style="color: #a7a7a7;"></i>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="m-0">{{ car.get_fuel_display }}</h6>
+                                <small class="text-muted fw-normal">Fuel</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="mt-4">
+                            <div class="d-flex  justify-content-start">
+                                <h5 class="text-white">Colors:</h5>
+                                {% for color in car_colors %}
+                                    <span style="background-color: {{ color.hex_code }};" class="mx-2 rounded p-3"></span>
+                                {% endfor %}
+                            </div>
+                            <h3 class="text-white mt-3">Price: {{ car.price }} SAR</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    
+               <div class="row container-fluid d-flex justify-content-end align-items-end">
+                   <div class=" align-items-end mb-3 d-flex justify-content-end gap-2 ">
+                    <a href="{% url 'cars:update_car_view' car.id%}" class="btn btn-success mx-1">Update</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Delete
+                    </button> 
+                  </div>
+               </div>
+            </div>
+    </div>
+
+
+                <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Car</h5>
+                        <!-- Close button using btn-close -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the car "{{ car.name }}"?
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Button to close the modal -->
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        
+                        <!-- Secure delete action via POST request (use a form) -->
+                        <form action="{% url 'cars:delete_car_view' car.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+     
+     {%endblock%}
+
+     <!---->

@@ -9,3 +9,19 @@ label span{
     height: 1rem;
     margin-left: 0.5rem;
 }
+.form-check{
+    margin-right: 0.3rem;
+    margin-top: 0.2rem;
+}
+.color-lable{
+    margin-right: 1rem;
+}
+
+.color-lable span{
+    margin-left: 0.5rem;
+}
+
+.num-info {
+    color: rgb(209, 207, 207);
+    font-size: 0.4rem;
+}

@@ -26,30 +26,17 @@
 
     <!-- Image Carousel Section -->
      <div class="mt-5 d-flex justify-content-end">
-        <a href="" class="d-flex justify-content-end
+        <a href="{%url 'brands:all_brands_view'%}" class="d-flex justify-content-end
              align-items-center bg-warning rounded px-3 py-1">View all<i class="fa-solid fa-arrow-right i-view"></i></a> 
      </div>
 <div class="logos" id="brands-field">
     
-    <div class="logos-slide">     
-            <a href="" >
-            <img class="rounded-3" src="{%static 'images/fordlogo.png'%}"/>
+    <div class="logos-slide">    
+        {%for brand in brands%}
+            <a href="{%url 'brands:details_brand_view' brand.id%}" >
+            <img class="rounded-3" src="{{brand.logo.url}}"/>
             </a>
-            <a href="" >
-            <img class="rounded-3" src="{%static 'images/bmwblogo.png'%}"/>
-            </a>
-            <a href="" >
-            <img class="rounded-3" src="{%static 'images/kialogo.png'%}"/>
-            </a>
-            <a href="" >
-            <img class="rounded-3" src="{%static 'images/hundailogo.png'%}"/>
-            </a>
-            <a href="" >
-            <img  class="rounded-3" src="{%static 'images/fordlogo.png'%}"/>
-            </a>
-            <a href="" >
-            <img class="rounded-3" src="{%static 'images/teslalogo.png'%}"/>
-            </a>     
+        {%endfor%}     
     </div>   
 </div>
 
@@ -58,25 +45,26 @@
 
         <div class="container p-0 ">
             <div class="row gap-4 d-flex justify-content-center align-items-center">
-                <a href="" class="card mb-2 p-0 pr-1 col-md-8 col-sm-12 border-warning" style="max-width: 540px;">   
+                {%for car in cars%}
+                <a href="{%url 'cars:detail_car_view' car.id%}" class="card mb-2 p-0 pr-1 col-md-8 col-sm-12 border-warning" style="max-width: 540px;">   
                     <div class="row gap-0">
                       <div class="col-md-4">
-                        <img src="{%static 'images/blackcar.jpg'%}" class="img-card rounded-start" alt="...">
+                        <img src="{{car.photos.first.image.url}}" class="img-card rounded-start" alt="...">
                       </div>
                       <div class="col-md-8">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h5 class="card-title">2020 - Car name</h5>
-                                <p class="text-muted">model  of car</p>
+                                <h5 class="card-title">{{car.year}} - {{car.name|truncatechars:12}}</h5>
+                                <p class="text-muted">{{car.model|truncatechars:12}}</p>
                             </div>
                             <div class="d-flex flex-column justify-content-start">
-                                <p class="card-text"> Car sepCar sepesCar sepesesCar sepesCar sepesCar sepesCar 
-                                    sepesCar sepes.</p>
+                                <p class="card-text"> {{car.specs|truncatechars:50}}</p>
                                     <div class="d-flex container justify-content-start align-items-center text-muted">
                                         <div class="row align-items-start">
-                                            <p class=" col-sm-5" ><i class="fa-solid fa-car-side"></i> 4 doors</p>                                            <p class=" col-sm-5 "><i class="fa-solid fa-users-between-lines"></i> 7 seats</p>
-                                            <p class=" col-sm-5"><i class="fa-solid fa-gear"></i> manual</p>
-                                            <p class=" col-sm-5"><i class="fa-solid fa-gas-pump"></i> fuel</p>
+                                            <p class=" col-sm-5" ><i class="fa-solid fa-car-side"></i> {{car.doors}} doors</p>
+                                            <p class=" col-sm-5 "><i class="fa-solid fa-users-between-lines"></i> {{car.seats}} seats</p>
+                                            <p class=" col-sm-5"><i class="fa-solid fa-gear"></i> {{car.engine}}</p>
+                                            <p class=" col-sm-5"><i class="fa-solid fa-gas-pump"></i> {{car.get_fuel_display}}</p>
     
                                         </div>
                                     </div>        
@@ -84,14 +72,14 @@
                             <div class="d-flex justify-content-between align-items-center">
                                
                         <div>
-                            <h5>140,000 SAR</h5>
+                            <h5>{{car.price}} SAR</h5>
                         </div>
                         <div class="d-flex gap-2 align-items-center justify-content-center">
                             <p class="card-text text-center text-body-secondary mb-2">Colors:</p>
                             <div class="colors-container">
-                              <span class="rounded-circle" style="background-color: black;"></span>
-                              <span class="rounded-circle" style="background-color: rgb(231, 6, 6);"></span>
-                              <span class="rounded-circle" style="background-color: rgb(107, 107, 107);"></span>
+                                {%for color in car.colors.all%}
+                              <span class="rounded-circle" style="background-color: {{color.hex_code}};"></span>
+                              {%endfor%}
                             </div>
                           </div>
                     </div>
@@ -100,54 +88,12 @@
                       </div>
                     </div>
                 </a>
-
-                <a href="" class="card mb-3 p-0 pr-1 col-md-9 col-sm-12 border-warning" style="max-width: 540px;">   
-                    <div class="row gap-0">
-                      <div class="col-md-4">
-                        <img src="{%static 'images/blackcar.jpg'%}" class="img-card rounded-start" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="card-title">2020 - Car name</h5>
-                                <p class="text-muted">model  of car</p>
-                            </div>
-                            <div class="d-flex flex-column justify-content-start">
-                                <p class="card-text"> Car sepCar sepesCar sepesesCar sepesCar sepesCar sepesCar 
-                                    sepesCar sepes.</p>
-                                    <div class="d-flex container justify-content-start align-items-center text-muted">
-                                        <div class="row align-items-start">
-                                            <p class=" col-sm-5" ><i class="fa-solid fa-car-side"></i> 4 doors</p>                                            <p class=" col-sm-5 "><i class="fa-solid fa-users-between-lines"></i> 7 seats</p>
-                                            <p class=" col-sm-5"><i class="fa-solid fa-gear"></i> manual</p>
-                                            <p class=" col-sm-5"><i class="fa-solid fa-gas-pump"></i> fuel</p>
-    
-                                        </div>
-                                    </div>        
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                               
-                        <div>
-                            <h5>140,000 SAR</h5>
-                        </div>
-                        <div class="d-flex gap-2 align-items-center justify-content-center">
-                            <p class="card-text text-center text-body-secondary mb-2">Colors:</p>
-                            <div class="colors-container">
-                              <span class="rounded-circle" style="background-color: black;"></span>
-                              <span class="rounded-circle" style="background-color: rgb(231, 6, 6);"></span>
-                              <span class="rounded-circle" style="background-color: rgb(107, 107, 107);"></span>
-                            </div>
-                          </div>
-                    </div>
-                   
-                        </div>
-                      </div>
-                    </div>
-                </a>
+                {%endfor%}
                  
             </div>
         </div>
         <div class="container d-flex justify-content-center">
-            <a href="" class="d-flex align-items-center justify-content-center
+            <a href="{%url 'cars:all_cars_view'%}" class="d-flex align-items-center justify-content-center
             align-items-center bg-warning rounded px-3 py-1">More<i class="fa-solid fa-arrow-right i-view"></i></a> 
 
         

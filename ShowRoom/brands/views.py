@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .forms import BrandForm
 from .models import Brand
+from cars.models import Car
 from django.contrib import messages
 from django.core.paginator import Paginator
 
@@ -9,7 +10,13 @@ from django.core.paginator import Paginator
 
 def all_brands_view(request:HttpRequest):
     brands=Brand.objects.all()
-    return render(request,'brands/all_brands.html',{"brands":brands})
+    if "search" in request.GET and len(request.GET["search"]) >= 1:
+        brands = brands.filter(name__icontains=request.GET["search"])
+
+    p=Paginator(brands,3)
+    page=request.GET.get('page',1)
+    brands_list=p.get_page(page)
+    return render(request,'brands/all_brands.html',{"brands":brands_list})
 
 def new_brand_view(request:HttpRequest):
     if request.method=="POST":
@@ -65,8 +72,8 @@ def delete_brand_view(request:HttpRequest,brand_id):
 def details_brand_view(request:HttpRequest, brand_id):
     try:
         brand=Brand.objects.get(pk=brand_id)
-
-        return render(request,'brands/details_brand.html',{"brand":brand}) 
+        cars=Car.objects.filter(brand=brand)
+        return render(request,'brands/details_brand.html',{"brand":brand,"cars":cars}) 
     except Brand.DoesNotExist:
         print("error massege")
         messages.error(request, "An error occurred: The page not found",'alert-danger')

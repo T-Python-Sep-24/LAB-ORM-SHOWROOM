@@ -23,9 +23,8 @@ class Car (models.Model):
     doors = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     specs = models.TextField()
-    colors=models.ManyToManyField(Color, blank=True)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
-
+    colors=models.ManyToManyField(Color, blank=True,null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE,related_name="cars")
     class FuelChoices(models.TextChoices):
         PETROL='PET',"Petrol"
         DIESEL='DIE',"Diesel"
@@ -41,8 +40,8 @@ class Car (models.Model):
         return self.name
 
 class Photo (models.Model):
-    car=models.ForeignKey(Car, on_delete=models.CASCADE)
-    image= models.FileField(upload_to="images/")
+    car=models.ForeignKey(Car, on_delete=models.CASCADE,related_name='photos')
+    image= models.ImageField(upload_to="images/",default='images/default.jpg')
 
     def __str__(self) -> str:
         return self.car.name

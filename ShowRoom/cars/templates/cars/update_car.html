@@ -1,0 +1,136 @@
+{% extends 'main/base.html'%}
+{%load static%}
+
+   
+    {%block head%}
+    <link href="{% static 'css/cars.css' %}" rel="stylesheet" />
+
+    {%endblock%}
+    {%block title%}<title>Update Car</title>{%endblock%}
+
+     {%block content%}
+
+     <h1 class="space-grotesk text-white mb-3">Update Car</h1>
+    {% if messages %}
+            <div class="messages">
+         {% for message in messages %}
+             <div class="alert {{ message.tags }}">
+                 {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div class="form-container py-4 rounded-4 d-flex flex-column justify-content-center mt-2">
+        
+            <div class="p-0 gap-4 d-flex justify-content-center align-items-center ">
+                <form action="{%url 'cars:update_car_view' car.id%}" class="container-fluid " method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="name" class="form-label">Car Name</label>
+                        <input type="text" class="form-control" value="{{car.name}}" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="model" class="form-label">Car Model</label>
+                        <input type="text" class="form-control" value="{{car.model}}" id="model" name="model" required>
+                    </div>   
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <div class="mb-3">
+                            <label for="seats" class="form-label">Number of Seats</label>
+                            <input type="number" min="1" max="100" class="form-control" value="{{car.seats}}" id="seats" name="seats" required>
+                        </div>  
+                        <div class="mb-3">
+                            <label for="doors" class="form-label">Number of Doors</label>
+                            <input type="number" min="1" max="10" class="form-control" value="{{car.doors}}" id="doors" name="doors" required>
+                        </div>  
+    
+                    </div>
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <label for="specs" class="form-label">Specifications</label>
+                        <textarea class="form-control" id="specs" rows="5" name="specs" required>{{car.specs}}</textarea>
+                    </div>
+
+                </div>
+
+                <div class="row">  
+
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <select name="fuel" class="form-select" required>
+                            <option>Choose Fuel </option>
+                            {% for val, lable in FuelChoices %}
+                                <option value="{{ val }}" {%if val == car.fuel%} selected {%endif%}>{{ lable }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3 col-md-6 col-sm-12">
+                        <select name="brand" class="form-select" required>
+                            <option value="" {% if not car.brand %} selected {% endif %}>Choose Brand</option>
+                            {% for b in brands %}
+                                <option value="{{ b.id }}" {% if b.id == car.brand.id %} selected {% endif %}>{{ b.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   
+                </div>  
+                 <div class="row">
+                    <div class="mb-3 col-md-4 col-sm-12">
+                        <label for="year" class="form-label">Year</label>
+                        <input type="text" class="form-control" value="{{car.year}}" id="year" name="year" required>
+                    </div>
+                    <div class="mb-3 col-md-4 col-sm-12">
+                        <label for="model" class="form-label">Price</label>
+                        <input type="number" class="form-control" value="{{car.price}}" id="price" name="price" required>
+                    </div> 
+                        <div class="mb-3 col-md-4 col-sm-12">
+                        <label for="engine" class="form-label">Engine</label>
+                        <input type="text" class="form-control" id="engine" value="{{car.engine}}" name="engine" required>
+                    </div>
+                </div>
+                <div class="row"> 
+
+                    <div class="mb-3 col-md-12 col-sm-12">
+                        <label for="colors" class="form-label">Colors</label>
+                        <div class="d-flex align-items-center justify-content-start mx-4 checkbox-container">
+                        {% for color in colors%}
+                        {% if  color in car_colors%}
+                        <input type="checkbox" checked class="form-check" id="check-{{color.id}}" name="colors" value="{{color.id}}"/>
+                        <label class="color-lable d-flex justify-content-center text-center align-items-center" for="check-{{color.id}}">{{color.name}}
+                            <span style="background-color: {{ color.hex_code }};"  class="rounded"></span></label>
+                        {%else%}   
+                        <input type="checkbox" class="form-check" id="check-{{color.id}}" name="colors" value="{{color.id}} "/>
+                        <label class="color-lable d-flex justify-content-center text-center align-items-center" for="check-{{color.id}}">{{color.name}}
+                            <span style="background-color: {{ color.hex_code }};"  class="rounded"></span></label>
+                         {%endif%}
+                        {%endfor%}
+                        </div>
+                    </div>
+                   
+                </div> 
+                <div class="row">
+                 <div class="mb-3 col-md-12 col-sm-12">
+                        <div class="d-flex gap-2">
+                        {%for photo in car_photos%}
+                            <img src='{{photo.image.url}}' style="width:50px; height: 45px;"/>
+                        {%endfor%}
+                         </div>
+                        <label for="photos" class="form-label">Car Photos</label>
+                        <input type="file" class="form-control" id="photos" name="photos" accept="image/*"  multiple/>
+                </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="d-flex mt-2 justify-content-end gap-4">
+                        <input type="submit" value="Update Car" class="btn btn-success text-white"/>
+                        <a href="{%url 'main:home_view'%}" class="btn btn-danger text-white">Cancel</a>
+                    </div>
+                </div>    
+                </form>
+        
+        </div>
+    </div>
+
+    
+     
+     {%endblock%}

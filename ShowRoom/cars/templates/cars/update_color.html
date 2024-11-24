@@ -41,14 +41,41 @@
                 <div class="row align-items-center">
                     <div class="d-flex mt-2 justify-content-end gap-4">
                         <input type="submit" value="Update Color" class="btn btn-success text-white"/>
-                        <a href="{%url 'main:home_view'%}" class="btn btn-danger text-white">Cancel</a>
-                    </div>
+                        <a href="{%url 'main:home_view'%}" class="btn btn-secondary text-white">Cancel</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button> 
+                        </div>
                 </div>    
                 </form>
         
         </div>
     </div>
-
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Color</h5>
+                        <!-- Close button using btn-close -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the color "{{ color.name }}"?
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Button to close the modal -->
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        
+                        <!-- Secure delete action via POST request (use a form) -->
+                        <form action="{% url 'cars:delete_color_view' color.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     
      
      {%endblock%}

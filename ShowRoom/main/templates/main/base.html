@@ -20,23 +20,22 @@
 
     <nav class="navbar navbar-expand-lg px-5">
         <div class="container-fluid">
-            <a class="navbar-brand text-white space-grotesk" href="#">Dealership</a>
+            <a class="navbar-brand text-white space-grotesk" href="/">Dealership</a>
             <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-white active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link text-white active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cars
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">All Cars</a></li>
-                            <li><a class="dropdown-item" href="#">Add Car</a></li>
-                            <li><a class="dropdown-item" href="#">Edit Car</a></li>
+                            <li><a class="dropdown-item" href="{%url 'cars:all_cars_view'%}">All Cars</a></li>
+                            <li><a class="dropdown-item" href="{%url 'cars:new_car_view'%}">Add Car</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -44,9 +43,8 @@
                             Brands
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">All Brands</a></li>
-                            <li><a class="dropdown-item" href="#">Add Brand</a></li>
-                            <li><a class="dropdown-item" href="#">Edit Brand</a></li>
+                            <li><a class="dropdown-item" href="{%url 'brands:all_brands_view'%}">All Brands</a></li>
+                            <li><a class="dropdown-item" href="{%url 'brands:new_brand_view'%}">Add Brand</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -54,8 +52,7 @@
                             Colors
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Add Color</a></li>
-                            <li><a class="dropdown-item" href="#">Edit Color</a></li>
+                            <li><a class="dropdown-item" href="{%url 'cars:new_color_view'%}">Add Color</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -97,27 +94,29 @@
         <div class="col-md-3 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-2">
             <h6 class="bold ">Cars</h6>
             <div class="d-flex flex-column">
-             <a class="small" href="#">All Cars</a>
-             <a  class="small"href="#">Add Car</a>
-             <a  class="small"href="#">Edit Car</a>    
+             <a class="small" href="{%url 'cars:all_cars_view'%}">All Cars</a>
+             <a  class="small"href="{%url 'cars:new_car_view'%}">Add Car</a>
                
             </div>        
          </div>
          <div class="col-md-3 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-2">
             <h6 class="bold ">Brands</h6>
             <div class="d-flex flex-column">
-             <a class="small" href="#">All Brands</a>
-             <a  class="small"href="#">Add Brand</a>
-             <a  class="small"href="#">Edit Brand</a>    
+             <a class="small" href="{%url 'brands:all_brands_view'%}">All Brands</a>
+             <a  class="small"href="{%url 'brands:new_brand_view'%}">Add Brand</a>
                
             </div>        
          </div>
          <div class="col-md-3 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-2">
             <h6 class="bold">Colors</h6>
             <div class="d-flex flex-column">
-             <a  class="small"href="#">Add Color</a>
-             <a  class="small"href="#">Edit Color</a>    
-               
+             <a  class="small text-center"href="{%url 'cars:new_color_view'%}">Add Color</a>
+             <form method="GET" action="{% url 'cars:search_color' %}" class="d-flex justify-content-center align-items-center  shadow-sm">
+                {% csrf_token %}
+                    <input type="text" name="color_name" class="form-control" placeholder="Edit color by name" required>
+                    <button type="submit" class="btn btn-primary">Search</button>
+
+            </form>             
             </div>        
          </div>     
     </div>
@@ -126,10 +125,10 @@
     <div class="d-flex justify-content-between py-2 px-3">
         <small class="text-muted ">Copyright&copy; Areej. All rights reserved</small>
         <div class="d-flex justify-content-center gap-3">
-            <a href=""><i class="fa-brands fa-square-x-twitter"></i></a>
-            <a href=""><i class="fa-brands fa-square-instagram"></i></a>
-            <a href=""><i class="fa-brands fa-linkedin"></i></a>
-            <a href=""><i class="fa-brands fa-square-facebook"></i></a>
+            <a href="https://x.com/?lang=ar"><i class="fa-brands fa-square-x-twitter"></i></a>
+            <a href="https://www.instagram.com/"><i class="fa-brands fa-square-instagram"></i></a>
+            <a href="https://www.linkedin.com/feed/"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/"><i class="fa-brands fa-square-facebook"></i></a>
         </div>
     </div>
     </div>
