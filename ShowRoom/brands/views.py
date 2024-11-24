@@ -23,3 +23,19 @@ def new_brand_view(request: HttpRequest):
             print("form error: ", brand_form.errors)
 
     return render(request, "brands/new.html")
+
+
+def update_brand_view(request: HttpRequest, brand_id: int):
+    brand = Brand.objects.get(pk=brand_id)
+    context = {"brand": brand}
+
+    if request.method == "POST":
+        # updating an existing object (car) not creating new one
+        brand_form = BrandForm(instance=brand, data=request.POST, files=request.FILES)
+        if brand_form.is_valid():
+            brand_form.save()
+            return redirect("brands:all_brands_view")
+        else:
+            print("form error: ", brand_form.errors)
+
+    return render(request, "brands/update.html", context)
