@@ -7,7 +7,27 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/brands.css' %}">{% endblock %}
 
 {% block content %}
- <section class="container">
-    <p>All Brands</p>
- </section>
+<section class="container">
+   <h1>All Brands</h1>
+    
+    
+   <div class="row row-cols-1 row-cols-md-2">
+      {% for brand in brands %}
+      <div class="col p-0">
+         <div class="car-card d-flex flex-column shadow mx-2 my-2 p-2 gap-2">
+            <div>
+                  <h5>{{ brand.name }}</h5>
+            </div>
+            <div class="card-image">
+                  <img src="{{ brand.logo.url }}" alt="{{ brand.name }} logo" />
+            </div>
+            <h5>Founded: {{ brand.founded_at }}</h5>
+            <h5>Cars: {{ brand.car_set.count }}</h5>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+
+
+</section>
 {% endblock %}
