@@ -29,7 +29,7 @@ def sign_in(request:HttpRequest):
             #login the user
             login(request, user)
             messages.success(request, "Logged in successfully", "alert-success")
-            return redirect(request.GET.get("next", "/"))
+            return redirect(request.GET.get("main:index_view", "/"))
         else:
             messages.error(request, "Please try again. You credentials are wrong", "alert-danger")
     return render(request, "users/signin.html")
