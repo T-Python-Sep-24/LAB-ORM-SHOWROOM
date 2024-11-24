@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="car-details">
+        {% for brand in brands %}
+            <div class="car-images">
+                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+            </div>
+           
+            <div class="card-body">
+                <h5 class="card-title">{{ brand.name }}</h5>
+                <p class="card-text">{{ brand.about }}</p>
+                <hr>
+            </div>
+
+            <h6>Cars:</h6>
+            <ul>
+                {% for car in brand.cars.all %}
+                    <li>{{ car.name }}</li>
+                    <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+                {% endfor %}
+            </ul>
+            <div class="mt-3">
+                <a href="{% url 'brands:update_brand_view' brand.id %}" class="btn btn-warning">Edit</a>
+
+                <form method="POST" action="{% url 'brands:delete_brand_view' brand.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>

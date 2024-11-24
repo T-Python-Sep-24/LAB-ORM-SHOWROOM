@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Gamers Haven {% endblock %}
+
+{% block content %}
+<main>
+    <div class="hero">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&h=400" alt="Cars Banner">
+    </div>
+    <a href="{% url 'cars:all_cars_view' %}">
+        <div class="d-flex align-items-end justify-content-end ">
+          <span class="material-symbols-outlined text-fxl">more</span>
+        </div>
+        </a>
+
+    <div class="car-grid">
+        {% for c in car %}
+        <div class="car-card">
+            {% if c.photo %}
+                <img src="{{ c.photo.url }}">
+            {% else %}
+                <img src="/media/images/default.jpg" alt="Default Image">
+            {% endif %}
+
+            <h3>
+                <a href="{% url 'cars:car_detail_view' c.id %}" style="text-decoration: none;">
+                    {{ c.name }}
+                </a>
+            </h3>
+
+            <p><strong>Brand:</strong> {{ c.brand.name }}</p>
+
+            <p><strong>Colors:</strong> 
+                {% for color in c.colors.all %}
+                    {{ color.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <p><strong>Model Year:</strong> {{ c.model_year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

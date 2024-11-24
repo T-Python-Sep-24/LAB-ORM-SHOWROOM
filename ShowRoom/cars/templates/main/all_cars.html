@@ -1,0 +1,64 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>All Cars</h1>
+    <div class="filters">
+        <form method="GET">
+            <label for="brand">Brand:</label>
+            <select name="brand" id="brand">
+                <option value="">All Brands</option>
+                {% for brand in brands %}
+                    <option value="{{ brand.id }}" {% if brand.id == request.GET.brand %}selected{% endif %}>
+                        {{ brand.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="color">Color:</label>
+            <select name="color" id="color">
+                <option value="">All Colors</option>
+                {% for color in colors %}
+                    <option value="{{ color.id }}" {% if color.id == request.GET.color %}selected{% endif %}>
+                        {{ color.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+
+    <div class="car-grid">
+        {% for car in page_obj %}
+        <div class="car-card">
+            {% if car.photo %}
+                <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+            {% else %}
+                <img src="/media/images/default.jpg" alt="Default Image">
+            {% endif %}
+
+            <h3><a href="{% url 'cars:car_detail_view' car.id %}">{{ car.name }}</a></h3>
+            <p><strong>Brand:</strong> {{ car.brand.name }}</p>
+            <p><strong>Year:</strong> {{ car.model_year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

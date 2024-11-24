@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <title>Car Showcase</title>
+</head>
+<body>
+
+        <nav>
+            <div class="nav-logo">CarShowcase</div>
+            <ul>
+                <li><a href="{% url 'main:home_view'%}" class="active">Cars</a></li>
+                <li><a href="{% url 'brands:all_brand_view'%}">Brands</a></li>
+                <li><a href="{% url 'brands:add_brand_view'%}">Add Brand</a></li>
+                <li><a href="{% url 'cars:add_car'%}">Add Car</a></li>
+            </ul>
+        </nav>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search cars...">
+            </div>
+        </div>
+    </nav>
+    <main>{% block content %} {% endblock %}</main>
+</body>
+</html>
