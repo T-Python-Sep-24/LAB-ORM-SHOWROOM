@@ -1,0 +1,67 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if car.photo %}
+                <img src="{{ car.photo.url }}" class="img-fluid rounded-start" alt="{{ car.name }}">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title">{{ car.name }}</h1>
+                    <p class="card-text"><img src="{{ car.brand.logo.url }}" alt="{{ car.brand.name }}" width="50px"><br></p>
+                    <p class="card-text"><strong>Specifications:</strong> {{ car.specs }}</p>
+                    <p class="card-text"><strong>Model Year:</strong> {{ car.model_year }}</p>
+                    <p class="card-text"><strong>Available Colors:</strong></p>
+                    <div class="d-flex flex-wrap align-items-center">
+                        {% for color in car.colors.all %}
+                        <div class="d-flex align-items-center me-3 mb-2">
+                            <img src="{{ color.photo.url }}" alt="{{ color.name }}" width="20" height="20" class="me-1" style="object-fit: cover; border-radius: 50%;">
+                            <span>{{ color.name }}</span>
+                        </div>
+                        {% empty %}
+                        <span class="text-muted">No colors available.</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'cars:update_car' car.id %}" class="btn btn-warning">Edit Car</a>
+                        <a href="{% url 'cars:delete_car' car.id %}" class="btn btn-danger">Delete Car</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<hr class="my-5">
+<div class="row">
+    <div class="col-12">
+        <h2>Cars under this brand</h2>
+        <div class="row">
+            {% for car in brand.cars.all %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.name }}</h5>
+                        <p class="card-text"><strong>Model Year:</strong> {{ car.model_year }}</p>
+                        <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-primary">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">No cars available under this brand.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

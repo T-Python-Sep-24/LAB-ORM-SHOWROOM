@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">All Cars</h1>
+    <div class="text-end mb-3">
+        <a href="{% url 'cars:new_car' %}" class="btn btn-primary">Add New Car</a>
+    </div>
+
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="card-text">
+                       <img src="{{ car.brand.logo.url }}" alt="{{ car.brand.name }}" width="50px"><br>
+                        Model Year: {{ car.model_year }}
+                    </p>
+                    <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No cars available.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

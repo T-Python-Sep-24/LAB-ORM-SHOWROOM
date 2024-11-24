@@ -11,3 +11,5 @@ class BrandForm(forms.ModelForm):
             'about': forms.Textarea({"class": "form-control", "rows": 4}),
             'founded_at': forms.DateInput({"class": "form-control", "type": "date"}),
         }
+
+

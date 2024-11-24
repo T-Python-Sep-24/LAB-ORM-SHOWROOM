@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>All Colors</h1>
+    <div class="row">
+        {% for color in colors %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ color.photo.url }}" class="card-img-top" alt="{{ color.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ color.name }}</h5>
+                    <a href="{% url 'cars:update_color' color.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'cars:delete_color' color.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No colors available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

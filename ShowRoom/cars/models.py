@@ -15,10 +15,10 @@ class Color(models.Model):
 
 class Car(models.Model):
     name = models.CharField(max_length=100) 
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='cars')  # علاقة مع Brand
-    colors = models.ManyToManyField(Color, related_name='cars')  # علاقة مع Color
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='cars')  
+    colors = models.ManyToManyField(Color, related_name='cars')  
     photo = models.ImageField(upload_to='car_photos/') 
-    specs = models.TextField()  # المواصفات
+    specs = models.TextField()  
     model_year = models.PositiveIntegerField()  
 
     def __str__(self):
