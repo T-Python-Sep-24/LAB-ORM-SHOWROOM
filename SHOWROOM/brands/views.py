@@ -22,6 +22,11 @@ def all_brands_view(request:HttpRequest):
 
 
 def add_new_brand_view(request:HttpRequest):
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only admin can add brand")
+
+        return redirect("main:main_view")
     
     if request.method == "POST":
         new_brand = Brand(
@@ -57,6 +62,11 @@ def brand_update_view(request:HttpRequest, brand_id):
 
     brand = get_object_or_404(Brand, pk=brand_id)
 
+    if not request.user.is_superuser:
+        messages.error(request, "Only admin can update brand")
+
+        return redirect("main:main_view")
+
     if request.method == "POST":
         brand.brand_name=request.POST.get("brand_name", brand.brand_name)
         brand.about=request.POST.get("about", brand.about)
@@ -80,6 +90,11 @@ def brand_update_view(request:HttpRequest, brand_id):
 def brand_delete_view(request:HttpRequest, brand_id):
     
     brand = get_object_or_404(Brand, pk=brand_id)
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only admin can delete brand")
+
+        return redirect("main:main_view")
     
     brand.delete()
 

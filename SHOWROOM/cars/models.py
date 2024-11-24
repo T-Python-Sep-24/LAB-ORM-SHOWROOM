@@ -1,6 +1,8 @@
 from django.db import models
 from brands.models import Brand
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
+
 
 class Color(models.Model):
     name = models.CharField(max_length=50)
@@ -48,3 +50,16 @@ class Car(models.Model):
 
     def __str__(self):
         return self.car_name
+    
+
+
+
+class Review(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)]) 
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Review by {self.user.username} for {self.car.car_name}'    

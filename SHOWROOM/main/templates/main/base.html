@@ -40,8 +40,25 @@
 
             </nav>
             <div class="hrader-links">
+              <div class="adds-links">
+                {% if request.user.is_superuser %}
                 <a href="{% url 'cars:add_new_car_view'%}" class="contact-button">Add Car</a>
                 <a href="{% url 'brands:add_new_brand_view'%}" class="contact-button">Add Brand</a>
+                {% endif %}
+              </div>
+
+                {% if request.user.is_authenticated %}
+                <div class="auth-logout">
+                  <h6>Welcome {{request.user.username}}</h6>
+                  <a href="{% url 'accesses:logout_view' %}?next={{request.path}}" class="auth-button">Logout</a>
+                </div>
+
+                {% else %}
+                <div class="all-auth-links">
+                  <a href="{% url 'accesses:login_view' %}?next={{request.path}}" class="auth-link">Login</a>
+                  <a href="{% url 'accesses:signup_view' %}?next={{request.path}}" class="auth-link">Sign Up</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </header>

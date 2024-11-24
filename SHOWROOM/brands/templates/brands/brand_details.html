@@ -23,8 +23,10 @@
         </div>
 
         <div class="action-links">
+            {% if request.user.is_superuser %}
             <a href="{% url 'brands:brand_update_view' brand.id %}" class="update-button">Update</a>
             <a href="{% url 'brands:brand_delete_view' brand.id %}" class="delete-button" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a>
+            {% endif %}
         </div>
 
     </section>

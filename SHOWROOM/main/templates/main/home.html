@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<main>
+<main class="hero-main">
     <section class="hero">
         <div class="hero-content">
             <h1>LUXURY PERFORMANCE CARS AT YOUR DESTINATION</h1>
@@ -58,9 +58,12 @@
             <a href="{% url 'cars:car_details_view' car.id %}" class="view-details-button">View Details</a>
         </div>
         {% endfor %}
+        
+
     </section>
     
-    
+    <!--{
+    % include 'cars/all_cars.html' %}-->
 
 </main>
 

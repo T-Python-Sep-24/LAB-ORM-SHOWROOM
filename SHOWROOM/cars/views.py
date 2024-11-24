@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
-from .models import Car, Color
+from .models import Car, Color, Review
 from brands.models import Brand
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -45,6 +45,11 @@ def all_cars_view(request:HttpRequest):
 
 
 def add_new_car_view(request:HttpRequest):
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only admin can add car")
+
+        return redirect("main:main_view")
 
     if request.method == "POST":
         car_name = request.POST.get("car_name")
@@ -93,7 +98,9 @@ def add_new_car_view(request:HttpRequest):
 def car_details_view(request:HttpRequest, car_id: int):
     
     car = get_object_or_404(Car, id=car_id)
-    return render(request, "cars/car_details.html", {"car": car})
+    reviews = car.reviews.all() 
+
+    return render(request, "cars/car_details.html", {"car": car, "reviews": reviews})
 
 
 
@@ -101,6 +108,10 @@ def car_details_view(request:HttpRequest, car_id: int):
 def car_update_view(request:HttpRequest, car_id: int):
     
     car = get_object_or_404(Car, pk=car_id)
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only admin can update car")
+        return redirect("main:main_view")
 
     if request.method == "POST":
         car.car_name=request.POST.get("car_name", car.car_name)
@@ -137,6 +148,10 @@ def car_update_view(request:HttpRequest, car_id: int):
 def car_delete_view(request:HttpRequest, car_id: int):
     
     car = get_object_or_404(Car, pk=car_id)
+    
+    if not request.user.is_superuser:
+        messages.error(request, "Only admin can delete car")
+        return redirect("main:main_view")
     
     car.delete()
 
@@ -176,7 +191,28 @@ def update_color_view(request, color_id):
         color.hex_code = request.POST.get("hex_code", color.hex_code)
 
         color.save()
+
         messages.success(request, "Color updated successfully!")
+
         return redirect("main:main_view")
 
     return render(request, 'cars/update_color.html', {"color": color})
+
+
+
+
+def add_review_view(request, car_id):
+
+    car = get_object_or_404(Car, pk=car_id)
+
+    if request.method == "POST":
+        rating = request.POST.get("rating")
+        comment = request.POST.get("comment")
+
+        Review.objects.create(car=car, user=request.user, rating=rating, comment=comment)
+
+        messages.success(request, "Your review has been added successfully!")
+
+        return redirect("cars:car_details_view", car_id=car.id)
+
+    return render(request, "cars/add_review.html", {"car": car})
