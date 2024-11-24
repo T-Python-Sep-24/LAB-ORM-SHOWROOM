@@ -1,0 +1,18 @@
+<!-- <div class="row mt-2 row-cols-1 row-cols-md-3 g-5 ms-3"> -->
+    <div class="d-flex flex-column justify-content-between align-items-center align-items-lg-start ms-5 me-5">
+        <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline gap-5">
+           {% for brand in brands %}
+           <div class="col col-lg-3 col-md-5 col-sm-10">
+               <div class="car_box d-flex flex-column justify-content-start align-items-start  p-4 gap-2">
+                   <img src="{{brand.logo.url}}" class="w-100 object-fit-contain brand_box_img"/>
+                   <div class="line"></div>
+                   <a class="mb-3" href="{% url 'brands:brand_detail_view' brand.id %}"><h3>{{brand.name}}</h3></a>
+                   <div class="d-flex gap-3">
+                        <h4 class="text-secondary">Number of Avaliable Cars:</h4>
+                        <h5> {{brand.car_set.count}} </h5>
+                   </div>
+               </div>
+           </div>
+           {% endfor %}
+       </div>
+     </div>
