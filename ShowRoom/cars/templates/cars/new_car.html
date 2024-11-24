@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h1>Add New Car</h1>
+    <form method="post" enctype="multipart/form-data" class="form-control" style="background-color: #5758582a; padding: 20px; border-radius: 10px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn btn-primary mt-2">Add Car</button>
+        <a href="{% url 'cars:all_cars' %}" class="btn btn-secondary mt-2">Back to Cars</a>
+    </form>
+{% endblock %}

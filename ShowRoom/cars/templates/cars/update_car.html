@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <h1>Edit {{ car.name }}</h1>
+    <form method="post" enctype="multipart/form-data" class="form-control" style="background-color: #5758582a; padding: 20px; border-radius: 10px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary m-3">Update Car</button>
+        <a href="{% url 'cars:all_cars' %}" class="btn btn-secondary m-3">Back to Cars</a>
+    </form>
+    
+    {% endblock %}
