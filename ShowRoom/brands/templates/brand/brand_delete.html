@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Brand</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete {{ brand.name }}?</h1>
+    <p>This action cannot be undone.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'brands:brand_detail' brand.id %}">Cancel</a>
+    </form>
+</body>
+</html>
