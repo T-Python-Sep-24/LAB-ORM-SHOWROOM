@@ -48,7 +48,7 @@
                     <div class="d-flex justify-content-center gap-2">
                         {% for color in colors %}
                         <input type="checkbox" class="btn-check" name="colors" id="check-{{color.id}}"
-                            autocomplete="off" value="{{color.name}}" {% if color.name in request.GET.colors %}checked{% endif %}>
+                            autocomplete="off" value="{{color.name}}" {% if color.name in filteredColors %}checked{% endif %}>
                         <label class="btn btn-outline-secondary border-2 py-0 rounded-pill"
                             for="check-{{color.id}}">{{color.name}}</label>
                         {% endfor %}
