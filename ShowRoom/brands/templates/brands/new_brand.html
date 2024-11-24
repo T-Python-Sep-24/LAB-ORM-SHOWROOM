@@ -3,8 +3,16 @@
 {% block title %}Add New Brand{% endblock %}
 
 {% block content %}
-<div class="d-flex">
-<div class="container mt-5">
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container mt-5" style="min-height: 90vh;">
     <h1 class="text-center">Add a New Brand</h1>
     <form method="post" action="{% url 'brands:new_brand_view' %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -26,6 +34,5 @@
         </div>
         <button type="submit" class="btn btn-primary w-100">Add Brand</button>
     </form>
-</div>
 </div>
 {% endblock %}

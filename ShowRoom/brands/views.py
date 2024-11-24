@@ -4,7 +4,9 @@ from django.http import HttpRequest , HttpResponse
 
 from django.contrib import messages
 from .models import Brand
-
+from django.core.paginator import Paginator
+from django.db.models import Q,Count
+from cars .models import *
 # Create your views here.
 
 def new_brand_view(request:HttpRequest):
@@ -17,18 +19,26 @@ def new_brand_view(request:HttpRequest):
             founded_at = request.POST["founded_at"] 
         )
         new_brand.save()
+        messages.success(request, f"Brand '{new_brand.name}' has been successfully created!")
     return render(request, 'brands/new_brand.html')
 
 def all_brands_view(request:HttpRequest):
-    brands = Brand.objects.all()
-    return render(request, 'brands/all_brands.html', {'brands': brands})
-
+    search_query = request.GET.get("search", "").strip()
+    brands = Brand.objects.annotate(car_count=Count('cars')).order_by('name')
+    if search_query:
+        brands = brands.filter(name__icontains=search_query)
+    
+    return render(request, "brands/all_brands.html", {
+        "brands": brands,
+        "search_query": search_query,
+    })
 
 
 def  brand_detail_view(request:HttpRequest, brand_id):
-    
     brand = Brand.objects.get(pk=brand_id)
-    return render(request, 'brands/brand_detail.html', {'brand': brand})
+    cars = Car.objects.filter(brand=brand)
+    return render(request, 'brands/brand_detail.html', {'brand': brand,'cars': cars,})
+
 def update_brand_view(request:HttpRequest, brand_id):
     brand = Brand.objects.get(pk=brand_id)
     
@@ -39,6 +49,7 @@ def update_brand_view(request:HttpRequest, brand_id):
         if 'logo' in request.FILES:
             brand.logo = request.FILES['logo']
         brand.save()
+        messages.success(request, f"Brand '{brand.name}' has been successfully updated!")
 
         return redirect('brands:brand_detail_view', brand_id=brand.id)
     return render (request , 'brands/update_brand.html  ', {"brand":brand})

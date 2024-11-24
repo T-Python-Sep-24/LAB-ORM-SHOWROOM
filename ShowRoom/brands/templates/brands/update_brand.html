@@ -3,10 +3,10 @@
 {% block title %}Update {{ brand.name }}{% endblock %}
 
 {% block content %}
-<div class="d-flex">
+
 <div class="container mt-5">
     <h1 class="text-center">Update {{ brand.name }}</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data"  action="{% url 'brands:update_brand_view' brand.id %}">
         {% csrf_token %}
         <div class="mb-3">
             <label for="name" class="form-label">Brand Name</label>

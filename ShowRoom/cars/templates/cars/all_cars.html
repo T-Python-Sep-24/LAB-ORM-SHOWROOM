@@ -1,25 +1,83 @@
-{% extends " main/base.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}All Cars{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <h1>All Cars</h1>
+    <form method="get" class="row mb-4">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search by name"
+                   value="{{ search_query }}">
+        </div>
+        <div class="col-md-3">
+            <select name="brand" class="form-select">
+                <option value="" selected>Filter by Brand</option>
+                {% for brand in brands %}
+                <option value="{{ brand.name }}" {% if brand.name == selected_brand %}selected{% endif %}>
+                    {{ brand.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="color" class="form-select">
+                <option value="" selected>Filter by Color</option>
+                {% for color in colors %}
+                <option value="{{ color.name }}" {% if color.name == selected_color %}selected{% endif %}>
+                    {{ color.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 text-end">
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </div>
+    </form>
     <div class="row">
         {% for car in cars %}
         <div class="col-md-4">
-            <div class="card mb-3">
-                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
-                <div class="card-body">
+            <div class="card mb-3" style="height: 400px;">
+                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}" style="max-height: 200px; object-fit: cover;">
+                <div class="card-body" >
                     <h5 class="card-title">{{ car.name }}</h5>
                     <p class="card-text">{{ car.specs|truncatewords:10 }}</p>
-                    <a href="{% url 'cars:car_details' car.id %}" class="btn btn-primary">View Details</a>
+                    <a href="{% url 'cars:details_car_view' car.id %}" class="btn btn-primary">Details</a>
                 </div>
             </div>
         </div>
         {% empty %}
-        <p>No cars available.</p>
+        <p>No cars foundC.......</p>
         {% endfor %}
     </div>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if cars.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ cars.previous_page_number }}&search={{ search_query }}&brand={{ selected_brand }}&color={{ selected_color }}">
+                    Previous
+                </a>
+            </li>
+            {% endif %}
+
+            {% for num in cars.paginator.page_range %}
+            <li class="page-item {% if num == cars.number %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}&search={{ search_query }}&brand={{ selected_brand }}&color={{ selected_color }}">
+                    {{ num }}
+                </a>
+            </li>
+            {% endfor %}
+
+            {% if cars.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ cars.next_page_number }}&search={{ search_query }}&brand={{ selected_brand }}&color={{ selected_color }}">
+                    Next
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
 </div>
 {% endblock %}

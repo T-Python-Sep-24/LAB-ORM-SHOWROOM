@@ -3,10 +3,11 @@ from brands .models import Brand
 # Create your models here.
 
 class Color(models.Model):
-    name = models.CharField(max_length=100) 
+    name = models.CharField(max_length=100)  
     hex_value = models.CharField(max_length=50)
 
-
+    def __str__(self) -> str:
+        return self.name
 
 class Car(models.Model):
     name = models.CharField(max_length=100)  
@@ -15,3 +16,6 @@ class Car(models.Model):
     photo = models.ImageField(upload_to='images/' , default="images/default.jpg") 
     specs = models.TextField()  # Specifications for the car
     model_year = models.DateField()
+
+    def __str__(self) -> str:
+        return self.name

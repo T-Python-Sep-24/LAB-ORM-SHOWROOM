@@ -3,12 +3,36 @@
 {% block title %}{{ brand.name }} Details{% endblock %}
 
 {% block content %}
-<div class="d-flex">
 <div class="container mt-5">
-    <h1>{{ brand.name }}</h1>
-    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-fluid mb-3">
-    <p><strong>About:</strong> {{ brand.about }}</p>
-    <p><strong>Founded At:</strong> {{ brand.founded_at }}</p>
-    <a href="{% url 'brands:update_brand_view' brand.id %}" class="btn btn-warning">Edit Brand</a>
+    <div class="row">
+        <div class="col-md-4">
+            
+            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-fluid rounded">
+        </div>
+        <div class="col-md-8">
+            <h1>{{ brand.name }}</h1>
+            <p>{{ brand.about }}</p>
+            <p><strong>Total Cars:</strong> {{ cars|length }}</p>
+            <a href="{% url 'brands:update_brand_view' brand.id %}" class="btn btn-warning mt-3">Update Brand</a>
+        </div>
+    </div>
+    <hr>
+    <h2>Cars in {{ brand.name }}</h2>
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4">
+            <div class="card mb-3" style="height: 400px;">
+                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}" style="width: 100%; height: 250px; object-fit:contain;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="card-text">{{ car.specs|truncatewords:10 }}</p>
+                    <a href="{% url 'cars:details_car_view' car.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No cars .....</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

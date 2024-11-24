@@ -7,3 +7,5 @@ class Brand(models.Model):
     about = models.TextField()
     founded_at = models.DateField()
 
+    def __str__(self) -> str:
+        return self.name
