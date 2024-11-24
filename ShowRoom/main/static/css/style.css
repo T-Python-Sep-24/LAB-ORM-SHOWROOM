@@ -34,7 +34,7 @@ section {
 }
 
 .card-image {
-    height: 150px;
+    height: 160px;
 }
 
 .card-image img {
@@ -54,3 +54,6 @@ footer p {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+
+/*** media queries ***/
