@@ -8,8 +8,17 @@
 
 {% block content %}
 <section class="container">
-   <h1>All Brands</h1>
-    
+   <div class="d-flex justify-content-between">
+      <h1>All Brands</h1>
+      <div>
+         <form action="{% url 'brands:all_brands_view' %}" method="get">
+            <div class="d-flex gap-2">
+               <input type="search" name="search" class="form-control" placeholder="search" value="{{ request.GET.search }}" />
+               <input type="submit" value="search" class="btn btn-dark">
+            </div>
+         </form>
+      </div>
+   </div>
     
    <div class="row row-cols-1 row-cols-md-2">
       {% for brand in brands %}
