@@ -129,7 +129,7 @@ def new_color_view(request: HttpRequest):
             print("color adding form is not valid")
             messages.error(request,"Error in Adding color", "alert-danger")
         return redirect("main:home_view")
-
+    return render(request, 'new_color.html')
 
 def update_color_view(request: HttpRequest, color_id):
 

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}New Car{% endblock %}
+
+{% block main %}
+
+<main>
+    <h1 class="display-6 text-center special-color pt-2">New Car</h1>
+    <hr class="special-color2" style="width:15%;margin: 0 auto;">
+    <div class="container pt-5">
+        <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+            <div class="col shadow rounded p-3 special-color">
+                <h1 class="">New Car</h1>
+                <h4>Fill the form bellow</h4>
+                <form class="mt-5" action="{% url 'cars:new_color_view' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Color Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Blue" required/>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="hexadecimal">Color Name</label>
+                        <input type="color" id="hexadecimal" name="hexadecimal" class="form-control" placeholder="#" required/>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-block p-2 mb-4">Add Car</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

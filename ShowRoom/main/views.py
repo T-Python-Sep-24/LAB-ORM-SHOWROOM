@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from cars.models import Car, Color
@@ -10,7 +10,7 @@ from .forms import TestDriveRequestForm
 
 def home_view(request: HttpRequest):
     featured_cars = Car.objects.all()[:4]
-    featured_brands = Brand.objects.all()[:4]
+    featured_brands = Brand.objects.annotate(car_count=Count('car'))[:4]
     return render(request, 'index.html', context={'cars': featured_cars, 'brands':featured_brands})
 
 
@@ -24,11 +24,13 @@ def search_view(request: HttpRequest):
             Q(specs__contains=keyword) |
             Q(model_year__contains=keyword)
         )
+        featured_brands = Brand.objects.annotate(car_count=Count('car'))[:4]
         brand_results = Brand.objects.filter(
             Q(name__contains=keyword) |
             Q(about__contains=keyword) |
             Q(founded_at__contains=keyword)
         )
+        # brand_results = brand_results.
 
     else:
         car_results = []

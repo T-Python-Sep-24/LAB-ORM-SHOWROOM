@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <title>{% block title %} {% endblock %}</title>
@@ -27,7 +28,7 @@
     {% endblock %}
 </head>
 <body>
-    <div class="header ">
+    <div class="header">
         <div class="align-items-center pt-5 {% if request.resolver_match.view_name == 'main:home_view' %}fixed-top{% endif %}">
             <div class="container">
                 <nav class="navbar navbar-expand-md px-5 py-1 mb-5 align-items-center justify-content-between">
@@ -97,22 +98,21 @@
                 <div class="col">
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
-                            <h5>Main Pages</h5>
+                            <h5>Pages</h5>
                             <p><a href="{% url 'cars:all_cars_view' %}">Cars Showroom</a></p>
-                            <p><a href="{% url 'brands:all_brands_view' %}">Brands Listings </a></p>
+                            <p><a href="{% url 'brands:all_brands_view' %}">Brands Page</a></p>
 
+                        </div>
+                        <div class="col">
+                            <h5>Links</h5>
+                            <p><a href="/">Home</a></p>
+                            <p><a href="#cars">Cars Section</a></p>
+                            <p><a href="#brands">Brands Section</a></p>
                         </div>
                         <div class="col">
                             <h5>Test Drive</h5>
                             <p><a href="{% url 'main:test_drive_view' %}">Get Your Test Drive Now</a></p>
 
-                            <p>3</p>
-                        </div>
-                        <div class="col">
-                            <h5>Links</h5>
-                            <p>1</p>
-                            <p>2</p>
-                            <p>3</p>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
 
         <div class="text-center text-light bg-dark p-3" >
             © 2024 Copyright:
-            <a class="text-body" href="{% url 'main:home_view' %}">HmzH</a>
+            <a class="text-decoration-none text-light" href="{% url 'main:home_view' %}">HmzH</a>
         </div>
 
     </footer>

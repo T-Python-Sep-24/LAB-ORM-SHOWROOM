@@ -13,6 +13,7 @@ from cars.models import Car
 def all_brands_view(request: HttpRequest):
 
     brands = Brand.objects.annotate(car_count=Count('car'))
+
     paginator = Paginator(brands, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

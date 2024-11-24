@@ -34,6 +34,10 @@
                     </div>
 
                     <div class="form-check mb-4 mt-4 gap-5">
+                        <div class="d-flex justify-content-between">
+                            <label>Colors</label>
+                            <a href="{% url 'cars:new_color_view' %}">Add Color</a>
+                        </div>
                         {% for color in colors %}
                         <input type="checkbox" class="check-box-input" name="colors" value="{{color.id}}" id="color-{{color.id}}">
                         <label class="form-label" for="color-{{color.id}}">{{color.name}}</label>
