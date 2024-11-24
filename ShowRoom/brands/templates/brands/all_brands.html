@@ -2,40 +2,38 @@
 {% load static %}
 
 {% block title %}All Brands{% endblock %}
-{% block style %}
-{% endblock %}
-{% block content %} 
 
+{% block content %}
 <div class="container text-center mt-5">
     <h1>Brands</h1>
+    <div class="text-center mt-5">
+        <a href="{% url 'brands:add_brand_view' %}" class="btn btn-dark w-40">Add</a>
+    </div>
     <hr style="width: 80px; border-top: 3px solid #1d3557; margin: 0 auto 2rem;">
 </div>
-<div class="container d-flex flex-wrap justify-content-center mt-5">
-    {% for brand in brands %}
-    <div class="card shadow p-4 m-3 d-flex flex-row" style="width: 100%; max-width: 800px; border-radius: 12px; background-color: #ffffff;">
-        
-        <div class="p-3" style="background-color: #ffffff; border-radius: 8px; flex: 0 0 300px; max-height: 300px;">
-            <img src="{{ brand.logo.url }}" alt="car Image" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
 
-        <div class="p-4" style="flex: 1;">
-            <h5 class="text-uppercase mb-3" style="color: #333;">{{ brand.name }}</h5>
-            
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">About</h6>
-                <p>{{ brand.about }}</p>
-            </div>
-
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">founded_at</h6>
-                <p>{{ brand.founded_at }}</p>
-            </div>
-            <div class="mt-4">
-                <a href="{{ brand.website }}" target="_blank" style="color: #007bff; text-decoration: none;">Website</a> 
+<div class="container mt-5">
+    <div class="row gy-4">
+        {% for brand in brands %}
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="card shadow-sm" style="width: 18rem; border-radius: 12px;">
+                <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }}" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-uppercase" style="color: #333;">{{ brand.name }}</h5>
+                    <p class="card-text" style="margin: 0;">
+                        <strong>Cars Count:</strong> {{ brand.car_count }}
+                    </p>
+                    <hr style="border-top: 1px solid #ddd;">
+                    <p class="card-text">
+                        <strong>About:</strong> {{ brand.about|truncatechars:30 }}<br>
+                        <strong>Founded:</strong> {{ brand.founded_at|date:"Y" }}
+                    </p>
+                    <a href="{{ brand.website }}" target="_blank" class="btn btn-dark">Visit Website</a>
+                    <a href="{% url 'brands:brand_detail_view' brand.id %}" class="btn btn-dark">Detail</a>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
-
 {% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Update Brand{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Update Brand</h1>
+    <hr style="width: 80px; border-top: 3px solid #1d3557; margin: 0 auto 2rem;">
+
+    <div class="card shadow-lg" style="max-width: 800px; margin: 0 auto; border-radius: 12px;">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Brand Details</h5>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Brand Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ brand.name }}" required>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="logo">Logo</label>
+                    <input type="file" class="form-control-file" id="logo" name="logo">
+                    {% if brand.logo %}
+                        <img src="{{ brand.logo.url }}" alt="Logo" class="img-fluid mt-3" style="max-width: 200px;">
+                    {% endif %}
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="about">About</label>
+                    <textarea class="form-control" id="about" name="about" rows="4">{{ brand.about }}</textarea>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="founded_at">Founded At</label>
+                    <input type="date" class="form-control" id="founded_at" name="founded_at" value="{{ brand.founded_at|date:'Y-m-d' }}">
+                </div>
+
+                <button type="submit" class="btn btn-dark mt-4 w-100">Update Brand</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,9 +1,47 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Detail{% endblock %}
-{% block style %}
-{% endblock %}
+{% block title %}Car Details{% endblock %}
 
-{% block content %} 
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 600px; border-radius: 8px;">
+        <h2 class="text-center mb-4">{{ car.name }}</h2>
+        {% if car.photo %}
+        <div class="text-center mb-4">
+            <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="img-fluid img-thumbnail" style="max-height: 300px;">
+        </div>
+        {% endif %}
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>Brand:</strong> {{ car.brand.name }}
+            </li>
+            <li class="list-group-item">
+                <strong>Colors:</strong> 
+                {% for color in car.colors.all %}
+                    <span class="badge bg-primary">{{ color.name }}</span>
+                {% endfor %}
+            </li>
+            <li class="list-group-item">
+                <strong>Model Year:</strong> {{ car.model_year }}
+            </li>
+            <li class="list-group-item">
+                <strong>Price:</strong> ${{ car.price }}
+            </li>
+            <li class="list-group-item">
+                <strong>Electric:</strong> 
+                {% if car.fuel_type %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </li>
+        </ul>
+        <div class="text-center mt-4">
+            <a href="{% url 'cars:all_cars_view' %}" class="btn btn-secondary me-2">Back to All Cars</a>
+            <a href="{% url 'cars:update_view' car.id %}" class="btn btn-primary me-2">Update</a>
+            <a href="{% url 'cars:delete_view' car.id %}" class="btn btn-danger me-2">Delete</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

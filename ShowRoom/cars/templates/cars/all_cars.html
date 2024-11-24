@@ -2,49 +2,81 @@
 {% load static %}
 
 {% block title %}All Cars{% endblock %}
-{% block style %}
-{% endblock %}
-{% block content %} 
 
+{% block content %}
 <div class="container text-center mt-5">
     <h1>Cars</h1>
     <hr style="width: 80px; border-top: 3px solid #1d3557; margin: 0 auto 2rem;">
 </div>
-<div class="container d-flex flex-wrap justify-content-center mt-5">
-    {% for car in cars %}
-    <div class="card shadow p-4 m-3 d-flex flex-row" style="width: 100%; max-width: 800px; border-radius: 12px; background-color: #ffffff;">
-        
-        <div class="p-3" style="background-color: #ffffff; border-radius: 8px; flex: 0 0 300px; max-height: 300px;">
-            <img src="{{ car.photo.url }}" alt="car Image" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">
+<div class="container mt-5 mb-4">
+    <form method="GET">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" name="search" value="{{ search_query }}" class="form-control" placeholder="Search by name">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="min_price" value="{{ min_price }}" class="form-control" placeholder="Min Price">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="max_price" value="{{ max_price }}" class="form-control" placeholder="Max Price">
+            </div>
+            <div class="col-md-3">
+                <select name="brand" class="form-control">
+                    <option value="">Select Brand</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand.id }}" {% if brand.id == brand_id %}selected{% endif %}>{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark w-50">Filter</button>
+            </div>
         </div>
+    </form>
+    <div class="col-md-2 mt-3">
+        <a href="{% url 'cars:add_car_view' %}" class="btn btn-dark w-50">Add</a>
+    </div>
+</div>
 
-        <div class="p-4" style="flex: 1;">
-            <h5 class="text-uppercase mb-3" style="color: #333;">{{ car.name }}</h5>
-            
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">brand</h6>
-                <p>{{ car.brand }}</p>
+<div class="container mt-5">
+    <div class="row gy-4">
+        {% for car in cars %}
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="card shadow-sm" style="width: 18rem; border-radius: 12px;">
+                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-uppercase" style="color: #333;">{{ car.name }}</h5>
+                    <p class="card-text">
+                        <strong>Brand:</strong> {{ car.brand.name }}<br>
+                        <strong>Price:</strong> ${{ car.price }}<br>
+                        <strong>Model Year:</strong> {{ car.model_year }}<br>
+                        <strong>Fuel:</strong> {% if car.fuel_type %} Electric {% else %} Gas {% endif %}
+                    </p>
+                    <a href="{% url 'cars:detail_view' car.id %}" class="btn btn-dark">View Details</a>
+                </div>
             </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">Color</h6>
-                <p>{{ car.colors }}</p>
-            </div>
+<div class="container mt-4">
+    <div class="d-flex justify-content-center">
+        <div class="pagination">
+            <span class="mr-2">Page {{ cars.number }} of {{ cars.paginator.num_pages }}</span>
             
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">Model Year</h6>
-                <p>{{ car.model_year }}</p>
-            </div>
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">Fuel</h6>
-                <p>{{ car.fuel_type }}</p>
-            </div>
-            <div class="mb-3">
-                <h6 class="text-uppercase" style="color: #007bff;">Price</h6>
-                <p>{{ car.price }}</p>
-            </div>
+            {% if cars.has_previous %}
+            <a href="?page=1&search={{ search_query }}&min_price={{ min_price }}&max_price={{ max_price }}{% if brand_id %}&brand={{ brand_id }}{% endif %}" class="btn btn-light">First</a>
+            <a href="?page={{ cars.previous_page_number }}&search={{ search_query }}&min_price={{ min_price }}&max_price={{ max_price }}{% if brand_id %}&brand={{ brand_id }}{% endif %}" class="btn btn-light">Previous</a>
+            {% endif %}
+            
+            {% if cars.has_next %}
+            <a href="?page={{ cars.next_page_number }}&search={{ search_query }}&min_price={{ min_price }}&max_price={{ max_price }}{% if brand_id %}&brand={{ brand_id }}{% endif %}" class="btn btn-light">Next</a>
+            <a href="?page={{ cars.paginator.num_pages }}&search={{ search_query }}&min_price={{ min_price }}&max_price={{ max_price }}{% if brand_id %}&brand={{ brand_id }}{% endif %}" class="btn btn-light">Last</a>
+            {% endif %}
         </div>
     </div>
-    {% endfor %}
 </div>
+
+
 {% endblock %}
