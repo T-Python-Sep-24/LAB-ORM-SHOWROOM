@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}All Colors{% endblock %}
+
+{% block content %}
+<h2>All Colors</h2>
+<ul>
+    {% for color in colors %}
+    <li>{{ color.name }} 
+        <a href="{% url 'cars:update_color' color.id %}">Edit</a> | 
+        <a href="{% url 'cars:delete_color' color.id %}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'cars:new_color' %}">Add New Color</a>
+{% endblock %}

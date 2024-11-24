@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block title %}All Brands{% endblock %}
+
+{% block content %}
+<h2>All Brands</h2>
+<a href="{% url 'brands:new_brand' %}">Add New Brand</a>
+<ul>
+    {% for brand in brands %}
+        <li>
+            <a href="{% url 'brands:brand_detail' brand.id %}">{{ brand.name }}</a>
+            <p>Total Cars: {{ brand.car_set.count }}</p>
+            <a href="{% url 'brands:update_brand' brand.id %}">Update</a> |
+            <a href="{% url 'brands:delete_brand' brand.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ brand.name }}{% endblock %}
+
+{% block content %}
+<h2>{{ brand.name }}</h2>
+<img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+<p>About: {{ brand.about }}</p>
+<p>Founded At: {{ brand.founded_at }}</p>
+<h3>Cars in this Brand</h3>
+<ul>
+    {% for car in brand.car_set.all %}
+        <li>{{ car.name }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'brands:update_brand' brand.id %}">Update</a> |
+<a href="{% url 'brands:delete_brand' brand.id %}">Delete</a>
+<a href="{% url 'brands:all_brands' %}">Back to All Brands</a>
+{% endblock %}

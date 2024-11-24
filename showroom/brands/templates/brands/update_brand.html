@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Update Brand{% endblock %}
+
+{% block content %}
+<h2>Update Brand: {{ brand.name }}</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Brand</button>
+</form>
+<a href="{% url 'brands:brand_detail' brand.id %}">Back to Brand Details</a>
+{% endblock %}

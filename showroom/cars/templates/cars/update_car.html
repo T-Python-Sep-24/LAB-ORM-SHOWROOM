@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Update Car{% endblock %}
+
+{% block content %}
+<h2>Update Car: {{ car.name }}</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Car</button>
+</form>
+<a href="{% url 'cars:car_detail' car.id %}">Back to Car Details</a>
+{% endblock %}
