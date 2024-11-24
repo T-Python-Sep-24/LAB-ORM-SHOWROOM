@@ -1,6 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q, Count
 from django.http import HttpRequest, HttpResponse
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from cars.models import Car, Color
 from brands.models import Brand
@@ -24,13 +26,17 @@ def search_view(request: HttpRequest):
             Q(specs__contains=keyword) |
             Q(model_year__contains=keyword)
         )
-        featured_brands = Brand.objects.annotate(car_count=Count('car'))[:4]
-        brand_results = Brand.objects.filter(
-            Q(name__contains=keyword) |
-            Q(about__contains=keyword) |
-            Q(founded_at__contains=keyword)
-        )
-        # brand_results = brand_results.
+        featured_brands = Brand.objects.annotate(car_count=Count('car'))
+        # brand_results = Brand.objects.filter(
+        #     Q(name__contains=keyword) |
+        #     Q(about__contains=keyword) |
+        #     Q(founded_at__contains=keyword)
+        # )
+        brand_results = featured_brands.filter(
+                    Q(name__contains=keyword) |
+                    Q(about__contains=keyword) |
+                    Q(founded_at__contains=keyword)
+                )
 
     else:
         car_results = []
