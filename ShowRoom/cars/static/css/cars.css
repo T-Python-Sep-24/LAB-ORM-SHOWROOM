@@ -1,0 +1,28 @@
+/* details card */
+.details-card-image {
+    height: 300px !important;
+}
+
+.details-card-image img {
+    width: 100% !important;
+    height: 100%;
+    object-fit: contain !important;
+}
+
+
+/*** form ***/
+.color-label {
+    text-decoration: underline;
+    text-decoration-thickness: 0.2rem;
+}
+
+.update-image-thumb {
+    height: 80px;
+    margin-bottom: 0.5rem;
+}
+
+.update-image-thumb img {
+    width: 100% !important;
+    height: 100%;
+    object-fit: contain !important;
+}

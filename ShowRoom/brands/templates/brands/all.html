@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Brands{% endblock %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'css/brands.css' %}">{% endblock %}
+
+{% block content %}
+<section class="container">
+   <div class="d-flex justify-content-between">
+      <h1>All Brands</h1>
+      <div>
+         <form action="{% url 'brands:all_brands_view' %}" method="get">
+            <div class="d-flex gap-2">
+               <input type="search" name="search" class="form-control" placeholder="search" value="{{ request.GET.search }}" />
+               <input type="submit" value="search" class="btn btn-dark">
+            </div>
+         </form>
+      </div>
+   </div>
+    
+   <div class="row row-cols-1 row-cols-md-2">
+      {% for brand in brands %}
+      <div class="col p-0">
+         <div class="car-card d-flex flex-column shadow mx-2 my-2 p-2 gap-2">
+            <div>
+                  <a href="{% url 'brands:details_brand_view' brand.id %}" class="main-link"><h5>{{ brand.name }}</h5></a>
+            </div>
+            <div class="card-image">
+                  <img src="{{ brand.logo.url }}" alt="{{ brand.name }} logo" />
+            </div>
+            <h5>Founded: {{ brand.founded_at }}</h5>
+            <h5>Cars: {{ brand.car_set.count }}</h5>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+
+
+</section>
+{% endblock %}
