@@ -1,0 +1,24 @@
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+    {% for car in cars %}
+    <div class="col p-0">
+        <div class="car-card d-flex flex-column shadow mx-2 my-2 p-2 gap-2">
+            <div class="d-flex justify-content-between">
+                <h5>{{ car.name }}</h5>
+                <div class="card-logo"><img src="{{ car.brand.logo.url }}" alt="{{car.brand.name}} logo"></div>
+            </div>
+            <div class="card-image">
+                <img src="{{ car.photo.url }}" alt="{{ car.name }}" />
+            </div>
+            <h5>Model: {{ car.model }}</h5>
+            <div class="d-flex justify-content-between">
+                <h5>Colors:</h5>
+                <div class="d-flex gap-2">
+                    {% for color in car.colors.all %}
+                        <div class="color-box" style="background-color: {{ color.hexadecimal }};"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
