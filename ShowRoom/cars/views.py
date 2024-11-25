@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest , HttpResponse
 
 from django.contrib import messages
-from . models import Car , Color
+from . models import Car , Color , Rview
 from brands .models import Brand
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -43,7 +43,9 @@ def all_cars_view(request:HttpRequest):
     })
 
 def new_car_view(request:HttpRequest):
-    
+    if not request.user.is_superuser:
+        messages.success(request , "only Admin can add car")
+        return redirect("main:home_view")
     if request.method == "POST":
         color_name = request.POST.get("color", "").strip()
         
@@ -66,6 +68,9 @@ def new_car_view(request:HttpRequest):
     return render(request, 'cars/new_car.html')
 
 def update_car_view(request: HttpRequest, car_id):
+    if not request.user.is_superuser:
+        messages.success(request , "only Admin can update car")
+        return redirect("main:home_view")
     car = Car.objects.get(pk=car_id)  
     if request.method == "POST":
         
@@ -98,17 +103,18 @@ def update_car_view(request: HttpRequest, car_id):
 def details_car_view(request, car_id):
     
     car = Car.objects.get(pk=car_id)
+    reviews= Rview.objects.filter(car=car) 
+    return render(request, 'cars/car_detail.html', {'car': car ,"reviews":reviews})
     
-    return render(request, 'cars/car_detail.html', {'car': car})
-
 
 def new_color_view(request: HttpRequest):
-
+    if not request.user.is_superuser:
+        messages.success(request , "only Admin can add color")
+        return redirect("main:home_view")
     if request.method == "POST":
-        color_name = request.POST.get("name", "").strip()
-        hex_value = request.POST.get("hex_value", "").strip()
+        color_name = request.POST["name"]
+        hex_value = request.POST["hex_value"]
                     
-        #color, created = Color.objects.get_or_create(name__iexact=color_name, defaults={"name", "hex_value": hex_value})
         color = Color(name=color_name, hex_value=hex_value)
         color.save()
 
@@ -119,7 +125,9 @@ def new_color_view(request: HttpRequest):
 
 
 def update_color_view(request: HttpRequest, color_id):
-    
+    if not request.user.is_superuser:
+        messages.success(request , "only Admin can update color")
+        return redirect("main:home_view")
     color = Color.objects.get(pk=color_id)
 
     if request.method == "POST":
@@ -130,3 +138,12 @@ def update_color_view(request: HttpRequest, color_id):
         return redirect('cars:update_color', color_id=color.id)  
 
     return render(request, 'cars/update_color.html', {'color': color})
+
+def add_review_view(request:HttpRequest ,car_id):
+    if not request.user.is_authenticated:
+        return redirect ("cars:sign_in_view ")
+    if request.method == "POST":
+        car = Car.objects.get(pk=car_id)
+        new_review=Rview (car=car, user=request.user,comment=request.POST["comment"])
+        new_review.save()
+    return redirect("cars:details_car_view",car_id=car_id)

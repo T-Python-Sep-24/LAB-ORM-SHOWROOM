@@ -13,9 +13,13 @@
             <h1>{{ brand.name }}</h1>
             <p>{{ brand.about }}</p>
             <p><strong>Total Cars:</strong> {{ cars|length }}</p>
+            {%if  request.user.is_superuser%}
             <a href="{% url 'brands:update_brand_view' brand.id %}" class="btn btn-warning mt-3">Update Brand</a>
+            {%endif%}
         </div>
+        
     </div>
+
     <hr>
     <h2>Cars in {{ brand.name }}</h2>
     <div class="row">

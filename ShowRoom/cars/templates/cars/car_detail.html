@@ -3,7 +3,7 @@
 {% block title %}{{ car.name }} Details{% endblock %}
 
 {% block content %}
-<div class="d-flex">
+
 <div class="container mt-5">
     <h1>{{ car.name }}</h1>
     <div class="mb-4 text-center">
@@ -25,9 +25,42 @@
         <h4>Model Year:</h4>
         <p>{{ car.model_year|date:"Y-m-d" }}</p>
     </div>
+    {%if  request.user.is_superuser%}
     <div class="mt-4">
         <a href="{% url 'cars:update_car_view' car.id %}" class="btn btn-warning mb-4" >Update</a>
     </div>
+    {%endif%}
+    <div class="container mt-5">
+        <h1>Reviews for {{ car.name }}</h1>
+        <div class="mb-4">
+            <h3>All Reviews</h3>
+            {% for review in reviews %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.user.username }}</h5>
+                    <p class="card-text">{{ review.comment }}</p>
+                    <p class="text-muted"><small>Posted on {{ review.created_at }}</small></p>
+                </div>
+            </div>
+            {% empty %}
+            <p>No reviews yet. Be the first to review!</p>
+            {% endfor %}
+        </div>
+        <div>
+            {% if request.user.is_authenticated%}
+            <h3>Leave a Review</h3>
+            <form method="post" action="{%url 'cars:add_review_view' car.id%}">
+                {% csrf_token %}
+                <textarea name="comment" class="form-control" rows="4" placeholder="Write your review..." required></textarea>
+                <button type="submit" class="btn btn-primary mt-3">Submit Review</button>
+            </form>
+            {%else%}
+            <div class="p-3 rounded bg-warning mt-1 d-flex flex-column gap-2">
+                <P>Only registered users can add reviews</P>
+            </div>
+            {%endif%}
+        </div>
+    </div>
 </div>
-</div>
+
 {% endblock %}

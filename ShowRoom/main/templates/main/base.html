@@ -16,16 +16,31 @@
         <div class="container-fluid d-flex">
             <div class="navbar-nav me-auto">
                 <a class="nav-link text-white" href="{%url 'main:home_view'%}">Home</a>
+                {%if request.user.is_superuser%}
                 <a class="nav-link text-white" href="{%url 'cars:new_car_view'%}">New Car</a>
-                <a class="nav-link text-white" href="{%url 'cars:all_cars_view'%}">Cars</a>
                 <a class="nav-link text-white" href="{%url 'brands:new_brand_view'%}">New Brand</a>
-                <a class="nav-link text-white" href="{%url 'brands:all_brands_view'%}">Brands</a>
                 <a class="nav-link text-white" href="{%url 'cars:new_color_view'%}">New color</a>
+                {%endif%}
+                <a class="nav-link text-white" href="{%url 'cars:all_cars_view'%}">Cars</a>
+                <a class="nav-link text-white" href="{%url 'brands:all_brands_view'%}">Brands</a>
+                {% if request.user.is_authenticated %}
+                <div class="d-flex align-items-center ms-5">
+                    <span class="me-2">Welcome, {{ user.username }}</span>
+                    <a class="nav-link text-white" href="{% url 'accounts:logout_view' %}?next={{request.path}}">Log out</a>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                    <a class="nav-link text-white me-1" href="{% url 'accounts:sign_up_view' %}?next={{request.path}}">Sign up</a>
+                    <a class="nav-link text-white" href="{% url 'accounts:sign_in_view' %}?next={{request.path}}">Sign in</a>
+                </div>
+                {% endif %}
+                
             </div>
             <form class="d-flex ms-auto" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
         </div>
+            
     </nav>
     <main>
         {% block content %}
