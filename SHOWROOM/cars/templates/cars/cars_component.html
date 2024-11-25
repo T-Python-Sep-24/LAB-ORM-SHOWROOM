@@ -1,0 +1,18 @@
+<section class="cars-grid">
+  {% for car in cars %}
+  <div class="car-card">
+    <img
+      src="{{ car.image.url }}"
+      alt="{{ car.car_name }}"
+      class="car-image-2"
+    />
+    <h2 class="car-name-2">{{ car.car_name }}</h2>
+    <p class="car-price-2">Price: ${{ car.price }}</p>
+    <a
+      href="{% url 'cars:car_details_view' car.id %}"
+      class="view-details-button"
+      >View Detailss</a
+    >
+  </div>
+  {% endfor %}
+</section>
