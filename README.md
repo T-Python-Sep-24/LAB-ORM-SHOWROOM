@@ -3,23 +3,9 @@
 ## Using what you learned, create a new project called `ShowRoom`
 This is a website for showing brands of cars, cars and details about cars. Essentially a Show Room for cars !
 
-### Models
-#### `Brand`
-- this is a model for the brands of cars. ex: Chevrolet, Toytoa, Ford, Tesla, etc.
-- It should at leas have the following attributes: name, logo, about, founded_at, ..... etc. You can add more.
-
-#### `Color`
-- This is a model to represent colors of cars.
-- It should at least have the following attributes: name, photo or rgb or hexadeicml color, ..... etc. You can add more.
-
-#### `Car`
-- This is a model to represent cars, ex: Camry, Caprice, Model 3, etc.
-- It should at least have the following attributes: name, brand, colors,  photo, specs, model, ..... etc. You can add more.
-Note: car model has a relation with `Car` model and `Color` model (use appropriate relation types for each)
-
 
 ### Pages
-- Home page `/`: this page shows the latest cars (limit to 4 with a link to go to all cars) , lates brands.
+
 - All Cars page `cars/all/`: this page shows all the cars (with pagination, max. 10 cars per page). It also has filters to filter by Brand and by Color, with search by name.
 - Car Detail page `cars/details/<card_id>/`: this page shows details of a car : name, photo, brand, available colors, specs, etc.
 - New car page: `cars/new/` : to add new car.
