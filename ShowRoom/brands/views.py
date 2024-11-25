@@ -19,7 +19,7 @@ def all_brands_view(request:HttpRequest):
     return render(request,'brands/all_brands.html',{"brands":brands_list})
 
 def new_brand_view(request:HttpRequest):
-    if not request.user.is_staff:
+    if not request.user.is_superuser:
             messages.warning(request,"only staff can add brand","alert-warning")
             return redirect("main:home_view")
     if request.method=="POST":
@@ -35,7 +35,7 @@ def new_brand_view(request:HttpRequest):
 
 def update_brand_view(request:HttpRequest,brand_id):
     try:
-        if not request.user.is_staff:
+        if not request.user.is_superuser:
             messages.warning(request,"only staff can update brand","alert-warning")
             return redirect("main:home_view")
         brand=Brand.objects.get(pk=brand_id)
@@ -63,7 +63,7 @@ def update_brand_view(request:HttpRequest,brand_id):
 
 def delete_brand_view(request:HttpRequest,brand_id):
     try:
-        if not request.user.is_staff:
+        if not request.user.is_superuser:
             messages.warning(request,"only staff can delete brand","alert-warning")
             return redirect("main:home_view")
         brand=Brand.objects.get(pk=brand_id)

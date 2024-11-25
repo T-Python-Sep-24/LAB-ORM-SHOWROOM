@@ -45,7 +45,7 @@ def detail_car_view(request:HttpRequest,car_id):
 
 
 def new_car_view(request:HttpRequest):
-    if not request.user.is_staff:
+    if not request.user.is_superuser:
         messages.error(request,"only staff can add cars","alert-warning")
         return redirect("main:home_view")
     brands=Brand.objects.all()
@@ -67,7 +67,7 @@ def new_car_view(request:HttpRequest):
 
 def update_car_view(request:HttpRequest,car_id):
     try:   
-        if not request.user.is_staff:
+        if not request.user.is_superuser:
             messages.warning(request,"only staff can update car","alert-warning")
             return redirect("main:home_view")
  
@@ -112,7 +112,7 @@ def update_car_view(request:HttpRequest,car_id):
 
 
 def new_color_view(request:HttpRequest):
-    if not request.user.is_staff:
+    if not request.user.is_superuser:
             messages.warning(request,"only staff can add color","alert-warning")
             return redirect("main:home_view")
  
@@ -131,7 +131,7 @@ def new_color_view(request:HttpRequest):
 
 def update_color_view(request:HttpRequest,color_id):
     try:
-        if not request.user.is_staff:
+        if not request.user.is_superuser:
             messages.warning(request,"only staff can update color","alert-warning")
             return redirect("main:home_view")
  
@@ -162,7 +162,7 @@ def update_color_view(request:HttpRequest,color_id):
 
 
 def search_color(request):
-    if not request.user.is_staff:
+    if not request.user.is_superuser:
             messages.warning(request,"only staff can search color","alert-warning")
             return redirect("main:home_view")
  
@@ -182,7 +182,7 @@ def search_color(request):
 
 def delete_car_view(request,car_id):
     try:
-        if not request.user.is_staff:
+        if not request.user.is_superuser:
             messages.warning(request,"only staff can delete car","alert-warning")
             return redirect("main:home_view")
 
@@ -200,7 +200,7 @@ def delete_car_view(request,car_id):
 
 def delete_color_view(request,color_id):
     try:
-        if not request.user.is_staff:
+        if not request.user.is_superuser:
             messages.warning(request,"only staff can delete color","alert-warning")
             return redirect("main:home_view")
  
