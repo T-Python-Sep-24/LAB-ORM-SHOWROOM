@@ -2,9 +2,12 @@
 
 ![image](https://github.com/user-attachments/assets/95450e94-dfb6-429f-8889-f932a1d012be)
 
+
 ![image](https://github.com/user-attachments/assets/61d9caf2-d442-4495-a388-1bd225fd2bc3)
 
+
 ![image](https://github.com/user-attachments/assets/396ea60f-dba1-4eb5-920a-8a7ad9192e20)
+
 
 ![image](https://github.com/user-attachments/assets/b8ef1a39-8275-4117-bbb0-c8cf246b56b5)
 
@@ -14,9 +17,26 @@
 
 ![image](https://github.com/user-attachments/assets/8a41d667-2b2e-4399-9452-43a011db9f6e)
 
+
 ![image](https://github.com/user-attachments/assets/82dfc0f2-3136-43d9-b5b2-b7d83e39b8e3)
 
+
 ![image](https://github.com/user-attachments/assets/a583c3e1-886b-4551-8201-4bb715cf2690)
+
+
+![image](https://github.com/user-attachments/assets/4b2ab7ef-5369-4b47-b3b6-338a2fb803fb)
+
+
+![image](https://github.com/user-attachments/assets/2b6deeea-774b-4814-a983-dd57936f0587)
+
+
+![image](https://github.com/user-attachments/assets/00d5cd18-0a33-49d5-8e3c-5d5f8757a2fd)
+
+
+![image](https://github.com/user-attachments/assets/31d0c268-45e4-4939-9547-a29524bd9936)
+
+
+![image](https://github.com/user-attachments/assets/ecbbe921-5d5f-4887-9715-5671aa9306f7)
 
 
 ## Using what you learned, create a new project called `ShowRoom`
