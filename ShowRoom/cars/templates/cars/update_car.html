@@ -21,35 +21,33 @@
     {% csrf_token %}
 
     <label for="name">Car Name</label>
-    <input type="text" name="name" value="{{ form.name.value }}" id="name" required>
+    {{ form.name }}
 
     <label for="brand">Brand</label>
-    <select name="brand" id="brand" required>
-        <option value="">-- Select Brand --</option>
-        {% for brand in brands %}
-            <option value="{{ brand.id }}" {% if form.brand.value == brand.id %}selected{% endif %}>{{ brand.name }}</option>
-        {% endfor %}
-    </select>
+    {{ form.brand }}
 
     <label for="colors">Colors</label>
     <div>
         {% for color in colors %}
             <div>
                 <label>
-                    <input type="checkbox" name="colors" value="{{ color.id }}" {% if color.id in form.colors.value %}checked{% endif %}> {{ color.name }}
+                    <!-- Check if color.id is in the list of selected color IDs (form.colors.value) -->
+                    <input type="checkbox" name="colors" value="{{ color.id }}"
+                        {% if color.id in form.colors.value %}checked{% endif %}>
+                    {{ color.name }}
                 </label>
             </div>
         {% endfor %}
     </div>
 
     <label for="photo">Photo</label>
-    <input type="file" name="photo" id="photo" accept="image/*">
+    {{ form.photo }}
 
     <label for="specs">Specs</label>
-    <textarea name="specs" id="specs" rows="5">{{ form.specs.value }}</textarea>
+    {{ form.specs }}
 
     <label for="model">Model</label>
-    <input type="text" name="model" value="{{ form.model.value }}" id="model" required>
+    {{ form.model }}
 
     <button type="submit">Update Car</button>
 </form>

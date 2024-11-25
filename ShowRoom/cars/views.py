@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib import messages
-from .models import Car, Color, Brand
-from .forms import CarForm
+from .models import Car, Review, Color
+from .forms import CarForm, ReviewForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+from brands.models import Brand
 
 
 def all_cars(request):
@@ -33,11 +35,14 @@ def all_cars(request):
         'search': search_query,
     })
 
+
 def car_detail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    return render(request, 'cars/car_detail.html', {'car': car})
+    reviews = car.reviews.all()
+    return render(request, 'cars/car_detail.html', {'car': car, 'reviews': reviews})
 
 
+@user_passes_test(lambda user: user.is_superuser)
 def new_car(request):
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
@@ -50,8 +55,8 @@ def new_car(request):
     return render(request, 'cars/new_car.html', {'form': form})
 
 
+@user_passes_test(lambda user: user.is_superuser)
 def update_car(request, car_id):
-
     car = get_object_or_404(Car, id=car_id)
     brands = Brand.objects.all()
     colors = Color.objects.all()
@@ -66,6 +71,7 @@ def update_car(request, car_id):
     return render(request, 'cars/update_car.html', {'form': form, 'brands': brands, 'colors': colors})
 
 
+@user_passes_test(lambda user: user.is_superuser)
 def delete_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     if request.method == 'POST':
@@ -107,3 +113,28 @@ def delete_color(request, color_id):
         messages.success(request, 'Color deleted successfully!')
         return redirect('cars:all_cars')
     return render(request, 'cars/delete_color.html', {'color': color})
+
+
+@login_required
+def submit_review(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+
+    if Review.objects.filter(user=request.user, car=car).exists():
+        messages.info(request, "You've already reviewed this car!")
+        return redirect('cars:car_detail', car_id=car.id)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.car = car
+            review.user = request.user
+            review.save()
+            messages.success(request, "Your review has been submitted!")
+            return redirect('cars:car_detail', car_id=car.id)
+        else:
+            messages.error(request, "There was an error submitting your review. Please check the form.")
+    else:
+        form = ReviewForm()
+
+    return render(request, 'cars/submit_review.html', {'form': form, 'car': car})

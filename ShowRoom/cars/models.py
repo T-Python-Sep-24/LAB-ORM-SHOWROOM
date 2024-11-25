@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from brands.models import Brand
 
 class Color(models.Model):
     BLACK = 'Black'
@@ -19,9 +21,6 @@ class Color(models.Model):
 
     def __str__(self):
         return self.name
-from django.db import models
-from brands.models import Brand
-from .models import Color
 
 class Car(models.Model):
     name = models.CharField(max_length=100)
@@ -33,3 +32,13 @@ class Car(models.Model):
 
     def __str__(self):
         return self.name
+
+class Review(models.Model):
+    car = models.ForeignKey('Car', on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    rating = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review for {self.car.name} by {self.user.username}"

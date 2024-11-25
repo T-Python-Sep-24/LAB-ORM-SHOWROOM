@@ -14,6 +14,9 @@ def brand_detail(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     return render(request, 'brands/brand_detail.html', {'brand': brand})
 
+from django.contrib.auth.decorators import user_passes_test
+
+@user_passes_test(lambda user: user.is_superuser)
 def new_brand(request):
     if request.method == 'POST':
         form = BrandForm(request.POST, request.FILES)
@@ -25,6 +28,7 @@ def new_brand(request):
         form = BrandForm()
     return render(request, 'brands/new_brand.html', {'form': form})
 
+@user_passes_test(lambda user: user.is_superuser)
 def update_brand(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     if request.method == 'POST':
@@ -36,6 +40,8 @@ def update_brand(request, brand_id):
     else:
         form = BrandForm(instance=brand)
     return render(request, 'brands/update_brand.html', {'form': form, 'brand': brand})
+
+@user_passes_test(lambda user: user.is_superuser)
 def delete_brand(request, brand_id):
     brand = get_object_or_404(Brand, id=brand_id)
     if request.method == 'POST':
