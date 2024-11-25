@@ -1,0 +1,86 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+    <section class="container-md text-center">
+        <h1 class="mt-4">
+        Update Profile
+        </h1>
+        <div class="half-border mb-5 mx-auto"></div>
+        <div class="d-flex flex-column flex-sm-row gap-4 justify-content-center">
+            <div class="d-flex flex-column">
+                <img src="{{request.user.profile.avatar.url}}" alt="Avatar" class="w-100 rounded-circle avatar mx-auto">
+                <h5 class="text-center my-2">@{{request.user.username}}</h5>
+            </div>
+            <div class="d-flex flex-column rounded-1 shadow-sm p-3 bg-color">
+                <div class="d-flex justify-content-center">
+                    <form action="{% url 'accounts:updateProfileView' %}" method="post" enctype="multipart/form-data" class="text-start p-3 needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3 d-flex flex-row gap-2">
+                            <div>
+                                <label for="fname" class="form-label fw-medium">Firs Name</label>
+                                <input type="text" class="form-control focus-ring border" style="--bs-focus-ring-color: rgba(var(--bs-danger-rgb), .25)" id="fname" name="fname" value="{{request.user.first_name}}" placeholder="Ex. Ghaliah.." required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid first name.
+                                </div>
+                            </div>
+                            <div>
+                                <label for="lname" class="form-label fw-medium">Last Name</label>
+                                <input type="text" class="form-control focus-ring border" style="--bs-focus-ring-color: rgba(var(--bs-danger-rgb), .25)" id="lname" name="lname" value="{{request.user.last_name}}" placeholder="Ex. Banounah.." required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid last name.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="about" class="form-label fw-medium">About</label>
+                            <textarea class="form-control focus-ring border" style="--bs-focus-ring-color: rgba(var(--bs-danger-rgb), .25)" id="about" name="about" rows="3" placeholder="About you..">{{request.user.profile.about}}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="avatar" class="form-label fw-medium">Avatar</label>
+                            <input class="form-control focus-ring border" style="--bs-focus-ring-color: rgba(var(--bs-danger-rgb), .25)" type="file" id="avatar" name="avatar" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-medium">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                <input type="text" class="form-control focus-ring border" style="--bs-focus-ring-color: rgba(var(--bs-danger-rgb), .25)" id="username" name="username" value="{{request.user.username}}" aria-describedby="inputGroupPrepend" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-medium">Email address</label>
+                            <input type="email" class="form-control focus-ring border" style="--bs-focus-ring-color: rgba(var(--bs-danger-rgb), .25)" id="email" name="email" value="{{request.user.email}}" minlength="8" placeholder="name@example.com" required>
+                            <div class="invalid-feedback">
+                                Please enter a valid email.
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button class="w-50 btn border-2 btn-outline-danger py-1" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <h5 class="text-start">Your Comments:</h5>
+                {% for com in request.user.comment_set.all %}
+                <div class="card p-1 my-1 text-start rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}"
+                    style="max-width:40rem;">
+                    <div class="card-body d-flex flex-column gap-1">
+                        <p class="card-text fs-5 fw-medium text-danger my-0">
+                            On <a href="{% url 'cars:carDetailsView' com.car.id %}">{{com.car.brand.name}} - {{com.car.model}}</a>
+                        </p>
+                        <p class="card-text my-0">
+                            {{com.comment}}
+                        </p>
+                        <p class="card-text small fw-medium text-danger">
+                            {{com.createdAt}}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

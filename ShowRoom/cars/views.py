@@ -6,6 +6,7 @@ from cars.forms import CarForm, ColorForm
 from brands.models import Brand
 from django.core.paginator import Paginator
 from django.db.models import Count
+from accounts.models import Bookmark
 
 # Add color view
 def addColorView(request:HttpRequest):
@@ -219,8 +220,10 @@ def carDetailsView(request: HttpRequest, carid:int):
         relatedCarsImages = Attachment.objects.filter(car__brand__name=car.brand.name)
 
         comments = Comment.objects.filter(car=car)
+        
+        isBookmarked = Bookmark.objects.filter(car=car, user=request.user).exists() if request.user.is_authenticated else False
 
-        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages, 'comments': comments})
+        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages, 'comments': comments, 'isBookmarked': isBookmarked})
     return response
 
 # Add comment
@@ -238,3 +241,26 @@ def addCommentView(request: HttpRequest, carid: int):
 
     response = redirect('cars:carDetailsView', carid)
     return response
+
+# Add bookmark
+def addBookmarkView(request:HttpRequest, carId:id):
+    
+    if not request.user.is_authenticated:
+        messages.error(request, "Only registered users can add bookmarks.", "alert-danger")
+        return redirect('cars:carDetailsView', carId)
+    try:
+        car = Car.objects.get(pk=carId)
+        
+        bookmark = Bookmark.objects.filter(user=request.user, car=car).first()
+        if not bookmark:
+            newBookmark = Bookmark(user=request.user, car=car)
+            newBookmark.save()
+            messages.success(request, "Bookmark added successfully.", "alert-success")
+        else:
+            bookmark.delete()
+            messages.warning(request, "Bookmark removed successfully.", "alert-warning")
+
+    except Exception as e:
+        messages.error(request, "Something went wrong. Couldn't add bookmark.", "alert-danger")
+
+    return redirect('cars:carDetailsView', carId)

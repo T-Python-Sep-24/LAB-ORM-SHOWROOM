@@ -6,33 +6,77 @@
 {% block content %}
 <section class="container-md my-5">
     <div class="d-flex flex-column flex-md-row gap-4 justify-content-center">
-        <div class="d-flex flex-column justify-content-center">
-            <img src="{{profile.avatar.url}}" alt="Avatar" class="w-100 rounded-circle avatar">
-            <h5 class="text-center">@{{profile.user.username}}</h5>
+        <div class="d-flex flex-column">
+            <img src="{{profile.avatar.url}}" alt="Avatar" class="w-100 rounded-circle avatar mx-auto">
+            <h5 class="text-center my-2">@{{profile.user.username}}</h5>
+            {% if request.user == profile.user %}
+            <a href="{% url 'accounts:updateProfileView' %}" class="mx-auto"><i class="bi bi-pencil-square btn btn-outline-danger py-1"></i></a>
+            {% endif %}
         </div>
-        <div class="flex-fill d-flex flex-column rounded-1 shadow-sm p-3 profile-crd">
+        <div class="flex-fill d-flex flex-column rounded-1 shadow-sm p-3 bg-color">
             <h2 class="mb-0">
                 {{profile.user.first_name}} {{profile.user.last_name}}
             </h2>
             <div class="half-border mb-2"></div>
             <p class="fs-5 my-1"><span class="fw-medium text-danger">About: </span>{{profile.about}}</p>
-            <h5>{{profile.user.first_name}}'s Comments:</h5>
-            {% for com in profile.user.comment_set.all %}
-            <div class="card p-1 my-2 text-start rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}"
-                style="max-width:40rem;">
-                <div class="card-body d-flex flex-column gap-1">
-                    <p class="card-text fs-5 fw-medium text-danger my-0">
-                        On <a href="{% url 'cars:carDetailsView' com.car.id %}">{{com.car.brand.name}} - {{com.car.model}}</a>
-                    </p>
-                    <p class="card-text my-0">
-                        {{com.comment}}
-                    </p>
-                    <p class="card-text small fw-medium text-danger">
-                        {{com.createdAt}}
-                    </p>
+            
+            <!-- User comments -->
+            <h5 class="mb-0 mt-3">
+                {% if request.user == profile.user %}
+                Your 
+                {% else %}
+                {{profile.user.first_name}}'s 
+                {% endif %}
+                Comments:
+            </h5>
+            <div class="row px-2 gap-2">
+                {% for com in profile.user.comment_set.all %}
+                <div class="col card p-1 my-1 text-start rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}"
+                    style="max-width:20rem;">
+                    <div class="card-body py-0 px-2 d-flex flex-column gap-1">
+                        <p class="card-text fw-medium text-danger my-0">
+                            On <a href="{% url 'cars:carDetailsView' com.car.id %}">{{com.car.brand.name}} - {{com.car.model}}</a>
+                        </p>
+                        <p class="card-text small my-0">
+                            {{com.comment}}
+                        </p>
+                        <p class="card-text text-danger fw-medium" style="font-size: x-small;">
+                            {{com.createdAt}}
+                        </p>
+                    </div>
                 </div>
+                {% empty %}
+                <p class="fw-medium ms-1 my-0">No comments yet.</p>
+                {% endfor %}
             </div>
-            {% endfor %}
+
+            <!-- User Bookmarks -->
+            {% if request.user == profile.user %}
+            <h5 class="mb-0 mt-3">Your bookmarks:</h5>
+            <div class="row px-2 gap-2">
+                {% for bookmark in profile.user.bookmark_set.all %}
+                <div class="col g-0 my-1 card border-0 text-start rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}"
+                style="max-width:12rem;">
+                    {% for carimg in bookmark.car.attachment_set.all %}
+                    {% if carimg.car == bookmark.car and "front" in carimg.image.url %}
+                    <img src="{{carimg.image.url}}" class="card-img-top object-fit-cover" style="max-height: 4rem;">
+                    {% endif %}
+                    {% endfor %}
+                    <div class="card-body p-2 d-flex flex-column gap-1">
+                        <p class="card-text fw-medium text-danger my-0">
+                            <a href="{% url 'cars:carDetailsView' bookmark.car.id %}">{{bookmark.car.brand.name}} - {{bookmark.car.model}}</a>
+                        </p>
+                        <p class="card-text text-danger fw-medium" style="font-size: x-small;">
+                            Added At: {{bookmark.addedAt}}
+                        </p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="fw-medium my-0">No bookmarks yet.</p>
+                <a href="{% url 'cars:displayCarsView' 'all' %}" class="btn btn-secondary text-dark py-0 ms-2" style="width: fit-content;">Browse cars</a>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
 </section>

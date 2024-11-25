@@ -10,9 +10,15 @@
         <h1 class="mt-3 ms-2">
             <a href="{% url 'brands:brandDetailsView' car.brand.id %}">{{car.brand.name}}</a> - {{car.model}} {{car.modelYear}}
         </h1>
-    </div>
-    
+    </div>    
     <div class="half-border mb-2"></div>
+    <a href="{% url 'cars:addBookmarkView' car.id %}">
+        {% if isBookmarked %}
+        <i class="bi bi-bookmark-x-fill"></i>
+        {% else %}
+        <i class="bi bi-bookmark-plus"></i>
+        {% endif %}
+    </a>
     <div class="container-fluid">
         {% if user.is_staff %}
         <div class="d-flex gap-2 justify-content-end">

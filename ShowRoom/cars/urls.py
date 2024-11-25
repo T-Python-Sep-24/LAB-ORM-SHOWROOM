@@ -15,5 +15,7 @@ urlpatterns = [
     path('color/delete/<int:clrId>', views.deleteColorView, name="deleteColorView"),
     path('colors/all/', views.allColorsView, name="allColorsView"),
 
-    path("comment/add/<int:carid>", views.addCommentView, name="addCommentView"),
+    path('comment/add/<int:carid>', views.addCommentView, name="addCommentView"),
+
+    path('bookmark/<int:carId>', views.addBookmarkView, name="addBookmarkView"),
 ]

@@ -4,8 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Profile
+from django.db import transaction, IntegrityError
 
 # Create new account View
+@transaction.atomic
 def registerView(request:HttpRequest):
  
     if request.method == "POST":
@@ -18,10 +20,12 @@ def registerView(request:HttpRequest):
             profile.save()
 
             messages.success(request, "Register successfull.", "alert-success")   
-            return redirect('accounts:loginView') 
-        
+            return redirect('accounts:loginView')
+            
+        except IntegrityError:
+            messages.error(request, "The username is already taken. Please choose another one.", "alert-danger")
         except Exception:
-            messages.error(request, f"Register failed. Try again", "alert-danger")    
+            messages.error(request, "Register failed. Try again", "alert-danger")    
 
     return render(request, 'accounts/register.html')
 
@@ -33,10 +37,10 @@ def loginView(request:HttpRequest):
         user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
         if user:
             login(request, user)
-            messages.success(request, f"Welcome back {user.first_name}, your login was successfull.", "alert-success")
+            messages.success(request, f"Welcome back {user.first_name}.", "alert-success")
             return redirect(request.GET.get('next', '/'))
         else:
-            messages.error(request, f"Login failed. Your credentials are incorrect.", "alert-danger")   
+            messages.error(request, "Login failed. Your credentials are incorrect.", "alert-danger")   
     
     return render(request, 'accounts/login.html')
 
@@ -59,3 +63,37 @@ def profileView(request: HttpRequest, username: str):
         return render(request, '404.html')
     
     return render(request, 'accounts/profile.html', {'profile': profile})
+
+# Display profile View
+@transaction.atomic
+def updateProfileView(request: HttpRequest):
+    
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login to update your account.", "alert-warning")
+        return redirect('accounts:loginView')
+    
+    if request.method == 'POST':
+        try:
+            user:User = request.user
+            profile:Profile = user.profile
+
+            # Update user instance
+            user.first_name=request.POST['fname']
+            user.last_name=request.POST['lname']
+            user.username=request.POST['username']
+            user.email=request.POST['email']
+            user.save()
+            
+            # Update user profile
+            profile.about=request.POST['about']
+            profile.avatar=request.FILES.get('avatar', profile.avatar)
+            profile.save()
+
+            messages.success(request, "Profile updated successfully.", "alert-success")
+            
+            return redirect('accounts:profileView')
+        
+        except Exception:
+            messages.error(request, "Profile wasn't updated.", "alert-danger")
+
+    return render(request, 'accounts/updateProfile.html')
