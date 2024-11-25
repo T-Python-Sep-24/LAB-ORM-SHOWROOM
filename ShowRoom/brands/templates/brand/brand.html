@@ -5,7 +5,7 @@
         <h1 style="text-align: center; margin-bottom: 20px;">Car Brands</h1>
         
         <div class="brands-grid">
-            {% for b in brands %}
+            {% for b in brand %}
             <div class="brand-card">
                 {% if b.logo %}
                     <img src="{{ b.logo.url }}" alt="{{ b.name }}">

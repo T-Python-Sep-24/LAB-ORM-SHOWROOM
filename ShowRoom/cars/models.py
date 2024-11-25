@@ -12,7 +12,7 @@ class Car(models.Model):
     name=models.CharField(max_length=1024)
     brand=models.ForeignKey(Brand,on_delete=models.PROTECT,related_name='cars')
     colors = models.ManyToManyField(Color, related_name="cars")
-    photo=models.ImageField(upload_to="media/images/", default="images/default.jpg")
+    photo=models.ImageField(upload_to="images/", default="images/default.jpg")
     space=models.TextField()
     model_year=models.PositiveIntegerField()
     fuel_type = models.CharField(max_length=50, choices=[  
@@ -21,3 +21,10 @@ class Car(models.Model):
         ('Electric', 'Electric'),
         ('Hybrid', 'Hybrid')
     ], default='Petrol')
+
+
+class Review(models.Model):
+    car = models.ForeignKey(Car,on_delete=models.CASCADE)
+    name=models.CharField(max_length=1024)
+    coment=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)

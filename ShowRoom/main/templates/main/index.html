@@ -16,11 +16,8 @@
     <div class="car-grid">
         {% for c in car %}
         <div class="car-card">
-            {% if c.photo %}
+           
                 <img src="{{ c.photo.url }}">
-            {% else %}
-                <img src="/media/images/default.jpg" alt="Default Image">
-            {% endif %}
 
             <h3>
                 <a href="{% url 'cars:car_detail_view' c.id %}" style="text-decoration: none;">

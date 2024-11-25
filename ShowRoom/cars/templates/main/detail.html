@@ -22,5 +22,15 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Delete</button>
         </div>
+
+        <hr>
+        <h2>Leave a Review</h2>
+        <form action="{% url 'cars:add_review' car.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your name" required class="form-control" />
+            <textarea name="coment" placeholder="Your comment" required class="form-control"></textarea>
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+        
     </div>
 {% endblock %}

@@ -23,14 +23,7 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="colors" class="form-label">Colors:</label>
-            <select name="colors" id="colors" class="form-select" multiple required>
-                {% for color in colors %}
-                    <option value="{{ color.id }}">{{ color.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
+       
 
         <div class="mb-3">
             <label for="space" class="form-label">Specs:</label>

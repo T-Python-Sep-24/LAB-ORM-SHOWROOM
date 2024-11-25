@@ -4,8 +4,8 @@ from .models import Brand
 from django.contrib import messages
 
 def all_brands_view(request:HttpRequest):
-    brands = Brand.objects.all()
-    return render(request, "brand/brand.html", {'brands': brands})
+    brand = Brand.objects.all()
+    return render(request, "brand/brand.html", {'brand': brand})
 
 def brand_detail_view(request, brand_id):
     brand = Brand.objects.get(id=brand_id)

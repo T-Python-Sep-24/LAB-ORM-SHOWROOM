@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest,HttpResponse
-from .models import Car, Color
+from .models import Car, Color,Review
 from brands.models import Brand
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -19,11 +19,12 @@ def car_detail_view(request, car_id):
 
 def add_car_view(request:HttpRequest):
     if request.method == "POST":
+        photo = request.FILES["photo"]
         name = request.POST["name"]
         brand_id = request.POST["brand"]
         brand = Brand.objects.get(id=brand_id)
         colors = request.POST.getlist("colors")
-        car = Car.objects.create(name=name, brand=brand, space=request.POST["space"], model_year=request.POST["model_year"])
+        car = Car.objects.create(name=name, brand=brand, space=request.POST["space"], model_year=request.POST["model_year"],photo=photo)
         car.colors.set(colors)
         car.save()
         messages.success(request, "Car added successfully!")
@@ -40,7 +41,7 @@ def update_car_view(request:HttpRequest, car_id):
         car.model_year = request.POST["model_year"]
         car.photo=request.FILES["photo"]
         car.save()
-        messages.success(request, "Car updated successfully!")
+        messages.success(request, "Car updated successfully!","alert-success")
         return redirect("main:home_view")
     return render(request, "main/update_car.html", {"car": car})
 
@@ -51,3 +52,17 @@ def delete_car_view(request:HttpRequest,car_id):
       car = Car.objects.get(pk=car_id)
       car.delete()
       return redirect("main:home_view")
+
+
+
+
+def add_review(request:HttpRequest,car_id):
+   if request.method == "POST":
+    car_object=Car.objects.get(pk=car_id)
+    new_review=Review(car=car_object,name=request.POST["name"],coment=request.POST["coment"])
+    new_review.save()
+
+   return redirect("cars:car_detail_view",car_id=car_id)
+
+
+
