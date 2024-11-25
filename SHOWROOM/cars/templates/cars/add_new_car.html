@@ -43,6 +43,11 @@
                         </label>
                     </div>
                     {% endfor %}
+                    <div class="add-color-link">
+                        <a href="{% url 'cars:add_new_color_view' %}?next={{request.path}}">
+                            <span class="material-symbols-outlined">add</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 

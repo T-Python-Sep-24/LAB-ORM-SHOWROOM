@@ -172,7 +172,7 @@ def add_new_color_view(request):
 
             messages.success(request, "Color added successfully!")
 
-            return redirect("main:main_view")
+            return redirect(request.GET.get("next", "/"))
         
 
         else:
@@ -194,7 +194,7 @@ def update_color_view(request, color_id):
 
         messages.success(request, "Color updated successfully!")
 
-        return redirect("main:main_view")
+        return redirect("cars:car_details_view")
 
     return render(request, 'cars/update_color.html', {"color": color})
 

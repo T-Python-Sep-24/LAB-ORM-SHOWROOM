@@ -2237,7 +2237,20 @@ footer {
 .submit-button:hover {
     background-color: #e64a19;
     color: white;
-    text-decoration: none;}
+    text-decoration: none;
+}
+
+
+.add-color-link a {
+    font-size: medium;
+    align-items: center;
+    font-weight: bold;
+    color: #ff5722 ;
+}
+
+.add-color-link a:hover {
+    color: #e64a19 ;
+}
 
 
 
