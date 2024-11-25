@@ -47,12 +47,12 @@
         </div>
     {% endif %}
 
-    <div class="current">
+    <div class="">
         Page {{ cars.number }} of {{ cars.paginator.num_pages }}
     </div>
 
     {% if cars.has_next %}
-        <div class="d-flex gap-4">
+        <div class="d-flex gap-4 ">
             <a href="?page={{ cars.next_page_number }}">next &raquo;</a>
             <a href="?page={{ cars.paginator.num_pages }}">last &raquo;</a>
         </div>

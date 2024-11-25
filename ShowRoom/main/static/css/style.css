@@ -49,9 +49,14 @@ footer hr {
 }
 
 .car_box {
+    min-height: 41rem;
     background-color: white;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.brand_box {
+    min-height: 20rem;
 }
 
 .car_box:hover {
@@ -160,10 +165,8 @@ footer hr {
     color:#4834dc;
 }
 
-.brand_box_img {
-    height: 12rem;
-    width: 12rem;
-    transition: transform 0.3s ease;
+.brand_box_img{
+    max-height: 30rem;
 }
 
 @media (max-width: 992px) {

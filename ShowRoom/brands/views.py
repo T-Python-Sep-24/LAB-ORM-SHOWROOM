@@ -6,6 +6,8 @@ from .forms import BrandForm
 
 from cars.models import Car
 
+from django.contrib import messages
+
 
 def all_brands_view(request:HttpRequest):
     brands = Brand.objects.all()
@@ -26,19 +28,13 @@ def new_brand_view(request:HttpRequest):
         brand_form = BrandForm(request.POST, request.FILES)
         if brand_form.is_valid():
             brand_form.save()
+            messages.success(request, "Added Brand Successfuly!", "alert-success")
             return redirect("main:home_view")
         else:
             print("not valid form", brand_form.errors)
+            messages.error(request, "Couldn't Add Brand!", "alert-danger")
     
     return render(request, "brands/brand_add.html")
-
-def brand_update_view(request:HttpRequest, brand_id:int):
-    
-    return render(request, "brands/brand_update.html")
-
-def brand_delete_view(request:HttpRequest,  brand_id:int):
-    
-    return redirect("main:home_view")
 
 def search_brands_view(request:HttpRequest):
     if "search" in request.GET and len(request.GET["search"]) >= 3:

@@ -9,6 +9,8 @@ from .forms import ContactForm
 from cars.models import Car
 from brands.models import Brand
 
+from django.core.mail import EmailMessage
+
 
 def home_view(request:HttpRequest):
     cars = Car.objects.filter(year__gt=datetime(2024, 12, 1))
@@ -23,6 +25,9 @@ def contact_view(request:HttpRequest):
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():
             contact_form.save()
+            
+            
+            
             return redirect('main:home_view')
         else:
             return render(request, "main/contact.html")

@@ -1,5 +1,7 @@
 from django.db import models
 from brands.models import Brand
+from django.contrib.auth.models import User
+
 
 
 class Color(models.Model):
@@ -9,6 +11,7 @@ class Color(models.Model):
     
     def __str__(self) -> str:
         return f'{self.name} - {self.hex_value}'
+
 
 class Car(models.Model):
     class DoorChoices(models.IntegerChoices):
@@ -37,3 +40,20 @@ class Car(models.Model):
     def __str__(self) -> str:
         return f'{self.name} - {self.brand.name}'
     
+
+class Review(models.Model):
+    class RatingChoices(models.IntegerChoices):
+        star1 = 1, "1"
+        star2 = 2, "2"
+        star3 = 3, "3"
+        star4 = 4, "4"
+        star5 = 5, "5"
+    
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    rating = models.SmallIntegerField(choices=RatingChoices.choices)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self) -> str:
+        return f'{self.user.username} - {self.car.name}'

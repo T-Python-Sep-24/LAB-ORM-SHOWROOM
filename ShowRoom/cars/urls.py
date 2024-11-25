@@ -12,4 +12,5 @@ urlpatterns = [
     path("delete/<car_id>/", views.car_delete_view, name="car_delete_view"),
     path("colors/new/", views.new_color_view, name="new_color_view"),
     path("search/cars/", views.search_cars_view, name="search_cars_view"),
+    path("reviews/add/<car_id>/", views.add_review_view, name="add_review_view")
 ]
