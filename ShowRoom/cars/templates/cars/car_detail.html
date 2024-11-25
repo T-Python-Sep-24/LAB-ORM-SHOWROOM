@@ -18,10 +18,15 @@
 
 <!-- Review Section -->
 <div class="mb-4">
-    <h4>Reviews</h4>
+    <h4>Reviews ({{car.review_set.count}})</h4>
+
     {% for review in car.reviews.all %}
         <div class="border p-3 mb-3 rounded">
-            <h5>{{ review.user.username }} rated it: {{ review.rating }}/5</h5>
+            <div class="d-flex gap-1 align-items-center">
+                <img src="{{review.user.profile.avatar.url}}" class="rounded-circle avatar" />
+                <a href="{% url 'Users:user_profile_view' review.user.username %}"><h4 class="m-0 p-0">{{review.user.first_name}} {{review.user.last_name}}</h4></a>
+            </div>
+            <!-- <h5>{{ review.user.username }} rated it: {{ review.rating }}/5</h5> -->
             <p>{{ review.review_text }}</p>
             <p><small>Reviewed on {{ review.created_at|date:"M d, Y, h:i a" }}</small></p>
         </div>
