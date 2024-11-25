@@ -6,12 +6,12 @@
         <div class="brand-card">
             <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="brand-logo">
             <div class="car-name-container">
-                <h3>{{ car.name }}</h3>
+                <h5>{{ car.name }}</h5>
                 {% if car.brand.logo %}
                     <img src="{{ car.brand.logo.url }}" alt="{{ car.brand.name }}" class="brand-logo-card">
                 {% endif %}
             </div>
-            <h4>{{ car.price }} {{ car.currency }}</h4>
+            <p>{{ car.price }} {{ car.currency }}</p>
             <button class="more-button" onclick="window.location.href='{% url 'cars:car_details_view' card_id=car.id  %}'">More</button>
         </div>
     {% endfor %}

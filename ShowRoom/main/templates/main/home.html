@@ -20,13 +20,13 @@
     </section>
     <div class="top-brands-section">
         <div class="brands-logos">
-            <h2>Top Brand with Most Cars</h2>
+            <h2 style="color: white;">Top Brand with Most Cars</h2>
             {% if top_brand %}
                 <div class="brand-logo-container">
                     <a href="{% url 'brands:brand_details_view' brand_id=top_brand.id %}">
                         <img src="{{ top_brand.logo.url }}" alt="{{ top_brand.name }}" class="brand-logo">
                     </a>
-                    <p>{{ top_brand.name }} - {{ top_brand.get_car_count }} Cars</p>
+                    <p style="color: white;">{{ top_brand.name }} - {{ top_brand.get_car_count }} Cars</p>
                 </div>
             {% else %}
                 <p>No brands available.</p>

@@ -33,7 +33,7 @@
           <input type="text" name="q" value="{{ query }}" placeholder="Search by car name..." class="search-input">
       </div>
       <div>
-          <select name="brand" class="filter-select">
+          <select name="brand" class="filter-select" style="border-radius: 20px; padding: 10px; width: auto;">
               <option value="">All Brands</option>
               {% for brand in brands %}
                   <option value="{{ brand.name }}" {% if brand.name == brand_filter %}selected{% endif %}>
@@ -43,7 +43,7 @@
           </select>
       </div>
       <div>
-          <select name="color" class="filter-select">
+          <select name="color" class="filter-select" style="border-radius: 20px; padding: 10px; width: auto;">
               <option value="">All Colors</option>
               {% for color in colors %}
                   <option value="{{ color.name }}" {% if color.name == color_filter %}selected{% endif %}>
@@ -63,18 +63,18 @@
          <div class="brand-card">
             <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="brand-logo">
             <div class="car-name-container">
-               <h3>{{ car.name }}</h3>
+               <h5>{{ car.name }}</h5>
                {% if car.brand.logo %}
                    <img src="{{ car.brand.logo.url }}" alt="{{ car.brand.name }}" class="brand-logo-card">
                {% endif %}
             </div>
-            <h4>{{ car.price }} {{car.currency}}</h4>
+            <p>{{ car.price }} {{car.currency}}</p>
             <button class="more-button" onclick="window.location.href='{% url 'cars:car_details_view' card_id=car.id %}'">
                 More
             </button>
          </div>
       {% empty %}
-         <p>No cars found.</p>
+         <h1>No cars found.</h1>
       {% endfor %}
    </div>
    <div class="pagination-container">
