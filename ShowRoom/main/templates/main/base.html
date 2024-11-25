@@ -67,11 +67,11 @@
                 </div>
                 <div class="nav-item p-1 d-flex flex-row gap-2 mx-3 align-items-end">
                     {% if user.is_authenticated %}
-                    <h6 class="px-2">Welcome {{user.first_name}}</h6>
-                    <a class="btn py-1 btn-secondary" href="{% url 'accounts:logoutView' %}?next={{request.path}}">Logout</a>
+                    <a href="{% url 'accounts:profileView' user.username %}" class="px-2 hover-underline fw-medium">Welcome {{user.first_name}}</a>
+                    <a class="btn py-0 btn-secondary" href="{% url 'accounts:logoutView' %}?next={{request.path}}">Logout</a>
                     {% else %}
-                    <a class="btn py-1 border-2 white-shadow {% if request.path == loginUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}?next={{request.path}}">Login</a>
-                    <a class="btn py-1 border-2 white-shadow {% if request.path == registerUrl %}btn-secondary{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}?next={{request.path}}">Register</a>
+                    <a class="btn py-0 border-2 white-shadow {% if request.path == loginUrl %}btn-secondary disabled{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}?next={{request.path}}">Login</a>
+                    <a class="btn py-0 border-2 white-shadow {% if request.path == registerUrl %}btn-secondary disabled{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}">Register</a>
                     {% endif %}
                 </div>
                 <!-- Mode switch -->

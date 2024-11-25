@@ -10,7 +10,7 @@
         </h1>
         <div class="half-border mb-5 mx-auto"></div>
         <div class="d-flex justify-content-center">
-            <form action="{% url 'accounts:registerView' %}" method="post" class="text-start p-4 rounded-4 shadow-sm frm needs-validation" novalidate>
+            <form action="{% url 'accounts:registerView' %}" method="post" enctype="multipart/form-data" class="text-start p-4 rounded-4 shadow-sm frm needs-validation" novalidate>
                 {% csrf_token %}
                 <div class="mb-3 d-flex flex-row gap-2">
                     <div>
@@ -26,6 +26,17 @@
                         <div class="invalid-feedback">
                             Please enter a valid last name.
                         </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="about" class="form-label fw-medium">About</label>
+                    <textarea class="form-control" id="about" name="about" rows="3" placeholder="About you.."></textarea>
+                </div>
+                <div class="mb-3 d-flex gap-3 align-items-end">
+                    <img src="{% static 'images/defaultAvatar.png' %}" id="preview" class="preview rounded-3 shadow-sm" alt="Preview">
+                    <div class="flex-fill">
+                        <label for="avatar" class="form-label fw-medium">Avatar</label>
+                        <input class="form-control" type="file" id="avatar" name="avatar" onchange="previewImage(event)" accept="image/*">
                     </div>
                 </div>
                 <div class="mb-3">
