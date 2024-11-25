@@ -13,6 +13,7 @@ def sign_up(request: HttpRequest):
         try:
             new_user = User.objects.create_user(
                 first_name = request.POST['first_name'],
+                last_name = request.POST['last_name'],
                 email = request.POST['email'],
                 password = request.POST['password'],
                 username = request.POST['username'],
@@ -33,7 +34,7 @@ def sign_in(request: HttpRequest):
         if user:
             login(request, user)
             messages.success(request, f'{user.username} Signed in Successfully', 'alert-success')
-            return redirect('main:home_view')
+            return redirect(request.GET.get('next', '/'))
         else:
             messages.error(request, 'Username or password is wrong, please try again', 'alert-danger')
     return render(request, 'signin.html')
@@ -43,4 +44,4 @@ def log_out(request: HttpRequest):
 
     logout(request)
     messages.success(request, 'logged out successfully, See You later', 'alert-success')
-    return redirect('main:home_view')
+    return redirect(request.GET.get('next', '/'))
