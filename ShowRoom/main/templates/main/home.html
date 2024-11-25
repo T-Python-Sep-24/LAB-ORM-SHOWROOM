@@ -10,20 +10,28 @@
 </div>
 
 <!-- All Cars Section -->
-<h2 class="section-title mt-5">🚘 Explore Our Cars</h2>
+<h2 class="section-title mt-5">Explore Our Cars</h2>
 <div class="horizontal-scroll-container">
     {% for car in all_cars %}
-        <div class="card">
-            {% if car.photo %}
-                <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
-            {% else %}
-                <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="No Image Available">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ car.name }}</h5>
-                <p class="card-text"><strong>Price:</strong> ${{ car.price }}</p>
-                <p class="card-text"><strong>Type:</strong> {{ car.get_car_type_display }}</p>
-                <a href="{% url 'cars:car_detail' car.id %}" class="btn btn-primary">View Details 🔍</a>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    {% if car.photo %}
+                        <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.name }}">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="No Image Available">
+                    {% endif %}
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="card-text"><strong>Price:</strong> ${{ car.price }}</p>
+                </div>
+                <div class="flip-card-back">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="card-text"><strong>Price:</strong> ${{ car.price }}</p>
+                    <p class="card-text"><strong>Type:</strong> {{ car.get_car_type_display }}</p>
+                    <a href="{% url 'cars:car_detail' car.id %}" class="button">
+                        <span>View Details 🔍</span>
+                    </a>
+                </div>
             </div>
         </div>
     {% endfor %}
@@ -33,29 +41,45 @@
 <h2 class="section-title mt-5">🏷️ Discover Top Brands</h2>
 <div class="horizontal-scroll-container">
     {% for brand in all_brands %}
-        <div class="card">
-            {% if brand.logo %}
-                <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }} Logo">
-            {% else %}
-                <img src="{% static 'images/placeholder_logo.png' %}" class="card-img-top" alt="No Logo Available">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ brand.name }}</h5>
-                <p class="card-text"><strong>Founded:</strong> {{ brand.founded_at }}</p>
-                <p class="card-text">{{ brand.about|truncatewords:15 }}</p>
-                <a href="{% url 'brands:brand_detail' brand.id %}" class="btn btn-primary">Learn More 🚀</a>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    {% if brand.logo %}
+                        <img src="{{ brand.logo.url }}" class="card-img-top" alt="{{ brand.name }} Logo">
+                    {% else %}
+                        <img src="{% static 'images/placeholder_logo.png' %}" class="card-img-top" alt="No Logo Available">
+                    {% endif %}
+                    <h5 class="card-title">{{ brand.name }}</h5>
+                </div>
+                <div class="flip-card-back">
+                    <h5 class="card-title">{{ brand.name }}</h5>
+                    <p class="card-text"><strong>Founded:</strong> {{ brand.founded_at }}</p>
+                    <a href="{% url 'brands:brand_detail' brand.id %}" class="button">
+                        <span>Learn More 🚀</span>
+                    </a>
+                </div>
             </div>
         </div>
     {% endfor %}
 </div>
 
 <!-- About Us Section -->
-<div class="about-card mt-5">
-    <h2>About Us 🌟</h2>
-    <p>
-        Welcome to <strong>ShowRoom 🚗</strong>, your premier destination for exploring the latest and most iconic vehicles in the industry. 
-        We are dedicated to making your car-buying journey smooth, exciting, and informative! 🎉
-    </p>
-    <a href="{% url 'main:about' %}" class="btn btn-secondary mt-3">Learn More About Us 📖</a>
+<h2 class="section-title mt-5">About Us 🌟</h2>
+<div class="about-card flip-card mt-5">
+    <div class="flip-card-inner">
+        <div class="flip-card-front">
+            
+            <p>We are dedicated to making your car-buying journey smooth, exciting, and informative! 🎉</p>
+        </div>
+        <div class="flip-card-back">
+           <p>
+    At ShowRoom, we offer exceptional service and a diverse selection of vehicles to assist you throughout your car-buying journey!
+</p>
+            <a href="{% url 'main:about' %}" class="button">
+                <span>Learn More 📖</span>
+            </a>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

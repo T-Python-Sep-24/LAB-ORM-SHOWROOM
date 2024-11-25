@@ -5,58 +5,78 @@
 
 {% block content %}
 <h1 class="text-center mb-4">All Brands</h1>
-<!-- Filter Form -->
-<form method="GET" class="search-form mb-4">
-    <input type="text" name="search" placeholder="Search brands by name" value="{{ request.GET.search }}">
-    
-    <select name="founded_at">
-        <option value="">All Years Founded</option>
-        {% for year in years %}
-            <option value="{{ year }}" {% if request.GET.founded_at == year|stringformat:"s" %}selected{% endif %}>
-                {{ year }}
-            </option>
-        {% endfor %}
-    </select>
-    
-    <select name="headquarters">
-        <option value="">All Headquarters</option>
-        {% for hq in headquarters %}
-            <option value="{{ hq }}" {% if request.GET.headquarters == hq|stringformat:"s" %}selected{% endif %}>
-                {{ hq }}
-            </option>
-        {% endfor %}
-    </select>
-    
-    <button type="submit" class="button">
-        <span>Filter</span>
-    </button>
-</form>
 
-<!-- Add New Brand Button -->
-<div class="text-center mb-4">
-    <a href="{% url 'brands:new_brand' %}" class="button">
-        <span>Add New Brand</span>
-    </a>
-</div>
+<!-- Filter and Add New Brand Form -->
+<form method="GET" class="search-form mb-4">
+    <div class="form-group">
+        <!-- Search Input -->
+        <input type="text" name="search" placeholder="Search brands by name" value="{{ request.GET.search }}">
+    </div>
+
+    <div class="form-group">
+        <!-- Founded Year Dropdown -->
+        <select name="founded_at">
+            <option value="">All Years Founded</option>
+            {% for year in years %}
+                <option value="{{ year }}" {% if request.GET.founded_at == year|stringformat:"s" %}selected{% endif %}>
+                    {{ year }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <!-- Headquarters Dropdown -->
+        <select name="headquarters">
+            <option value="">All Headquarters</option>
+            {% for hq in headquarters %}
+                <option value="{{ hq }}" {% if request.GET.headquarters == hq|stringformat:"s" %}selected{% endif %}>
+                    {{ hq }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-actions">
+        <!-- Submit Button -->
+        <button type="submit" class="button">
+            <span>Filter</span>
+        </button>
+
+        <!-- Add New Brand Button -->
+        <a href="{% url 'brands:new_brand' %}" class="button ml-3">
+            <span>Add New Brand</span>
+        </a>
+    </div>
+</form>
 
 <!-- Brands Display -->
 <div class="horizontal-scroll-container">
     {% for brand in brands %}
-        <div class="card">
-            {% if brand.logo %}
-                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
-            {% else %}
-                <img src="{% static 'images/placeholder.png' %}" alt="No Logo Available">
-            {% endif %}
-            <h3>{{ brand.name }}</h3>
-            <p>Founded: {{ brand.founded_at }}</p>
-            <a href="{% url 'brands:brand_detail' brand.id %}" class="button">
-                <span>View Details</span>
-            </a>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <!-- Front Side -->
+                <div class="flip-card-front">
+                    {% if brand.logo %}
+                        <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" alt="No Logo Available">
+                    {% endif %}
+                    <h3>{{ brand.name }}</h3>
+                </div>
+                <!-- Back Side -->
+                <div class="flip-card-back">
+                    <h3>{{ brand.name }}</h3>
+                    <p>Founded: {{ brand.founded_at }}</p>
+                    <p>Headquarters: {{ brand.headquarters }}</p>
+                    <a href="{% url 'brands:brand_detail' brand.id %}" class="button">
+                        <span>View Details</span>
+                    </a>
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>
-
 
 <!-- Pagination -->
 <div class="pagination">
@@ -64,7 +84,7 @@
         {% if page == page_obj.number %}
             <span class="active">{{ page }}</span>
         {% else %}
-            <a href="?page={{ page }}">{{ page }}</a>
+            <a href="?page={{ page }}&search={{ request.GET.search }}&founded_at={{ request.GET.founded_at }}&headquarters={{ request.GET.headquarters }}">{{ page }}</a>
         {% endif %}
     {% endfor %}
 </div>

@@ -16,15 +16,13 @@ class Car(models.Model):
         HATCHBACK = 'Hatchback', 'Hatchback'
         CONVERTIBLE = 'Convertible', 'Convertible'
         TRUCK = 'Truck', 'Truck'
-        VAN = 'Van', 'Van'
         OTHER = 'Other', 'Other'
 
     name = models.CharField(max_length=255)
     brand = models.ForeignKey('brands.Brand', on_delete=models.CASCADE, related_name='cars')
     colors = models.ManyToManyField('Color')
     photo = models.ImageField(upload_to='car_photos/', blank=True, null=True)
-    specs = models.TextField()
-    year = models.PositiveIntegerField()
+    year = models.IntegerField()  # Changed to IntegerField to store only the year
     price = models.DecimalField(max_digits=10, decimal_places=2)
     car_type = models.CharField(
         max_length=50,
@@ -33,4 +31,5 @@ class Car(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.year})" 
+    

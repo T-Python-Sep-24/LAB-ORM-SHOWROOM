@@ -4,6 +4,9 @@ from django.contrib import messages
 from .models import Car, Color
 from .forms import CarForm, ColorForm
 from brands.models import Brand
+from django.core.paginator import Paginator
+
+
 
 
 def all_cars(request):
@@ -12,21 +15,36 @@ def all_cars(request):
     colors = Color.objects.all()  # Fetch all colors for the filter
 
     # Filters and search
-    brand_filter = request.GET.get('brand')
-    color_filter = request.GET.get('color')
-    search_query = request.GET.get('search')
+    brand_filter = request.GET.get('brand', '')
+    color_filter = request.GET.get('color', '')
+    year_filter = request.GET.get('year', '')
+    search_query = request.GET.get('search', '')
 
+    # Apply filters
     if brand_filter:
         cars = cars.filter(brand__id=brand_filter)
     if color_filter:
         cars = cars.filter(colors__id=color_filter)
+    if year_filter:
+        cars = cars.filter(year=year_filter)
     if search_query:
         cars = cars.filter(name__icontains=search_query)
 
+    # Get unique years for dropdown
+    years = Car.objects.values_list('year', flat=True).distinct().order_by('year')
+
+    # Pagination setup
+    paginator = Paginator(cars, 5)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'cars/all_cars.html', {
-        'cars': cars,
+        'cars': page_obj,
         'brands': brands,
         'colors': colors,
+        'years': years,
+        'paginator': paginator,
+        'page_obj': page_obj,
     })
 
 

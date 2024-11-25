@@ -11,7 +11,7 @@ body {
     font-family: Arial, sans-serif;
     background: url('/static/images/bg1.jpeg') no-repeat center center fixed;
     background-size: cover;
-    color: #ffffff;
+    color: #71322c;
     line-height: 1.6;
 }
 
@@ -47,17 +47,19 @@ main {
 h1, h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #403a35;
+    color: #f0f0ef;
 }
 
 /* Horizontal Scroll Container */
 .horizontal-scroll-container {
-    display: flex;
+    display: flex
+;
     overflow-x: auto;
     padding: 10px;
     gap: 20px;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    flex-wrap: wrap;
 }
 
 .horizontal-scroll-container::-webkit-scrollbar {
@@ -76,16 +78,16 @@ h1, h2 {
 /* Card Styling */
 .card {
     position: relative;
-    width: 676px;
-    height: 400px;
-    background-color: #243137; /* Changed to original color */
-    border-radius: 10px;
+    width: 770px;
+    height: 340px;
+    background-color: #243137bd; /* Changed to original color */
+    border-radius: 71px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     perspective: 548px;
-    box-shadow: 0 0 0 5px #ffffff80; /* Added from the second snippet */
+    box-shadow: 0 0 0 5px #ffffff56; /* Added from the second snippet */
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -103,7 +105,7 @@ h1, h2 {
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #243137; /* Maintain background */
+    background-color: #243137c0; /* Maintain background */
     transform: rotateX(-90deg);
     transform-origin: bottom;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -193,11 +195,11 @@ h1, h2 {
 /* Button Styling */
 .card .button {
     display: inline-block;
-    background: linear-gradient(45deg, #0ce39a, #69007f, #fc0987);
+    background: linear-gradient(45deg, #0ce39a, #7f4a00, #ffbd17); /* Same gradient as background */
     color: #ffffff;
-    padding: 10px 15px;
-    margin: 15px 0;
-    border-radius: 10px;
+    padding: 7px 50px;
+    margin: 31px 0;
+    border-radius: 9px;
     text-decoration: none;
     font-weight: bold;
     transition: 0.3s ease;
@@ -227,7 +229,7 @@ h1, h2 {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(45deg, #0ce39a, #69007f, #fc0987);
+    background: linear-gradient(45deg, #0ce39a, #7f4a00, #ffbd17); /* Same gradient as background */
     border-radius: 9px;
     filter: blur(20px);
     opacity: 0;
@@ -263,7 +265,7 @@ form {
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.791);
 }
 
 form label {
@@ -277,10 +279,10 @@ form input, form select, form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ffffff;
+    border: 1px solid #888484;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
+    color: #110f0f;
 }
 
 form input[type="submit"], form button {
@@ -405,65 +407,71 @@ h1 span {
     color: #0ce39a; /* Change color on hover */
     transition: color 0.3s; /* Smooth transition */
 }
-.about-card {
-    max-width: 900px;
-    margin: 30px auto;
-    background: rgba(0, 0, 0, 0.85); /* Semi-transparent black background */
-    color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    text-align: center;
-    padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.horizontal-scroll-container {
+    display: flex-wrap;
+    overflow-x: auto;
 }
 
-
-.about-card:hover {
-    transform: scale(1.05); /* Subtle zoom on hover */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+.flip-card {
+    background-color: transparent;
+    width: 200px; /* Adjust the width as needed */
+    height: 300px; /* Adjust the height as needed */
+    perspective: 1000px;
+    margin: 10px;
 }
 
-.about-card h1 {
-    font-size: 2.5em;
-    color: #f4a261;
-    margin-bottom: 20px;
-}
-
-.card-content p {
-    line-height: 1.8;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    padding-left: 30px;
+.flip-card-inner {
     position: relative;
-    text-align: left;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
 }
 
-.card-content p span {
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
     position: absolute;
-    left: 0;
-    font-size: 1.5em;
-    transform: translateY(-2px);
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
 }
 
-.card-content strong {
-    color: #f4a261;
+.flip-card-front {
+    background-color: #ffffffa2; /* Front background color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.button {
-    display: inline-block;
-    background: linear-gradient(45deg, #0ce39a, #69007f, #fc0987);
-    color: #ffffff;
-    text-transform: uppercase;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 1.2em;
-    margin-top: 20px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.flip-card-back {
+    background-color: #f1f1f18e; /* Back background color */
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.button:hover {
-    background-color: #f4a261;
-    transform: translateY(-3px);
+.flip-card img {
+    max-width: 100%;
+    max-height: 70%; /* Adjust as needed */
+}
+
+.about-card {
+    background-color: #ffffff3a; /* Card background color */
+    border: 1px solid #ddd; /* Border for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Inner padding */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    max-width: 600px; /* Maximum width of the card */
+    margin: 0 auto; /* Center the card */
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column; /* Stack the content vertically */
 }

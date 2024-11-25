@@ -19,6 +19,7 @@
 <form method="GET" class="search-form mb-4">
     <input type="text" name="search" placeholder="Search cars by name" value="{{ request.GET.search }}">
     
+    <!-- Filter by Brand -->
     <select name="brand">
         <option value="">All Brands</option>
         {% for brand in brands %}
@@ -28,6 +29,7 @@
         {% endfor %}
     </select>
     
+    <!-- Filter by Color -->
     <select name="color">
         <option value="">All Colors</option>
         {% for color in colors %}
@@ -37,6 +39,16 @@
         {% endfor %}
     </select>
     
+    <!-- Filter by Year -->
+    <select name="year">
+        <option value="">All Years</option>
+        {% for year in years %}
+            <option value="{{ year }}" {% if request.GET.year == year|stringformat:"s" %}selected{% endif %}>
+                {{ year }}
+            </option>
+        {% endfor %}
+    </select>
+
     <button type="submit" class="button">
         <span>Filter</span>
     </button>
@@ -45,18 +57,27 @@
 <!-- Cars Display -->
 <div class="horizontal-scroll-container">
     {% for car in cars %}
-        <div class="card">
-            {% if car.photo %}
-                <img src="{{ car.photo.url }}" alt="{{ car.name }}">
-            {% else %}
-                <img src="{% static 'images/placeholder.png' %}" alt="No Image Available">
-            {% endif %}
-            <h3>{{ car.name }}</h3>
-            <p>Brand: {{ car.brand.name }}</p>
-            <p>Price: ${{ car.price }}</p>
-            <a href="{% url 'cars:car_detail' car.id %}" class="button">
-                <span>View Details</span>
-            </a>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    {% if car.photo %}
+                        <img src="{{ car.photo.url }}" alt="{{ car.name }}">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" alt="No Image Available">
+                    {% endif %}
+                    <h3>{{ car.name }}</h3>
+                    <p>Brand: {{ car.brand.name }}</p>
+                </div>
+                <div class="flip-card-back">
+                    <h3>{{ car.name }}</h3>
+                    <p>Brand: {{ car.brand.name }}</p>
+                    <p>Year: {{ car.year }}</p>
+                    <p>Price: ${{ car.price }}</p>
+                    <a href="{% url 'cars:car_detail' car.id %}" class="button">
+                        <span>View Details</span>
+                    </a>
+                </div>
+            </div>
         </div>
     {% empty %}
         <p>No cars available.</p>
@@ -69,7 +90,7 @@
         {% if page == page_obj.number %}
             <span class="active">{{ page }}</span>
         {% else %}
-            <a href="?page={{ page }}&search={{ request.GET.search }}&brand={{ request.GET.brand }}&color={{ request.GET.color }}">{{ page }}</a>
+            <a href="?page={{ page }}&search={{ request.GET.search }}&brand={{ request.GET.brand }}&color={{ request.GET.color }}&year={{ request.GET.year }}">{{ page }}</a>
         {% endif %}
     {% endfor %}
 </div>
