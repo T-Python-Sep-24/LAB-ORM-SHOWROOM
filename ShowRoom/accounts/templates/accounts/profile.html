@@ -4,36 +4,35 @@
 {% block title %}{{profile.user.username}} Profile{% endblock %}
 
 {% block content %}
-<section class="container-md m-5">
-    <div class="row">
-        <div class="col-2">
-            <img src="{{profile.avatar.url}}" alt="Avatar" class="w-100 rounded-circle">
-            <h5>@{{profile.user.username}}</h5>
+<section class="container-md my-5">
+    <div class="d-flex flex-column flex-md-row gap-4 justify-content-center">
+        <div class="d-flex flex-column justify-content-center">
+            <img src="{{profile.avatar.url}}" alt="Avatar" class="w-100 rounded-circle avatar">
+            <h5 class="text-center">@{{profile.user.username}}</h5>
         </div>
-        <div class="col rounded-2">
-            <div class="d-flex flex-column bg-color rounded-1 shadow-sm p-3">
-                <h2 class="mb-0">
-                    {{profile.user.first_name}} {{profile.user.last_name}}
-                </h2>
-                <div class="half-border mb-2"></div>
-                <p class="fs-5 my-1"><span class="fw-medium text-danger">About: </span>{{profile.about}}</p>
-                <h5>{{profile.user.first_name}}'s Comments:</h5>
-                {% for com in profile.user.comment_set.all %}
-                <div class="card p-1 my-2 text-start  rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}" style="max-width:40rem;">
-                    <div class="card-body d-flex flex-column gap-1">
-                        <p class="card-text fs-5 fw-medium text-danger my-0">
-                            {{com.user.first_name}} {{com.user.last_name}} on <a href="{% url 'cars:carDetailsView' com.car.id %}">{{com.car.brand.name}} - {{com.car.model}}</a>
-                        </p>
-                        <p class="card-text my-0">
-                            {{com.comment}}
-                        </p>
-                        <p class="card-text small fw-medium text-danger">
-                            {{com.createdAt}}
-                        </p>
-                    </div>
+        <div class="flex-fill d-flex flex-column rounded-1 shadow-sm p-3 profile-crd">
+            <h2 class="mb-0">
+                {{profile.user.first_name}} {{profile.user.last_name}}
+            </h2>
+            <div class="half-border mb-2"></div>
+            <p class="fs-5 my-1"><span class="fw-medium text-danger">About: </span>{{profile.about}}</p>
+            <h5>{{profile.user.first_name}}'s Comments:</h5>
+            {% for com in profile.user.comment_set.all %}
+            <div class="card p-1 my-2 text-start rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}"
+                style="max-width:40rem;">
+                <div class="card-body d-flex flex-column gap-1">
+                    <p class="card-text fs-5 fw-medium text-danger my-0">
+                        On <a href="{% url 'cars:carDetailsView' com.car.id %}">{{com.car.brand.name}} - {{com.car.model}}</a>
+                    </p>
+                    <p class="card-text my-0">
+                        {{com.comment}}
+                    </p>
+                    <p class="card-text small fw-medium text-danger">
+                        {{com.createdAt}}
+                    </p>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>

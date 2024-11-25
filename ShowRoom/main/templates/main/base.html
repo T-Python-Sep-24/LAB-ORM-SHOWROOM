@@ -65,15 +65,6 @@
                         </li>
                     </ul>
                 </div>
-                <div class="nav-item p-1 d-flex flex-row gap-2 mx-3 align-items-end">
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'accounts:profileView' user.username %}" class="px-2 hover-underline fw-medium">Welcome {{user.first_name}}</a>
-                    <a class="btn py-0 btn-secondary" href="{% url 'accounts:logoutView' %}?next={{request.path}}">Logout</a>
-                    {% else %}
-                    <a class="btn py-0 border-2 white-shadow {% if request.path == loginUrl %}btn-secondary disabled{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}?next={{request.path}}">Login</a>
-                    <a class="btn py-0 border-2 white-shadow {% if request.path == registerUrl %}btn-secondary disabled{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}">Register</a>
-                    {% endif %}
-                </div>
                 <!-- Mode switch -->
                 <div class="d-flex justify-content-center gap-1">
                     <a href="{% url 'main:modeView' 'light' %}?next={{request.get_full_path|urlencode}}"
@@ -85,6 +76,21 @@
                         <span class="material-symbols-outlined p-1 hoverEffect white-shadow">dark_mode</span>
                     </a>
                 </div>
+                <!-- Account -->
+                <div class="d-flex flex-row mx-3 gap-2">
+                    {% if user.is_authenticated %}
+                    <div class="d-flex gap-3 align-items-end">
+                        <a href="{% url 'accounts:profileView' user.username %}" class="d-flex flex-row gap-1 align-items-end">
+                            <img src="{{user.profile.avatar.url}}" class="avatar-sm rounded-circle">
+                            <p class="m-0 hover-underline fw-medium white-shadow">{{user.first_name}}</p>
+                        </a>
+                        <a class="btn py-0 btn-secondary" href="{% url 'accounts:logoutView' %}?next={{request.path}}">Logout</a>
+                    </div>  
+                    {% else %}
+                    <a class="btn py-0 border-2 white-shadow {% if request.path == loginUrl %}btn-secondary disabled{% else %}btn-outline-secondary{% endif %}" href="{{loginUrl}}?next={{request.path}}">Login</a>
+                    <a class="btn py-0 border-2 white-shadow {% if request.path == registerUrl %}btn-secondary disabled{% else %}btn-outline-secondary{% endif %}" href="{{registerUrl}}">Register</a>
+                    {% endif %}
+                </div>
             </div>
         </nav>
     </header>
@@ -93,7 +99,7 @@
         <!-- Alerts after any user action ex: add, delete -->
         {% if messages %}
             {% for msg in messages %}
-            <div class="container m-3">
+            <div class="container my-3 justify-items-center">
                 <div class="alert {{msg.tags}} alert-dismissible fade show mx-auto" role="alert">
                     {{msg}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

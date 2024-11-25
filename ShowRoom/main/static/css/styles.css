@@ -353,3 +353,36 @@
 .colors-crd img {
     height: 8rem;
 }
+
+/* Profile */
+.avatar {
+    max-height:200px;
+    max-width: 200px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.avatar-sm {
+    max-height:30px;
+    max-width: 30px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.dark .profile-crd {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    max-width: 60%;
+}
+
+.light .profile-crd {
+    background: rgba(12, 18, 33, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 60%;
+}
+
+@media only screen and (max-width: 768px) {
+    .profile-crd {
+        max-width: 90%;
+    }
+}

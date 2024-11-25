@@ -47,11 +47,11 @@ def logoutView(request:HttpRequest):
     messages.success(request, "Logged out successfully.", "alert-success")
     return redirect(request.GET.get('next', '/'))
     
-
+# Display profile View
 def profileView(request: HttpRequest, username: str):
     try:
         user = User.objects.get(username=username)
-        if Profile.objects.filter(user=user).first():
+        if Profile.objects.filter(user=user).exists():
             profile: Profile = user.profile
         else:
             profile = Profile(user=user)
