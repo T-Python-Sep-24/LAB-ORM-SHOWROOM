@@ -106,7 +106,8 @@
                     </div>
                 </div>
             </div>
-                    
+            {% if request.user.is_staff%}
+    
                <div class="row container-fluid d-flex justify-content-end align-items-end">
                    <div class=" align-items-end mb-3 d-flex justify-content-end gap-2 ">
                     <a href="{% url 'cars:update_car_view' car.id%}" class="btn btn-success mx-1">Update</a>
@@ -115,6 +116,7 @@
                     </button> 
                   </div>
                </div>
+               {%endif%}
             </div>
     </div>
 
@@ -145,8 +147,42 @@
             </div>
         </div>
 
-    
-     
+        <hr/>
+        <h2 class="text-white">Reviews ({{reviews.count}})</h2>
+
+        <div class="d-flex flex-column gap-3">
+          {%for review in reviews%}
+
+              <div class="d-flex flex-column p-3 bg-light shadow">
+                  <h4>{{review.user.username}}</h4>
+                  <p>{{review.comment}}</p>
+                  <small class="text-muted">{{review.created_at}}</small>
+                  
+              </div>
+          {%endfor%}
+        </div>
+        {% if request.user.is_authenticated%}
+        <h2 class="mt-5 text-white">Add Review</h2>
+      
+        <form class="d-flex flex-column gap-3 w-50 commentform mb-5" method="post" action="{% url 'cars:add_review_view' car.id%}">
+          {% csrf_token %}
+          <textarea class="form-control" name="comment" minlength="1" placeholder="Comment"></textarea>
+          <select class="form-select" name="rating" required>
+              <option value="">Rating</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+          </select>
+          <input type="submit" value="Add review" class="btn btn-success"/>
+        </form>
+
+        {%else%}
+            <div class="p-3 rounded bg-warning mt-4 d-flex flex-column gap-2">
+                only registed user can add reviews
+            </div>
+        {%endif%}
      {%endblock%}
 
      <!---->

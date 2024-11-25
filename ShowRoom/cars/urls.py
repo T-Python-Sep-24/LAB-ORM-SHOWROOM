@@ -13,4 +13,6 @@ urlpatterns=[
     path('colors/new/',views.new_color_view, name="new_color_view"),
     path('colors/delete/<color_id>/',views.delete_color_view,name="delete_color_view"),
     path('colors/search_color/', views.search_color, name='search_color'),
+    path('reviews/add/<car_id>/',views.add_review_view,name="add_review_view"),
+
 ]

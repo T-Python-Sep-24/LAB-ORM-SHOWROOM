@@ -19,6 +19,9 @@ def all_brands_view(request:HttpRequest):
     return render(request,'brands/all_brands.html',{"brands":brands_list})
 
 def new_brand_view(request:HttpRequest):
+    if not request.user.is_staff:
+            messages.warning(request,"only staff can add brand","alert-warning")
+            return redirect("main:home_view")
     if request.method=="POST":
         brand_form=BrandForm(request.POST,request.FILES)
         if brand_form.is_valid():
@@ -32,6 +35,9 @@ def new_brand_view(request:HttpRequest):
 
 def update_brand_view(request:HttpRequest,brand_id):
     try:
+        if not request.user.is_staff:
+            messages.warning(request,"only staff can update brand","alert-warning")
+            return redirect("main:home_view")
         brand=Brand.objects.get(pk=brand_id)
         if request.method=="POST":
             brand_form=BrandForm(request.POST,request.FILES,instance=brand)
@@ -57,6 +63,9 @@ def update_brand_view(request:HttpRequest,brand_id):
 
 def delete_brand_view(request:HttpRequest,brand_id):
     try:
+        if not request.user.is_staff:
+            messages.warning(request,"only staff can delete brand","alert-warning")
+            return redirect("main:home_view")
         brand=Brand.objects.get(pk=brand_id)
         brand.delete()
         messages.success(request, 'The brand has been deleted successfully!','alert-success')

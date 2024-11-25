@@ -5,6 +5,8 @@ from cars.models import Car
 # Create your views here.
 
 def home_view(request:HttpRequest):
+    if request.user.is_authenticated:
+        print(request.user.first_name)
     brands=Brand.objects.all()
     cars=Car.objects.order_by('-year')[0:2]
     return render(request,'main/home.html',{"brands":brands,"cars":cars})

@@ -23,11 +23,12 @@
             <div class="p-0 fluid-container gap-4 d-flex justify-content-center align-items-center ">
                 <div class="row  d-flex justify-content-center">   
 
-                <div class=" col-md-3 d-flex flex-column justify-content-between mb-3">
-                <div class="bg-warning rounded-4 p-3 mb-3">
+                <div class=" col-md-3 d-flex flex-column justify-content-center gap-2 mb-3">
+                <div class="bg-warning rounded-4 p-3 mb-3 ">
                     <h1 class="space-grotesk "><span class="text-white">|</span> {{brand.name}}</h1>
                     <small class="">Founded At {{brand.found_at}}</small>
                 </div>
+                {% if request.user.is_staff%}
                 <div class="align-items-center mb-3 text-center">
                     <a href="{% url 'brands:update_brand_view' brand.id%}" class="btn btn-success mx-1">Update</a>
 
@@ -35,6 +36,8 @@
                         Delete
                     </button>  
                 </div>
+                {%endif%}
+
                 </div>
 
                 <div class="col-md-6 d-flex justify-content-center text-center mb-3 align-items-center">

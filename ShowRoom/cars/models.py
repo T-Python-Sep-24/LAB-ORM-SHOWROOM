@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from brands.models import Brand
 # Create your models here.
 
@@ -47,3 +48,12 @@ class Photo (models.Model):
         return self.car.name
     
 
+class Review(models.Model):
+    car=models.ForeignKey(Car, on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    rating= models.SmallIntegerField()
+    comment= models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.name} on {self.car.name}"

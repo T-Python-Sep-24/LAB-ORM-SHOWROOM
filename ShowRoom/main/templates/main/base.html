@@ -35,7 +35,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{%url 'cars:all_cars_view'%}">All Cars</a></li>
+                            {% if request.user.is_staff%}
                             <li><a class="dropdown-item" href="{%url 'cars:new_car_view'%}">Add Car</a></li>
+                            {%endif%}
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -44,9 +46,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{%url 'brands:all_brands_view'%}">All Brands</a></li>
+                            {% if request.user.is_staff%}
                             <li><a class="dropdown-item" href="{%url 'brands:new_brand_view'%}">Add Brand</a></li>
+                            {%endif%}
+
                         </ul>
                     </li>
+                    {% if request.user.is_staff%}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Colors
@@ -55,7 +61,28 @@
                             <li><a class="dropdown-item" href="{%url 'cars:new_color_view'%}">Add Color</a></li>
                         </ul>
                     </li>
+                    {%endif%}
+
+                    {% if request.user.is_authenticated%}
+                    <li class="nav-item">
+                        <h6 class="nav-link text-warning mt-1" >Hi, {{user.username}}</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" aria-current="page" href="{%url 'accounts:log_out'%}?next={{request.path}}">Log Out</a>
+                    </li>
+
+                    {%else%}
+                    <li class="nav-item">
+                        <a class="nav-link text-white " aria-current="page" href="{%url 'accounts:sign_up'%}?next={{request.path}}">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " aria-current="page" href="{%url 'accounts:sign_in'%}?next={{request.path}}">Sign In</a>
+                    </li>
+                    {%endif%}
+                    
+                   
                 </ul>
+
             </div>
         </div>
     </nav>
@@ -95,7 +122,11 @@
             <h6 class="bold ">Cars</h6>
             <div class="d-flex flex-column">
              <a class="small" href="{%url 'cars:all_cars_view'%}">All Cars</a>
+             {% if request.user.is_staff%}
+
              <a  class="small"href="{%url 'cars:new_car_view'%}">Add Car</a>
+             {%endif%}
+
                
             </div>        
          </div>
@@ -103,10 +134,15 @@
             <h6 class="bold ">Brands</h6>
             <div class="d-flex flex-column">
              <a class="small" href="{%url 'brands:all_brands_view'%}">All Brands</a>
+             {% if request.user.is_staff%}
+
              <a  class="small"href="{%url 'brands:new_brand_view'%}">Add Brand</a>
-               
+             {%endif%}
+  
             </div>        
          </div>
+         {% if request.user.is_staff%}
+
          <div class="col-md-3 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-2">
             <h6 class="bold">Colors</h6>
             <div class="d-flex flex-column">
@@ -118,7 +154,9 @@
 
             </form>             
             </div>        
-         </div>     
+         </div> 
+         {%endif%}
+    
     </div>
 
     </div>

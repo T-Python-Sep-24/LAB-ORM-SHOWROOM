@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
-from .models import Car,Color,Photo
+from .models import Car,Color,Photo,Review
 from brands.models import Brand
 from .forms import ColorForm,CarForm
 from django.contrib import messages
@@ -28,21 +28,26 @@ def all_cars_view(request:HttpRequest):
 
 
 def detail_car_view(request:HttpRequest,car_id):
-    try:    
+    try: 
+
         car =Car.objects.get(pk=car_id)
         car_colors=car.colors.all()
-        car_photos=car.photos.all()[1:]     
-        return render(request,'cars/detail_car.html',{"car":car,"car_colors":car_colors,"car_photos":car_photos})
+        car_photos=car.photos.all()[1:] 
+        reviews=Review.objects.filter(car=car)    
+        return render(request,'cars/detail_car.html',{"reviews":reviews,"car":car,"car_colors":car_colors,"car_photos":car_photos})
     except Car.DoesNotExist:
         print("error massege")
         messages.error(request, "An error occurred: The page not found",'alert-danger')
         return redirect('main:home_view')
     except Exception as e:
-        messages.error(request, f"An error occurred: {str(e)}")
+        messages.error(request, f"An error occurred: {str(e)}",'alert-danger')
         return redirect('main:home_view')
 
 
 def new_car_view(request:HttpRequest):
+    if not request.user.is_staff:
+        messages.error(request,"only staff can add cars","alert-warning")
+        return redirect("main:home_view")
     brands=Brand.objects.all()
     colors=Color.objects.all()
     if request.method=="POST":
@@ -61,7 +66,11 @@ def new_car_view(request:HttpRequest):
     return render(request,'cars/new_car.html',{"brands":brands,"colors":colors,"FuelChoices":Car.FuelChoices.choices})
 
 def update_car_view(request:HttpRequest,car_id):
-    try:    
+    try:   
+        if not request.user.is_staff:
+            messages.warning(request,"only staff can update car","alert-warning")
+            return redirect("main:home_view")
+ 
         car =Car.objects.get(pk=car_id)
         brands=Brand.objects.all()
         colors=Color.objects.all()
@@ -103,6 +112,11 @@ def update_car_view(request:HttpRequest,car_id):
 
 
 def new_color_view(request:HttpRequest):
+    if not request.user.is_staff:
+            messages.warning(request,"only staff can add color","alert-warning")
+            return redirect("main:home_view")
+ 
+
     if request.method=="POST":
         color_form=ColorForm(request.POST,request.FILES)
         if color_form.is_valid():
@@ -117,6 +131,11 @@ def new_color_view(request:HttpRequest):
 
 def update_color_view(request:HttpRequest,color_id):
     try:
+        if not request.user.is_staff:
+            messages.warning(request,"only staff can update color","alert-warning")
+            return redirect("main:home_view")
+ 
+
         color=Color.objects.get(pk=color_id)
         if request.method=="POST":
             color_form=ColorForm(request.POST,request.FILES,instance=color)
@@ -143,6 +162,11 @@ def update_color_view(request:HttpRequest,color_id):
 
 
 def search_color(request):
+    if not request.user.is_staff:
+            messages.warning(request,"only staff can search color","alert-warning")
+            return redirect("main:home_view")
+ 
+
     color_name = request.GET.get('color_name', '') 
 
     if color_name:
@@ -158,6 +182,10 @@ def search_color(request):
 
 def delete_car_view(request,car_id):
     try:
+        if not request.user.is_staff:
+            messages.warning(request,"only staff can delete car","alert-warning")
+            return redirect("main:home_view")
+
         car=Car.objects.get(pk=car_id)
         car.delete()
         messages.success(request, 'The car has been deleted successfully!','alert-success')
@@ -172,6 +200,11 @@ def delete_car_view(request,car_id):
 
 def delete_color_view(request,color_id):
     try:
+        if not request.user.is_staff:
+            messages.warning(request,"only staff can delete color","alert-warning")
+            return redirect("main:home_view")
+ 
+
         color=Color.objects.get(pk=color_id)
         color.delete()
         messages.success(request, 'The color has been deleted successfully!','alert-success')
@@ -183,3 +216,16 @@ def delete_color_view(request,color_id):
     except Exception as e:
         messages.error(request, f"An error occurred: {str(e)}",'alert-danger')
         return redirect('main:home_view')
+    
+
+
+def add_review_view(request:HttpRequest,car_id):
+    if not request.user.is_authenticated:
+        messages.error(request,"only registed user can add review",'alert-danger')
+        return redirect("accounts:sign_in")
+    if request.method=="POST":
+        car_obj = Car.objects.get(pk=car_id)
+        review=Review(user=request.user,comment=request.POST['comment'],rating=request.POST['rating'],car=car_obj)
+        review.save()
+        messages.success(request, "thank you for your review",'alert-success')
+    return redirect("cars:detail_car_view",car_id=car_id)    
