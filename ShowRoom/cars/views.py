@@ -7,7 +7,8 @@ from django.shortcuts import render, redirect
 from .forms import CarForm, ColorForm
 from brands.models import Brand
 
-from .models import Car, Color
+from .models import Car, Color, CarReview
+
 
 # Create your views here.
 
@@ -46,12 +47,16 @@ def all_cars_view(request: HttpRequest):
 def car_details_view(request: HttpRequest, car_id):
 
     car = Car.objects.get(pk=car_id)
+    reviews = CarReview.objects.filter(car=car)
 
-    return render(request, 'car_details.html', context={'car':car})
+
+    return render(request, 'car_details.html', context={'car':car, 'reviews':reviews, 'rates':CarReview.Rates.choices})
 
 
 def add_car_view(request: HttpRequest):
-
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can add Cars", 'alert-danger')
+        return redirect('main:home_view')
     try:
         brands = Brand.objects.all()
         colors = Color.objects.all()
@@ -88,6 +93,10 @@ def add_car_view(request: HttpRequest):
 
 def update_car_view(request: HttpRequest, car_id):
 
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can Update Cars", 'alert-danger')
+        return redirect('main:home_view')
+
     brands = Brand.objects.all()
 
     colors = Color.objects.all()
@@ -106,7 +115,9 @@ def update_car_view(request: HttpRequest, car_id):
 
 
 def delete_car_view(request: HttpRequest, car_id: int):
-
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can delete Cars", 'alert-danger')
+        return redirect('main:home_view')
     try:
         car = Car.objects.get(pk=car_id)
         car.delete()
@@ -119,6 +130,10 @@ def delete_car_view(request: HttpRequest, car_id: int):
 
 
 def new_color_view(request: HttpRequest):
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can add Colors", 'alert-danger')
+        return redirect('main:home_view')
 
     if request.method == "POST":
         color_form = ColorForm(request.POST)
@@ -133,6 +148,10 @@ def new_color_view(request: HttpRequest):
 
 def update_color_view(request: HttpRequest, color_id):
 
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can update colors", 'alert-danger')
+        return redirect('main:home_view')
+
     color = Color.objects.get(pk=color_id)
     if request.method == "POST":
         color_form = ColorForm(request.POST, instance=color)
@@ -146,6 +165,11 @@ def update_color_view(request: HttpRequest, color_id):
 
 
 def delete_color_view(request: HttpRequest, color_id):
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can add Cars", 'alert-danger')
+        return redirect('main:home_view')
+
     try:
         color = Color.objects.get(pk=color_id)
         color.delete()
@@ -153,3 +177,24 @@ def delete_color_view(request: HttpRequest, color_id):
     except Exception as e:
         print(e)
         messages.error(request, "Error deleting this color", "alert-danger")
+
+
+def add_review_view(request: HttpRequest, car_id):
+
+    try:
+        if not request.user.is_authenticated:
+            messages.error(request, "Please Login to add reviews", 'alert-danger')
+            return redirect('accounts:sign_in')
+        if request.method == 'POST':
+            new_comment = CarReview(
+                car=Car.objects.get(pk=car_id),
+                user=request.user,
+                comment=request.POST['comment'],
+                rating=request.POST['rating'])
+            new_comment.save()
+            messages.success(request, 'Comment was added successfully', 'alert-success')
+        return redirect('cars:car_details_view', car_id = car_id)
+    except Exception as e:
+        messages.error(request, 'Error in adding your comment', 'alert-danger')
+        return render(request,'page_not_found.html')
+        print(e)

@@ -42,7 +42,9 @@ def brand_details_view(request: HttpRequest, brand_id:int):
 
 
 def add_brand_view(request: HttpRequest):
-
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can add Brands", 'alert-danger')
+        return redirect('main:home_view')
     try:
         if request.method == "POST":
             brand_form = BrandForm(request.POST, request.FILES)
@@ -62,6 +64,10 @@ def add_brand_view(request: HttpRequest):
 
 def update_brand_view(request:HttpRequest, brand_id: int):
 
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can update Brands", 'alert-danger')
+        return redirect('main:home_view')
+
     brand = Brand.objects.get(pk=brand_id)
 
     if request.method == "POST":
@@ -77,6 +83,10 @@ def update_brand_view(request:HttpRequest, brand_id: int):
 
 
 def delete_brand_view(request:HttpRequest, brand_id):
+
+    if not request.user.is_superuser:
+        messages.error(request, "Only Admins can delete brands", 'alert-danger')
+        return redirect('main:home_view')
 
     try:
         brand = Brand.objects.get(pk=brand_id)

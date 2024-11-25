@@ -12,11 +12,12 @@
                 <div class="d-flex justify-content-between">
 
                     <h1>{{brand.name}}</h1>
-
+                    {% if request.user.is_superuser %}
                     <div>
                         <a class="btn btn-primary" href="{% url 'brands:update_brand_view' brand.id %}"><span class="material-symbols-outlined">edit_square</span></a>
                         <a class="btn btn-danger" href="{% url 'brands:delete_brand_view' brand.id %}"><span class="material-symbols-outlined">delete</span></a>
                     </div>
+                    {% endif %}
                 </div>
 
                 <p>{{brand.about}}</p>
