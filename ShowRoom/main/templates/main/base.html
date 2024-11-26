@@ -14,8 +14,10 @@
         <ul>
             <li><a href="{% url 'main:home_view' %}" class="active">Cars</a></li>
             <li><a href="{% url 'brands:all_brand_view' %}">Brands</a></li>
+            {% if request.user.is_staff %}
             <li><a href="{% url 'brands:add_brand_view' %}">Add Brand</a></li>
             <li><a href="{% url 'cars:add_car' %}">Add Car</a></li>
+            {% endif %}
             {% if request.user.is_authenticated %}
                 <li>
                     <h6>Welcome, {{ request.user.username }}</h6>

@@ -13,15 +13,7 @@
                 {% endfor %}
             </select>
 
-            <label for="color">Color:</label>
-            <select name="color" id="color">
-                <option value="">All Colors</option>
-                {% for color in colors %}
-                    <option value="{{ color.id }}" {% if color.id == request.GET.color %}selected{% endif %}>
-                        {{ color.name }}
-                    </option>
-                {% endfor %}
-            </select>
+          
 
             <button type="submit">Apply Filters</button>
         </form>
