@@ -19,7 +19,7 @@ def all_brands_view(request:HttpRequest):
     return render(request,'brands/all_brands.html',{"brands":brands_list})
 
 def new_brand_view(request:HttpRequest):
-    if not request.user.is_superuser:
+    if not request.user.is_superuser and not request.user.has_perm("brands.add_brand"):
             messages.warning(request,"only staff can add brand","alert-warning")
             return redirect("main:home_view")
     if request.method=="POST":

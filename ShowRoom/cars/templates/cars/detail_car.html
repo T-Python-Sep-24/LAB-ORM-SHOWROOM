@@ -164,8 +164,14 @@
           {%for review in reviews%}
 
               <div class="d-flex flex-column p-3 bg-light shadow">
-                  <a href="{%url 'accounts:user_profile_view' review.user.username%}" class="yellow-link"><h4>{{review.user.first_name}} {{review.user.last_name}}</h4></a>
+                <div class="d-flex justify-content-between">
+                    <a href="{%url 'accounts:user_profile_view' review.user.username%}" class="yellow-link"><h4>{{review.user.first_name}} {{review.user.last_name}}</h4></a>
+                    {% if review.user == request.user or perms.cars.delete_review %}
+                    <a href="{% url 'cars:delete_review_view' review.id %}" class="btn btn-danger ms-2">delete</a>
+                    {% endif %}
+                </div>
                   <p>{{review.comment}}</p>
+
                   <small class="text-muted">{{review.created_at}}</small>
                   
               </div>

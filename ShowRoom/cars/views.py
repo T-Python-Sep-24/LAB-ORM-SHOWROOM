@@ -47,8 +47,8 @@ def detail_car_view(request:HttpRequest,car_id):
 
 
 def new_car_view(request:HttpRequest):
-    if not request.user.is_superuser:
-        messages.error(request,"only staff can add cars","alert-warning")
+    if not request.user.is_superuser and not request.user.has_perm("cars.add_car"):
+        messages.warning(request,"You don't have permission to add car","alert-warning")
         return redirect("main:home_view")
     brands=Brand.objects.all()
     colors=Color.objects.all()
@@ -114,7 +114,7 @@ def update_car_view(request:HttpRequest,car_id):
 
 
 def new_color_view(request:HttpRequest):
-    if not request.user.is_superuser:
+    if not request.user.is_superuser and not request.user.has_perm("cars.add_color"):
             messages.warning(request,"only staff can add color","alert-warning")
             return redirect("main:home_view")
  
@@ -133,7 +133,7 @@ def new_color_view(request:HttpRequest):
 
 def update_color_view(request:HttpRequest,color_id):
     try:
-        if not request.user.is_superuser:
+        if not request.user.is_superuser and not request.user.has_perm("cars.change_color"):
             messages.warning(request,"only staff can update color","alert-warning")
             return redirect("main:home_view")
  
@@ -164,7 +164,7 @@ def update_color_view(request:HttpRequest,color_id):
 
 
 def search_color(request):
-    if not request.user.is_superuser:
+    if not request.user.is_superuser and not request.user.has_perm("cars.view_color"):
             messages.warning(request,"only staff can search color","alert-warning")
             return redirect("main:home_view")
  
@@ -234,6 +234,22 @@ def add_review_view(request:HttpRequest,car_id):
 
 
 
+
+def delete_review_view(request:HttpRequest,review_id):
+  
+    try:
+            review = Review.objects.get(pk=review_id)
+            car_id=review.car.id
+            if request.user != review.user and not (request.user.is_superuser and request.user.has_perm("cars.delete_review")):
+                messages.error(request,"you don't have permisstion to delete a review",'alert-danger')
+                return redirect("cars:detail_car_view",car_id=car_id)  
+            else:    
+                review.delete()
+                messages.success(request, "review deleted successfully",'alert-success')
+                return redirect("cars:detail_car_view",car_id=car_id)  
+    except Exception as e:
+        print(e)
+        messages.error(request,"you don't have permisstion to delete a review",'alert-danger')
 
 
 def add_bookmark_view(request,car_id):

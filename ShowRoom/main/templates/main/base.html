@@ -35,7 +35,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{%url 'cars:all_cars_view'%}">All Cars</a></li>
-                            {% if request.user.is_superuser%}
+                            {% if request.user.is_superuser or perms.cars.add_car%}
                             <li><a class="dropdown-item" href="{%url 'cars:new_car_view'%}">Add Car</a></li>
                             {%endif%}
                         </ul>
@@ -46,13 +46,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{%url 'brands:all_brands_view'%}">All Brands</a></li>
-                            {% if request.user.is_superuser%}
+                            {% if request.user.is_superuser or perms.brands.add_brand%}
                             <li><a class="dropdown-item" href="{%url 'brands:new_brand_view'%}">Add Brand</a></li>
                             {%endif%}
 
                         </ul>
                     </li>
-                    {% if request.user.is_superuser%}
+                    {% if request.user.is_superuser or perms.cars.add_color%}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Colors
@@ -124,7 +124,7 @@
             <h6 class="bold ">Cars</h6>
             <div class="d-flex flex-column">
              <a class="small" href="{%url 'cars:all_cars_view'%}">All Cars</a>
-             {% if request.user.is_superuser%}
+             {% if request.user.is_superuser or perms.cars.add_car%}
 
              <a  class="small"href="{%url 'cars:new_car_view'%}">Add Car</a>
              {%endif%}
@@ -136,14 +136,14 @@
             <h6 class="bold ">Brands</h6>
             <div class="d-flex flex-column">
              <a class="small" href="{%url 'brands:all_brands_view'%}">All Brands</a>
-             {% if request.user.is_superuser%}
+             {% if request.user.is_superuser or perms.brands.add_brand%}
 
              <a  class="small"href="{%url 'brands:new_brand_view'%}">Add Brand</a>
              {%endif%}
   
             </div>        
          </div>
-         {% if request.user.is_superuser%}
+         {% if request.user.is_superuser or perms.cars.add_color or perms.cars.change_color%}
 
          <div class="col-md-3 col-sm-12 d-flex flex-column align-items-center justify-content-center gap-2">
             <h6 class="bold">Colors</h6>
