@@ -8,10 +8,10 @@ from django.core.paginator import Paginator
 from django.db.models import Count
 from accounts.models import Bookmark
 
-# Add color view
+# Add color View
 def addColorView(request:HttpRequest):
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can add colors.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.add_color')):
+        messages.warning(request, "Only editors can add colors.", "alert-warning")
         response = redirect('main:homeView')
     else:
         colorData = ColorForm()
@@ -28,11 +28,11 @@ def addColorView(request:HttpRequest):
 
     return response
 
-# Update color view
+# Update color View
 def updateColorView(request:HttpRequest, clrId:int):
     
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can update colors.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.change_color')):
+        messages.warning(request, "Only editors can update colors.", "alert-warning")
         response = redirect('main:homeView')
     else:
         try:
@@ -53,11 +53,11 @@ def updateColorView(request:HttpRequest, clrId:int):
 
     return response
 
-# Delete color view
+# Delete color View
 def deleteColorView(request: HttpRequest, clrId:int):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can delete colors.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.delete_color')):
+        messages.warning(request, "Only editors can delete colors.", "alert-warning")
         response = redirect('main:homeView')
     else:
         try:
@@ -76,10 +76,11 @@ def deleteColorView(request: HttpRequest, clrId:int):
 
     return response
 
+# Display all colors View
 def allColorsView(request:HttpRequest):
     
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can view registered colors.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.view_color')):
+        messages.warning(request, "Only editors can view registered colors.", "alert-warning")
         response = redirect('main:homeView')
     else:
         colors = Color.objects.all()
@@ -87,11 +88,11 @@ def allColorsView(request:HttpRequest):
     
     return response
 
-# Add car view
+# Add car View
 def addCarView(request: HttpRequest):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can add cars.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.add_car')):
+        messages.warning(request, "Only editors can add cars.", "alert-warning")
         response = redirect('main:homeView')
     else:
         carData = CarForm()
@@ -116,15 +117,15 @@ def addCarView(request: HttpRequest):
     
     return response
 
-# Update car view
-def updateCarView(request: HttpRequest, carid:int):
+# Update car View
+def updateCarView(request: HttpRequest, carId:int):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can update cars.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.change_car')):
+        messages.warning(request, "Only editors can update cars.", "alert-warning")
         response = redirect('main:homeView')
     else:
         try:
-            car = Car.objects.get(pk=carid)
+            car = Car.objects.get(pk=carId)
         except Exception:
             response = render(request, '404.html')
         else:
@@ -149,19 +150,19 @@ def updateCarView(request: HttpRequest, carid:int):
                 else:
                     messages.error(request, f"'{request.POST['model']}' wasn't updated.", "alert-danger")
                     
-                response = redirect('cars:carDetailsView', carid)
+                response = redirect('cars:carDetailsView', carId)
 
     return response
 
-# Delete car view
-def deleteCarView(request: HttpRequest, carid:int):
+# Delete car View
+def deleteCarView(request: HttpRequest, carId:int):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can delete cars.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('cars.delete_car')):
+        messages.warning(request, "Only editors can delete cars.", "alert-warning")
         response = redirect('main:homeView')
     else:
         try:
-            car = Car.objects.get(pk=carid)
+            car = Car.objects.get(pk=carId)
         except Exception:
             response = render(request, '404.html')
         else:
@@ -176,7 +177,7 @@ def deleteCarView(request: HttpRequest, carid:int):
 
     return response
 
-# Diplay cars view
+# Diplay cars View
 def displayCarsView(request: HttpRequest, filter: str):
 
     bodyTypes = Car.BodyType.choices
@@ -207,39 +208,62 @@ def displayCarsView(request: HttpRequest, filter: str):
     
     return response
 
-def carDetailsView(request: HttpRequest, carid:int):
+# Car details View
+def carDetailsView(request: HttpRequest, carId:int):
     try:
-        car = Car.objects.get(pk=carid)
+        car = Car.objects.get(pk=carId)
     except Exception:
         response = render(request, '404.html')
     else:
 
-        relatedCars = Car.objects.exclude(pk=carid).filter(brand=car.brand)[0:3]
-
+        relatedCars = Car.objects.exclude(pk=carId).filter(brand=car.brand)[0:3]
         comments = Comment.objects.filter(car=car)
-        
         isBookmarked = Bookmark.objects.filter(car=car, user=request.user).exists() if request.user.is_authenticated else False
 
         response = render(request, 'cars/carDetails.html', context={'car': car, 'relatedCars': relatedCars, 'comments': comments, 'isBookmarked': isBookmarked})
     return response
 
-# Add comment
-def addCommentView(request: HttpRequest, carid: int):
+# Add comment View
+def addCommentView(request: HttpRequest, carId: int):
 
     if not request.user.is_authenticated:
         messages.error(request, "Only registered users can add comments.", "alert-danger")
         response = redirect('accounts:loginView')
     else:
         if request.method == 'POST':
-            car = Car.objects.get(pk=carid)
+            car = Car.objects.get(pk=carId)
             newComment = Comment(car=car, user=request.user , comment=request.POST['comment'])
             newComment.save()
             messages.success(request, "Your comment was added successfully.", "alert-success") 
 
-    response = redirect('cars:carDetailsView', carid)
+    response = redirect('cars:carDetailsView', carId)
     return response
 
-# Add bookmark
+# Delete comment View
+def deleteCommentView(request: HttpRequest, commentId:int):
+
+    try:
+        comment = Comment.objects.get(pk=commentId)
+    except Exception:
+        response = render(request, '404.html')
+    else:
+        try:
+            carId = comment.car.id
+            if (request.user.is_staff and request.user.has_perm('cars.delete_comment')) or comment.user == request.user:
+                comment.delete()
+            else:
+                messages.warning(request, "You can't delete this comment.", "alert-warning")
+
+        except Exception:
+            messages.error(request, "Something went wrong. Comment wasn't deleted.", "alert-danger")
+        else: 
+            messages.success(request, "Comment deleted successfully.", "alert-success")    
+        
+        response = redirect('cars:carDetailsView', carId)
+
+    return response
+
+# Add bookmark View
 def addBookmarkView(request:HttpRequest, carId:id):
     
     if not request.user.is_authenticated:
@@ -261,3 +285,4 @@ def addBookmarkView(request:HttpRequest, carId:id):
         messages.error(request, "Something went wrong. Couldn't add bookmark.", "alert-danger")
 
     return redirect('cars:carDetailsView', carId)
+

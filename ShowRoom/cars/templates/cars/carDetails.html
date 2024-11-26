@@ -14,24 +14,27 @@
     <div class="half-border mb-2"></div>
     <a href="{% url 'cars:addBookmarkView' car.id %}">
         {% if isBookmarked %}
-        <i class="bi bi-bookmark-x-fill"></i>
+        <i class="bi bi-bookmark-x-fill h4"></i>
         {% else %}
-        <i class="bi bi-bookmark-plus"></i>
+        <i class="bi bi-bookmark-plus h4"></i>
         {% endif %}
     </a>
     <div class="container-fluid">
-        {% if user.is_staff %}
+        
         <div class="d-flex gap-2 justify-content-end">
-            <a href="{% url 'cars:updateCarView' car.id %}" class="btn border-2 shadow-sm {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
+            {% if user.is_staff and perms.cars.change_car %}
+            <a href="{% url 'cars:updateCarView' car.id %}" class="btn border-2 shadow-sm py-1 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
                 Update
             </a>
+            {% endif %}
             <!-- Button to trigger delete modal -->
-            <button type="button" class="btn btn-outline-danger border-2 shadow-sm" data-bs-toggle="modal"
+            {% if user.is_staff and perms.cars.delete_car %}
+            <button type="button" class="btn btn-outline-danger border-2 shadow-sm py-1" data-bs-toggle="modal"
                 data-bs-target="#deleteModal">
                 Delete
             </button>
+            {% endif %}
         </div>
-        {% endif %}
         <!-- Car images carousel -->
         <div id="carDetailsCarousel" class="carousel slide my-3 rounded-3 shadow overflow-hidden carousel-fade details-carousel mx-auto" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -59,6 +62,8 @@
             </button>
         </div>
     </div>
+
+    <!-- Car details -->
     <div class="container-fluid">
         <div class="row row-cols-1 row-cols-lg-2 justify-content-center">
             <div class="col">
@@ -149,7 +154,7 @@
     </div>
 </section>
 
-<!-- Delete Modal -->
+<!-- Delete car modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -160,10 +165,9 @@
             <div class="modal-body">
                 Are you sure you want to delete '<strong>{{car.brand.name}} - {{car.model}}</strong>'?
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary shadow-sm"
-                    data-bs-dismiss="modal">Close</button>
-                <a href="{% url 'cars:deleteCarView' car.id %}" class="btn btn-danger shadow-sm">Delete</a>
+            <div class="modal-footer py-1">
+                <button type="button" class="btn btn-secondary shadow-sm py-0" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'cars:deleteCarView' car.id %}" class="btn btn-danger shadow-sm py-0 text-white">Delete</a>
             </div>
         </div>
     </div>
@@ -189,19 +193,50 @@
         <div class="d-flex flex-column gap-2 mb-5 mx-2">
             {% for comment in comments %}
             <div class="card p-1 my-2 text-start shadow rounded-2 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}text-bg-dark{% else %}text-bg-light{% endif %}" style="max-width:40rem;">
-                <div class="card-body d-flex flex-column gap-1">
+                <div class="card-body d-flex flex-column gap-1 position-relative">
                     <div class="d-flex gap-3 align-items-end">
                         <a href="{% url 'accounts:profileView' comment.user.username %}" class="d-flex flex-row gap-1 align-items-end">
                             <img src="{{comment.user.profile.avatar.url}}" class="avatar-sm rounded-circle">
                             <p class="card-text fs-5 fw-medium hover-underline white-shadow">{{comment.user.first_name}} {{comment.user.last_name}}</p>
                         </a>
                     </div>
+                    {% if request.user == comment.user or perms.cars.delete_comment %}
+                    <button type="button" class="btn btn-outline-danger border-2 shadow-sm m-2 px-1 py-0 position-absolute top-0 end-0" data-bs-toggle="modal"
+                        data-bs-target="#deleteCommentModal{{comment.id}}">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                    {% endif %}
                     <p class="card-text fw-medium">
                         {{comment.comment}}
                     </p>
                     <p class="card-text small fw-medium text-danger">
                         {{comment.createdAt}}
                     </p>
+                </div>
+            </div>
+            <!-- Delete comment modal -->
+            <div class="modal fade" id="deleteCommentModal{{comment.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Comment</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="m-0">Are you sure you want to delete 
+                                {% if request.user == comment.user %}
+                                your 
+                                {% else %}
+                                <span class="fw-medium text-danger">{{comment.user.username}}'s </span>
+                                {% endif %}
+                                comment?</p>
+                            <p class="m-0 small"><strong class="text-danger">Comment content: </strong>{{comment.comment}}</p>
+                        </div>
+                        <div class="modal-footer py-1">
+                            <button type="button" class="btn btn-secondary shadow-sm py-0" data-bs-dismiss="modal">Close</button>
+                            <a href="{% url 'cars:deleteCommentView' comment.id %}" class="btn btn-danger shadow-sm py-0 text-white">Delete</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% empty %}

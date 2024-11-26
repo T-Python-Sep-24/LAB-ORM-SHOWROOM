@@ -10,6 +10,7 @@
     </h1>
     <div class="half-border mb-3 mx-auto"></div>
 
+    <!-- Search bar -->
     <form action="{% url 'cars:displayCarsView' selected %}{% querystring %}" method="get" class="my-3 needs-validation"
         novalidate>
         <div class="input-group justify-content-center">
@@ -24,16 +25,17 @@
             </div>
         </div>
     </form>
+    <!-- Add car, view colors and filtering buttons -->
     <div class="d-flex justify-content-center gap-2 mb-4">
-        {% if user.is_staff %}
-        <a href="{% url 'cars:allColorsView' %}" class="btn btn-danger text-white align-content-center">All colors</a>
-        <a href="{% url 'cars:addCarView' %}" class="btn btn-danger text-white align-content-center">New</a>
+        {% if user.is_staff and perms.cars.add_car %}
+        <a href="{% url 'cars:addCarView' %}" class="btn btn-danger text-white align-content-center py-1">New</a>
         {% endif %}
-        <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltering"
+        {% if user.is_staff and perms.cars.view_color %}
+        <a href="{% url 'cars:allColorsView' %}" class="btn btn-danger text-white align-content-center py-1">All colors</a>
+        {% endif %}
+        <button class="btn btn-danger py-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltering"
         aria-controls="offcanvasFiltering">
-            <span class="material-symbols-outlined">
-                filter_alt
-            </span>
+        <i class="bi bi-filter h4"></i>
         </button>
     </div>
     

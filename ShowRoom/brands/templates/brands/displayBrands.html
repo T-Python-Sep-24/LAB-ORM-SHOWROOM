@@ -20,7 +20,7 @@
                 </div>
             </div>
         </form>
-        {% if user.is_staff %}
+        {% if user.is_staff and perms.brand.add_brand %}
         <a href="{% url 'brands:addBrandView' %}" class="btn btn-danger text-white align-content-center">New</a>
         {% endif %}
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-gap-4 justify-content-center mt-4">

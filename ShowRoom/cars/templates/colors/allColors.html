@@ -9,7 +9,9 @@
         All colors
     </h1>
     <div class="half-border mb-3 mx-auto"></div>
+    {% if user.is_staff and perms.cars.delete_color %}
     <a href="{% url 'cars:addColorView' %}" class="btn btn-danger text-white align-content-center">New</a>
+    {% endif %}
     <div class="row row-cols-2 row-cols-md-5 justify-content-center gap-2 mt-4">
         {% for color in colors %}
         <div class="card g-0 colors-crd border-0 shadow-sm">
@@ -18,17 +20,21 @@
                 <h5 class="card-title">{{color.name}}</h5>
                 <p class="card-text fw-medium mb-1">#{{color.hexCode}}</p>
                 <div class="d-flex gap-2 justify-content-center">
+                    {% if user.is_staff and perms.cars.delete_color %}
                     <button type="button" class="btn btn-outline-danger border-2 shadow-sm py-0" data-bs-toggle="modal"
                         data-bs-target="#deleteModal{{color.id}}">
                         Delete
                     </button>
+                    {% endif %}
+                    {% if user.is_staff and perms.cars.change_color %}
                     <a href="{% url 'cars:updateColorView' color.id %}" class="btn border-2 shadow-sm py-0 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %}btn-outline-light{% else %}btn-outline-dark{% endif %}">
                         Update
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
-        <!-- Delete Modal -->
+        <!-- Delete color modal -->
         <div class="modal fade" id="deleteModal{{color.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

@@ -10,18 +10,22 @@
     </h1>
     <div class="half-border mb-3"></div>
     <div class="container-fluid">
-        {% if user.is_staff %}
+        <!-- Update and delete buttons -->
         <div class="d-flex gap-2 justify-content-end my-2">
-            <a href="{% url 'brands:updateBrandView' brand.id %}" class="btn border-2 shadow-sm {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
+            {% if user.is_staff and perms.brands.change_brand %}
+            <a href="{% url 'brands:updateBrandView' brand.id %}" class="btn border-2 shadow-sm py-1 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
                 Update
             </a>
-            <!-- Button to trigger delete modal -->
-            <button type="button" class="btn btn-outline-danger border-2 shadow-sm" data-bs-toggle="modal"
-                data-bs-target="#deleteModal">
+            {% endif %}
+            {% if user.is_staff and perms.brands.delete_brand %}
+            <!-- Trigger delete modal -->
+            <button type="button" class="btn btn-outline-danger border-2 shadow-sm py-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
                 Delete
             </button>
+            {% endif %}
         </div>
-        {% endif %}
+
+        <!-- Brand details -->
         <div class="row row-cols-1 row-cols-md-2">
             <div class="col">
                 <img src="{{brand.logo.url}}" alt="brand logo" class="rounded-1 shadow w-100 h-100 object-fit-cover">
@@ -41,6 +45,8 @@
         </div>
     </div>
 </section>
+
+<!-- Cars from the same brand -->
 <section class="container my-5">
     <a href="" class="fs-3 mt-4 hover-underline">
         Cars from {{brand.name}}:
@@ -51,7 +57,7 @@
 </section>
 
 
-<!-- Delete Modal -->
+<!-- Delete brand modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -62,9 +68,9 @@
             <div class="modal-body">
                 Are you sure you want to delete '<strong>{{brand.name}}</strong>'?
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">Close</button>
-                <a href="{% url 'brands:deleteBrandView' brand.id %}" class="btn btn-danger shadow-sm">Delete</a>
+            <div class="modal-footer py-1">
+                <button type="button" class="btn btn-secondary shadow-sm py-0" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'brands:deleteBrandView' brand.id %}" class="btn btn-danger shadow-sm py-0">Delete</a>
             </div>
         </div>
     </div>

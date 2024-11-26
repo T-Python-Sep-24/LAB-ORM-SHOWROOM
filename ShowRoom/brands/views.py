@@ -10,8 +10,8 @@ from django.core.paginator import Paginator
 # Add brand instance
 def addBrandView(request: HttpRequest):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can add brands.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('brands.add_brand')):
+        messages.warning(request, "Only editors can add brands.", "alert-warning")
         response = redirect('main:homeView')
     else:
         brandData = BrandForm()
@@ -30,14 +30,14 @@ def addBrandView(request: HttpRequest):
     return response
 
 # Update brand instance
-def updateBrandView(request: HttpRequest, brandid:int):
+def updateBrandView(request: HttpRequest, brandId:int):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can update brands.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('brands.change_brand')):
+        messages.warning(request, "Only editors can update brands.", "alert-warning")
         response = redirect('main:homeView')
     else:
         try:
-            brand = Brand.objects.get(pk=brandid)
+            brand = Brand.objects.get(pk=brandId)
         except Exception:
             response = render(request, '404.html')
         else:
@@ -51,20 +51,20 @@ def updateBrandView(request: HttpRequest, brandid:int):
                 else:
                     messages.error(request, f"'{request.POST['name']}' wasn't updated.", "alert-danger")
                     
-                response = redirect('brands:brandDetailsView', brandid)
+                response = redirect('brands:brandDetailsView', brandId)
     
     return response
 
 # Delete brand view
-def deleteBrandView(request:HttpRequest, brandid:int):
+def deleteBrandView(request:HttpRequest, brandId:int):
 
-    if not request.user.is_staff:
-        messages.warning(request, "Only staff can delete brands.", "alert-warning")
+    if not (request.user.is_staff and request.user.has_perm('brands.delete_brand')):
+        messages.warning(request, "Only editors can delete brands.", "alert-warning")
         response = redirect('main:homeView')
     else:
     
         try:
-            brand = Brand.objects.get(pk=brandid)
+            brand = Brand.objects.get(pk=brandId)
         except Exception:
             response = render(request, '404.html')
         else:
@@ -96,9 +96,9 @@ def displayBrandsView(request: HttpRequest):
     return response
 
 # Brand details view
-def brandDetailsView(request: HttpRequest, brandid:int):
+def brandDetailsView(request: HttpRequest, brandId:int):
     try:
-        brand = Brand.objects.get(pk=brandid)
+        brand = Brand.objects.get(pk=brandId)
     except Exception:
         response = render(request, '404.html')
     else:
