@@ -4,7 +4,7 @@
 {% block title %}{{car.brand.name}} - {{car.model}}{% endblock %}
 
 {% block content %}
-<section class="container-md">
+<section class="container-lg">
     <div class="d-flex align-items-center">
         <img src="{{car.brand.logo.url}}" alt="Brand logo" class="rounded-2 car-logo">
         <h1 class="mt-3 ms-2">
@@ -19,8 +19,8 @@
         <i class="bi bi-bookmark-plus h4"></i>
         {% endif %}
     </a>
-    <div class="container-fluid">
-        
+
+    <div class="container-lg">
         <div class="d-flex gap-2 justify-content-end">
             {% if user.is_staff and perms.cars.change_car %}
             <a href="{% url 'cars:updateCarView' car.id %}" class="btn border-2 shadow-sm py-1 {% if 'mode' in request.COOKIES and request.COOKIES.mode == 'dark' %} btn-outline-light {% else %} btn-outline-dark {% endif %}">
@@ -36,7 +36,7 @@
             {% endif %}
         </div>
         <!-- Car images carousel -->
-        <div id="carDetailsCarousel" class="carousel slide my-3 rounded-3 shadow overflow-hidden carousel-fade details-carousel mx-auto" data-bs-ride="carousel">
+        <div id="carDetailsCarousel" class="carousel slide my-3 rounded-3 shadow overflow-hidden carousel-fade mx-auto" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 {% for carImg in car.attachment_set.all %}
                 <button type="button" data-bs-target="#carDetailsCarousel" data-bs-slide-to="{{forloop.counter0}}"
@@ -62,7 +62,6 @@
             </button>
         </div>
     </div>
-
     <!-- Car details -->
     <div class="container-fluid">
         <div class="row row-cols-1 row-cols-lg-2 justify-content-center">

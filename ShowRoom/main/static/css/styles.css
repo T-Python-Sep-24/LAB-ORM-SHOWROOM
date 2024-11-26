@@ -244,11 +244,6 @@
     height: 18rem;
     object-fit: cover;
 }
-
-.details-carousel {
-    width: 85%;
-} 
-
 .carousel img {
     max-height: 600px;
     width: 100%;
