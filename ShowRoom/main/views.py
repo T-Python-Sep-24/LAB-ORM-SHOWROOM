@@ -7,9 +7,8 @@ from brands.models import Brand
 def homeView(request: HttpRequest):
     cars = Car.objects.all().order_by('-addedAt')[0:3]
     brands = Brand.objects.all().order_by('founded')[0:3]
-    carimages = Attachment.objects.all()
     
-    response = render(request, 'main/home.html', context={'cars':cars, 'brands': brands, 'carimages': carimages})
+    response = render(request, 'main/home.html', context={'cars':cars, 'brands': brands})
     return response
 
 #Mode change view

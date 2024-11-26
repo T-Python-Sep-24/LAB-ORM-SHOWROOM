@@ -180,7 +180,6 @@ def deleteCarView(request: HttpRequest, carid:int):
 def displayCarsView(request: HttpRequest, filter: str):
 
     bodyTypes = Car.BodyType.choices
-    carsImages = Attachment.objects.all()
     colors = Color.objects.all()
     brands = Brand.objects.all()
 
@@ -189,14 +188,14 @@ def displayCarsView(request: HttpRequest, filter: str):
     else:
         cars = Car.objects.filter(bodyType__iexact=filter).order_by('-addedAt')
     
-    if "search" in request.GET and len(request.GET["search"]) >= 2:
-        cars = cars.filter(model__contains=request.GET["search"]).order_by('-addedAt')
+    if 'search' in request.GET and len(request.GET['search']) >= 2:
+        cars = cars.filter(model__contains=request.GET['search']).order_by('-addedAt')
 
-    if "colors" in request.GET:
-        cars = cars.filter(colors__name__in=request.GET.getlist("colors")).order_by('-addedAt')
+    if 'colors' in request.GET:
+        cars = cars.filter(colors__name__in=request.GET.getlist('colors')).order_by('-addedAt')
 
-    if "brand" in request.GET and request.GET['brand'] != '':
-        cars = cars.filter(brand=request.GET["brand"])
+    if 'brand' in request.GET and request.GET['brand'] != '':
+        cars = cars.filter(brand__name=request.GET['brand'])
 
     cars = cars.annotate(Count("id"))
 
@@ -204,7 +203,7 @@ def displayCarsView(request: HttpRequest, filter: str):
     pageNumber = request.GET.get('page', 1)
     page_obj = paginator.get_page(pageNumber)
 
-    response = render(request, 'cars/displayCars.html', context={'cars': page_obj, 'selected': filter, 'bodyTypes': bodyTypes, 'carsImages': carsImages, 'colors': colors, 'brands': brands, "filteredColors":request.GET.getlist("colors")})
+    response = render(request, 'cars/displayCars.html', context={'cars': page_obj, 'selected': filter, 'bodyTypes': bodyTypes, 'colors': colors, 'brands': brands, "filteredColors":request.GET.getlist("colors")})
     
     return response
 
@@ -214,16 +213,14 @@ def carDetailsView(request: HttpRequest, carid:int):
     except Exception:
         response = render(request, '404.html')
     else:
-        carImages = Attachment.objects.filter(car=car)
 
         relatedCars = Car.objects.exclude(pk=carid).filter(brand=car.brand)[0:3]
-        relatedCarsImages = Attachment.objects.filter(car__brand__name=car.brand.name)
 
         comments = Comment.objects.filter(car=car)
         
         isBookmarked = Bookmark.objects.filter(car=car, user=request.user).exists() if request.user.is_authenticated else False
 
-        response = render(request, 'cars/carDetails.html', context={'car': car, 'carImages': carImages, 'relatedCars': relatedCars, 'carsImages': relatedCarsImages, 'comments': comments, 'isBookmarked': isBookmarked})
+        response = render(request, 'cars/carDetails.html', context={'car': car, 'relatedCars': relatedCars, 'comments': comments, 'isBookmarked': isBookmarked})
     return response
 
 # Add comment

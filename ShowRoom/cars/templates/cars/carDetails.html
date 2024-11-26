@@ -35,13 +35,13 @@
         <!-- Car images carousel -->
         <div id="carDetailsCarousel" class="carousel slide my-3 rounded-3 shadow overflow-hidden carousel-fade details-carousel mx-auto" data-bs-ride="carousel">
             <div class="carousel-indicators">
-                {% for carImg in carImages %}
+                {% for carImg in car.attachment_set.all %}
                 <button type="button" data-bs-target="#carDetailsCarousel" data-bs-slide-to="{{forloop.counter0}}"
                     class="{% if forloop.first %}active{% endif %}" aria-label="Slide {{forloop.counter}}"></button>
                 {% endfor %}
             </div>
             <div class="carousel-inner">
-                {% for carImg in carImages %}
+                {% for carImg in car.attachment_set.all %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <img src="{{carImg.image.url}}" class="d-block" alt="Car image">
                 </div>

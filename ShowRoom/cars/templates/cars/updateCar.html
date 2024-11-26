@@ -131,7 +131,7 @@
                 </div>
                 <p class="fw-medium mb-1">Current Images</p>
                 <div class="d-flex gap-4 mb-4">
-                    {% for img in carImgs %}
+                    {% for img in car.attachment_set.all %}
                     <img src="{{img.image.url}}" class="rounded-2 shadow" style="height: 80px;" alt="Car images">
                     {% endfor %}
                 </div>

@@ -48,11 +48,11 @@
             <form action="{% url 'cars:displayCarsView' selected %}{% querystring %}" method="get" class="my-3">
                 <div class="my-3">
                     <p class="fw-medium">Color:</p>
-                    <div class="d-flex justify-content-center gap-2">
+                    <div class="d-flex flex-column justify-content-center gap-2">
                         {% for color in colors %}
                         <input type="checkbox" class="btn-check" name="colors" id="check-{{color.id}}"
                             autocomplete="off" value="{{color.name}}" {% if color.name in filteredColors %}checked{% endif %}>
-                        <label class="btn btn-outline-secondary border-2 py-0 rounded-pill"
+                        <label class="btn btn-outline-secondary border-2 py-0 rounded-pill mx-auto"
                             for="check-{{color.id}}">{{color.name}}</label>
                         {% endfor %}
                     </div>
@@ -62,7 +62,7 @@
                     <select id="brand" name="brand" class="form-select" aria-label="Brand select">
                         <option value="">All</option>
                         {% for brand in brands %}
-                        <option value="{{brand.id}}" {% if request.GET.brand == brand %}selected{% endif %}>{{brand.name}}</option>
+                        <option value="{{brand.name}}" {% if brand.name == request.GET.brand %}selected{% endif %}>{{brand.name}}</option>
                         {% endfor %}
                     </select>
                 </div>

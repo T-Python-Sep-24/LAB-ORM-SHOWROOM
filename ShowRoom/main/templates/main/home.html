@@ -37,7 +37,7 @@
         <div class="carousel-inner">
             {% for car in cars %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                {% for carimg in carimages %}
+                {% for carimg in car.attachment_set.all %}
                 {% if carimg.car == car and "front" in carimg.image.url %}
                 <img src="{{carimg.image.url}}" class="d-block w-100 object-fit-cover" height="600" alt="car image">
                 {% endif %}
