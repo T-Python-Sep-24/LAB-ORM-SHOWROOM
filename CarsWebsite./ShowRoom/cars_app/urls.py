@@ -9,4 +9,7 @@ urlpatterns = [
     path('new/', views.new_car_view, name='new_car_view'),
     path('update/<int:car_id>/',views.update_car_view, name='update_car_view'),
     path('delete/<int:car_id>/',views.delete_car_view, name='delete_car_view'),
+    path('colors/new/',views.new_color_view , name='new_color_view'),
+    path('colors/update/<color_id>/',views.update_color_view , name='views.update_color_view'),
+
 ]

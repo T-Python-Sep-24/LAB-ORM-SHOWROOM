@@ -50,7 +50,7 @@ def brand_delete_view(request, brand_id):
     if request.method == 'POST':
         brand.delete() 
         messages.success(request, "Brand deleted successfully!")
-        return redirect('brand_list')  
+        return redirect('brands_app:all_brands_view')  
     return render(request, 'brands_app/delete_brand.html', {'brand': brand})  
 
  

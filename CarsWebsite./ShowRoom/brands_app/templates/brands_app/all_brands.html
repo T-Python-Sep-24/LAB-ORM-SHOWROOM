@@ -7,7 +7,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for brand in brands %}
         <div class="bg-gray-800 rounded-lg shadow-md p-4">
-            <h3 class="font-semibold text-lg text-white">{{ brand.name }}</h3>
+            <a href="{%url 'brands_app:brand_detail_view' brand.id %}" class="font-semibold text-lg text-white">{{ brand.name }}</h3>
             <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="w-full h-64 object-cover rounded-t-lg bg-white"> <!-- Fixed height -->
             <p class="text-white">Founded: {{ brand.founded_at }}</p>
         </div>

@@ -8,6 +8,9 @@
     <p><strong>Brand:</strong> {{ car.brand_id.name }}</p>
     <p><strong>Model Year:</strong> {{ car.model_year }}</p>
     <p><strong>Specs:</strong> {{ car.specs }}</p>
+    <p><strong>Color:</strong> {% for color in car.color.all %}{{ color.name }}, {% endfor %}</p>
+    
+
     <div class="mt-4">
         <a href="{% url 'cars_app:update_car_view' car.id %}" class="bg-yellow-500 text-white py-2 px-4 rounded">Edit Car</a>
         <a href="{% url 'cars_app:delete_car_view' car.id %}" class="bg-red-600 text-white py-2 px-4 rounded">Delete Car</a>

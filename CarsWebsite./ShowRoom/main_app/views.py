@@ -6,7 +6,7 @@ from brands_app.models import Brand
 
 def home_view(request:HttpRequest):
     
-    brands = Brand.objects.order_by('-id')[:5]
+    brands = Brand.objects.order_by('-id')[:4]
     # latest_cars = Car.objects.order_by('-id')[:4]  # Adjust as needed
     cars = Car.objects.all()
 
@@ -14,6 +14,4 @@ def home_view(request:HttpRequest):
         'brands': brands,
         'cars': cars,
     })
-    # return render(request, 'main_app/home.html', {'brands': brands})
-
-    # return render(request, "main_app/home.html")
+  

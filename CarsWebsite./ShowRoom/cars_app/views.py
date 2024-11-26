@@ -4,8 +4,18 @@ from .models import Car, Color
 from brands_app.models import Brand
 from django.contrib import messages
 from .form import CarForm  
+from .form import ColorForm
 
-
+def new_color(request):
+    if request.method == 'POST':
+        form = ColorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Color added successfully!')
+            return redirect('cars:all_colors')  # Redirect to a page that shows all colors
+    else:
+        form = ColorForm()
+    return render(request, 'cars/new_color.html', {'form': form})
 def all_cars_view(request: HttpRequest):
    
     cars = Car.objects.all()
@@ -52,4 +62,29 @@ def delete_car_view(request: HttpRequest, car_id: int):
         messages.success(request, "Car deleted successfully!")
         return redirect('cars_app:all_cars_view')  
 
-        return render(request, 'cars_app/delete_car.html', {'car': car})
+    return render(request, 'cars_app/delete_cars.html', {'car': car})
+
+
+def new_color_view(request: HttpRequest):
+    if request.method == 'POST':
+        form = ColorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Color added successfully!')
+            return redirect('cars_app:new_car_view') 
+    else:  
+        form = ColorForm()
+    
+    return render(request, 'cars_app/add_new_colors.html', {'form': form})
+
+def update_color_view(request: HttpRequest, color_id):
+    color = Color.objects.get(id=color_id)
+    if request.method == 'POST':
+        form = ColorForm(request.POST, instance=color)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Color updated successfully!')
+            return redirect('main_app:home_view')
+    else:
+        form = ColorForm(instance=color)
+    return render(request, 'cars_app/update_cars_colors.html', {'form': form})

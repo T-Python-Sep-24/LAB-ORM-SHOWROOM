@@ -3,11 +3,13 @@
 {% block title %}Home - ShowRoom{% endblock %}
 {% block content %}
 <!-- Hero Section -->
+<main class=" start-0 my-8 w-full">
+
 
 <section class="relative w-full h-screen">
-    <img src="{% static 'images/car-bg1.jpeg' %}" class="absolute inset-0 object-cover w-full h-full rounded-lg" alt="Car Background"/>
+    <img src="https://di-uploads-pod24.dealerinspire.com/butlerlexusofsouthatlanta/uploads/2023/08/2021-Lexus-ISs-1024x577.jpeg" class="absolute inset-0 object-cover  h-full  rounded-lg w-full " alt="Car Background"/>
     <div class="relative z-10 flex items-center justify-center h-full">
-        <div class="text-white mr-10 pb-6  pl-20 "> <!-- Added padding for better text visibility -->
+        <div class="text-white p-10 "> <!-- Added padding for better text visibility -->
             <h1 class="text-8xl font-bold mb-8 ">Welcome to ShowRoom</h1>
             <p class="text-4xl mb-8 ">This is a website for showing brands of cars, cars, and details about cars. Essentially, a Show Room for cars!</p>
             <a href="#" class="bg-blue-500 text-white font-semibold py-4 px-4 rounded-lg hover:bg-blue-900 transition duration-300  ">Discover More</a>
@@ -18,8 +20,9 @@
 
 
 <!-- Latest Cars Section -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-    <h2 class="text-2xl font-bold mb-4">Latest Cars</h2>
+<h2 class="text-2xl font-bold mb-4  p-8 ">Latest Cars</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 p-8">
+   
     {% for car in cars|slice:":4" %}  <!-- Display only the first four cars -->
     <div class="bg-white rounded-lg shadow-md p-4">
         <img src="{{ car.photo.url }}" alt="{{ car.name }}" class="card-image w-full rounded-t-lg">
@@ -33,14 +36,14 @@
 </div>
 
 <!-- Button to View All Cars -->
-<div class="mt-4">
-    <a href="{% url 'cars_app:all_cars_view' %}" class="bg-blue-600 text-white py-2 px-4 rounded">View All Cars</a>
+<div class="mt-4 p-8  ">
+    <a href="{% url 'cars_app:all_cars_view' %}" class="bg-blue-600 text-white py-2 px-4 rounded ">View All Cars</a>
 </div>
 
 <!-- Latest Brands Section -->
 <div class="mt-8">
-    <h2 class="text-2xl font-bold mb-4">Latest Brands</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <h2 class="text-2xl font-bold mb-4 p-8  ">Latest Brands</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-8  " >
         {% for brand in brands %}
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="w-full h-48 object-cover">
@@ -56,5 +59,5 @@
         {% endfor %}
     </div>
 </div>
-
+</main>
 {% endblock %}
