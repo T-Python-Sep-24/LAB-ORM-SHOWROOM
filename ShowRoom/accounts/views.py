@@ -12,7 +12,7 @@ def registerView(request:HttpRequest):
  
     if request.method == "POST":
         try:
-            newUser = User.objects.create_user(first_name=request.POST['fname'], last_name=request.POST['lname'], username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
+            newUser = User.objects.create_user(first_name=request.POST['fname'], last_name=request.POST['lname'], username=request.POST['username'].lower(), email=request.POST['email'], password=request.POST['password'])
             newUser.save()
 
             # Create profile
@@ -34,10 +34,10 @@ def loginView(request:HttpRequest):
 
     if request.method == 'POST':
         # Check user credentials
-        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+        user = authenticate(request, username=request.POST["username"].lower(), password=request.POST["password"])
         if user:
             login(request, user)
-            messages.success(request, f"Welcome back {user.first_name}.", "alert-success")
+            messages.success(request, f"Welcome {user.first_name}.", "alert-success")
             return redirect(request.GET.get('next', '/'))
         else:
             messages.error(request, "Login failed. Your credentials are incorrect.", "alert-danger")   
@@ -54,12 +54,13 @@ def logoutView(request:HttpRequest):
 # Display profile View
 def profileView(request: HttpRequest, username: str):
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.get(username__iexact=username)
         if Profile.objects.filter(user=user).exists():
             profile: Profile = user.profile
         else:
             profile = Profile(user=user)
-    except Exception:
+    except Exception as e:
+        print(e)
         return render(request, '404.html')
     
     return render(request, 'accounts/profile.html', {'profile': profile})
