@@ -65,7 +65,9 @@
 
                     {% if request.user.is_authenticated%}
                     <li class="nav-item">
-                        <h6 class="nav-link text-warning mt-1" >Hi, {{user.username}}</h6>
+                        <a class="nav-link p-0" href="{%url 'accounts:user_profile_view' request.user.username%}">
+                        <h6 class="nav-link text-warning mt-1" >Hi, {{ request.user.username}}</h6>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-danger" aria-current="page" href="{%url 'accounts:log_out'%}?next={{request.path}}">Log Out</a>

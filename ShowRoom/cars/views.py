@@ -5,6 +5,7 @@ from brands.models import Brand
 from .forms import ColorForm,CarForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+from accounts.models import Bookmark
 # Create your views here.
 
 
@@ -33,8 +34,9 @@ def detail_car_view(request:HttpRequest,car_id):
         car =Car.objects.get(pk=car_id)
         car_colors=car.colors.all()
         car_photos=car.photos.all()[1:] 
-        reviews=Review.objects.filter(car=car)    
-        return render(request,'cars/detail_car.html',{"reviews":reviews,"car":car,"car_colors":car_colors,"car_photos":car_photos})
+        reviews=Review.objects.filter(car=car)  
+        is_bookmarked=  Bookmark.objects.filter(car=car, user=request.user).exists() if request.user.is_authenticated else False
+        return render(request,'cars/detail_car.html',{"reviews":reviews,"car":car,"car_colors":car_colors,"car_photos":car_photos,"is_bookmarked":is_bookmarked})
     except Car.DoesNotExist:
         print("error massege")
         messages.error(request, "An error occurred: The page not found",'alert-danger')
@@ -228,4 +230,30 @@ def add_review_view(request:HttpRequest,car_id):
         review=Review(user=request.user,comment=request.POST['comment'],rating=request.POST['rating'],car=car_obj)
         review.save()
         messages.success(request, "thank you for your review",'alert-success')
+    return redirect("cars:detail_car_view",car_id=car_id)    
+
+
+
+
+
+def add_bookmark_view(request,car_id):
+    if not request.user.is_authenticated:
+            messages.warning(request,"only rigisted user can add bookmarks","alert-warning")
+            return redirect("accounts:sign_in")
+
+    try:
+       car=Car.objects.get(pk=car_id)
+       bookmark =Bookmark.objects.filter(user=request.user,car=car).first()
+       if not bookmark:
+            new_bookmark= Bookmark(user=request.user,car=car)
+            new_bookmark.save()
+            messages.success(request, "added to bookmarks",'alert-success')
+       else:
+           bookmark.delete()
+           messages.warning(request, "removed bookmark",'alert-warning')
+     
+    except Exception as e:
+        print(e)
+
+
     return redirect("cars:detail_car_view",car_id=car_id)    

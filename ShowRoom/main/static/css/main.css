@@ -149,3 +149,11 @@ footer a:hover{
         transform: translateX(-100%);
     }
 }
+
+.yellow-link:hover{
+    color: #ffc107 !important;
+}
+
+.nav-link:hover{
+    text-decoration: underline;
+}
