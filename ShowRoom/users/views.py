@@ -3,6 +3,7 @@ from django.http import HttpRequest,HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from users.models import Profile
 # Create your views here.
 
 
@@ -12,7 +13,8 @@ def sign_up(request:HttpRequest):
         try:
             new_user = User.objects.create_user(username=request.POST["username"],password=request.POST["password"],first_name=request.POST["first_name"],email=request.POST["email"])
             new_user.save()
-            print(new_user)
+            profile = Profile(user=new_user,about=request.POST["about"])
+            profile.save()            
             messages.success(request,"Registered User Successfully","alert-success")
             return redirect("users:sign_in")
         except Exception as e:
@@ -37,4 +39,11 @@ def log_out(request:HttpRequest):
     logout(request)
     return redirect("main:home_view")
 
+
+
+def user_profile_view(request:HttpRequest,user_name):
+    user = User.objects.get(username=user_name)
+    profile:Profile = user.profile
+   # profile = Profile.objects.get(user=user)
+    return render(request,'users/profile.html',{"user":user})
 
