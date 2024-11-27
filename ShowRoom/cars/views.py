@@ -1,10 +1,12 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render,redirect,get_object_or_404
+from django.http import HttpRequest, HttpResponse, Http404
 from .models import Car, Color,Review
 from brands.models import Brand
 from .forms import CarForm,ReviewForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from Users.models import Bookmark
 
 def all_cars(request):
     query = request.GET.get('q', '')  # Search query
@@ -79,6 +81,7 @@ def car_detail(request, car_id):
                 review.user = request.user  # Associate the review with the logged-in user
                 review.car = car  # Associate the review with the car
                 review.save()
+                is_bookmarked = Bookmark.objects.filter(game=game,  user=request.user).exists() if request.user.is_authenticated else False
                 return redirect('cars:car_detail', car_id=car.id)  # Redirect to avoid resubmitting on refresh
 
     return render(request, 'cars/car_detail.html', {'car': car, 'reviews': reviews, 'review_form': review_form})
@@ -120,4 +123,38 @@ def delete_car(request, car_id):
     return render(request, 'cars/delete_car.html', {'car': car})
 
 
+def add_review_view(request:HttpRequest, car_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "Only registered user can add review","alert-danger")
+        return redirect("users:sign_in")
+
+    if request.method == "POST":
+        car_object = Car.objects.get(pk=car_id)
+        new_review = Review(car=car_object,user=request.user,comment=request.POST["comment"],rating=request.POST["rating"])
+        new_review.save()
+
+        messages.success(request, "Added Review Successfully", "alert-success")
+
+    return redirect("cars:car_detail", car_id=car_id)
+
+
+def add_bookmark_view(request:HttpRequest, car_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "Only registered user can add bookmarks","alert-danger")
+        return redirect("users:sign_in")
+    try:
+        car = Car.objects.get(pk=car_id)
+
+        bookmark = Bookmark.objects.filter(car=car, user=request.user).first()
+        if not bookmark:
+            new_bookmark = Bookmark(user=request.user, car=car)
+            new_bookmark.save()
+            messages.success(request, "Bookmarked added", "alert-success")
+        else:
+            bookmark.delete()
+            messages.warning(request, "Bookmark removed", "alert-warning")
+
+    except Exception as e:
+        print(e)
+    return redirect("cars:car_detail", car_id=car_id)
 

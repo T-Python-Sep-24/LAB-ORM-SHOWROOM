@@ -1,9 +1,17 @@
 {% extends "cars/base.html" %}
-
 {% block title %}{{ car.name }} Details{% endblock %}
-
 {% block content %}
-<h1>{{ car.name }}</h1>
+<div class="d-flex justify-content-between align-items-start">
+    <h1>{{ car.name }}</h1>
+    <a href="{% url 'cars:add_bookmark_view' car.id %}">
+        {% if is_bookmarked %}
+        <i class="bi bi-bookmark-check-fill"></i>
+        {% else %}
+        <i class="bi bi-bookmark-plus"></i>
+        {% endif %}
+    </a>
+</div>
+
 <img src="{{ car.photo.url }}" alt="{{ car.name }}" style="width: 300px;">
 <p><strong>Brand:</strong> {{ car.brand.name }}</p>
 <p><strong>Model:</strong> {{ car.model }}</p>
@@ -18,15 +26,13 @@
 
 <!-- Review Section -->
 <div class="mb-4">
-    <h4>Reviews ({{car.review_set.count}})</h4>
-
+    <h4>Reviews ({{car.reviews.count}})</h4>
     {% for review in car.reviews.all %}
         <div class="border p-3 mb-3 rounded">
             <div class="d-flex gap-1 align-items-center">
                 <img src="{{review.user.profile.avatar.url}}" class="rounded-circle avatar" />
                 <a href="{% url 'Users:user_profile_view' review.user.username %}"><h4 class="m-0 p-0">{{review.user.first_name}} {{review.user.last_name}}</h4></a>
             </div>
-            <!-- <h5>{{ review.user.username }} rated it: {{ review.rating }}/5</h5> -->
             <p>{{ review.review_text }}</p>
             <p><small>Reviewed on {{ review.created_at|date:"M d, Y, h:i a" }}</small></p>
         </div>

@@ -67,6 +67,12 @@
     margin-right: 10px;
 }
 
+.avatar {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+}
+
 /* Responsiveness */
 @media (max-width: 768px) {
     .car-form {
