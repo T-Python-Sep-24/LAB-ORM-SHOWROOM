@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Gamers Haven {% endblock %}
+
+{% block content %}
+<main>
+    <div class="hero">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&h=400" alt="Cars Banner">
+    </div>
+    <a href="{% url 'cars:all_cars_view' %}"class="text-decoration-none text-black">
+        <div class="d-flex align-items-end justify-content-end ">
+            <span >&#8594;</span> 
+        </div>
+    </a>
+
+    <div class="car-grid">
+        {% for c in car %}
+        <div class="car-card">
+           
+                <img src="{{ c.photo.url }}">
+
+            <h3>
+                <a href="{% url 'cars:car_detail_view' c.id %}" class="text-decoration-none text-dark">
+                    {{ c.name }}
+                </a>
+            </h3>
+
+            <p><strong>Brand:</strong> {{ c.brand.name }}</p>
+
+          
+
+            <p><strong>Model Year:</strong> {{ c.model_year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
