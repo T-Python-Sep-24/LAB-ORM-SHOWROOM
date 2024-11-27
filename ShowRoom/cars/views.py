@@ -52,18 +52,22 @@ def create_car(request):
     if not request.user.is_superuser and not request.user.is_staff:
         messages.error(request, "Only admins and staff can add cars.", "alert-warning")
         return redirect("main:index_view")
+    
 
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
+            
         if form.is_valid():
             form.save()
             messages.success(request, "Car has been successfully added!")
             return redirect('cars:all_cars')
         else:
+            print(form.errors)
             messages.error(request, "Error adding car. Please check the form.")
     else:
         form = CarForm()
     
+
     return render(request, 'cars/create_car.html', {'form': form})
 
 def car_detail(request, car_id):

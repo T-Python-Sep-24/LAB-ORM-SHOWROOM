@@ -41,27 +41,17 @@
         <label for="{{ form.price.id_for_label }}">Car Price</label>
         {{ form.price }}
     </div>
-    {% for color in form.colors %}
-<div class="form-check">
-    <input 
-        class="form-check-input" 
-        type="checkbox" 
-        name="colors" 
-        id="color-{{ forloop.counter }}" 
-        value="{{ color.choice_label }}"
-        data-color="{{ color.choice_label|lower }}" />
-    <label 
-        class="form-check-label" 
-        for="color-{{ forloop.counter }}">
-        {{ color.choice_label }}
-    </label>
-</div>
-{% endfor %}
+
+    <div class="form-check">
+        <label class="form-check-label" for="{{ form.color.id_for_label }}">Color</label>
+        {{form.colors}}
+    </div>
 
     <button type="submit" class="btn btn-primary btn-block">Add Car</button>
 </form>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Select all checkboxes with data-color attribute
     const colorInputs = document.querySelectorAll('input[data-color]');
 
