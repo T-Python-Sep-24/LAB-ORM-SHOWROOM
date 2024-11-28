@@ -43,6 +43,16 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:log_out' %}">Logout</a>
                       </li>
+                      {% else %}
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Login
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li><a class="dropdown-item" href="{% url 'accounts:sign_in' %}">Sign In</a></li>
+                          <li><a class="dropdown-item" href="{% url 'accounts:sign_up' %}">Sign Up</a></li>
+                        </ul>
+                      </li>
                       {% endif %}
                     </ul>
                   </div>
