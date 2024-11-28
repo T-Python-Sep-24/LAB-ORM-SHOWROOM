@@ -40,6 +40,9 @@
                       <li class="nav-item d-flex">
                         <p class="text-white my-auto">| Welcome {{ request.user.username }}</p>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:log_out' %}">Logout</a>
+                      </li>
                       {% endif %}
                     </ul>
                   </div>

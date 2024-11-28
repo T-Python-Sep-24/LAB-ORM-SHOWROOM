@@ -40,5 +40,7 @@ def sign_in(request: HttpRequest):
 
 
 def log_out(request: HttpRequest):
+    logout(request)
+    messages.success(request, "logged out successfully", "alert-warning")
 
     return redirect("main:home_view")
