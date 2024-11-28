@@ -36,6 +36,11 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{% url 'brands:new_brand_view' %}">New Brand</a>
                       </li>
+                      {% if request.user.is_authenticated %}
+                      <li class="nav-item d-flex">
+                        <p class="text-white my-auto">| Welcome {{ request.user.username }}</p>
+                      </li>
+                      {% endif %}
                     </ul>
                   </div>
                 </div>

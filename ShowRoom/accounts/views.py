@@ -21,6 +21,19 @@ def sign_up(request: HttpRequest):
 
 
 def sign_in(request: HttpRequest):
+    if request.method == "POST":
+        # get username and password from form
+        username = request.POST["username"]
+        password = request.POST["password"]
+        # authenicate the user
+        user = authenticate(request, username=username, password=password)
+
+        # check if user authinicated
+        if user is not None:   # we can use (if user): both works
+            messages.success(request, "Login successfully", "alert-success")
+            login(request, user)
+        else:
+            messages.error(request, "Wrong credinitials", "alert-warning")
 
     return render(request, "accounts/signin.html")
 
