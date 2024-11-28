@@ -14,6 +14,7 @@
             <div class="d-flex flex-column shadow p-3 gap-2">
                 <div class="d-flex justify-content-between">
                     <h1>{{ brand.name }}</h1>
+                    {% if request.user.is_superuser %}
                     <div class="d-flex gap-2">
                         <a href="{% url 'brands:update_brand_view' brand.id %}"><button class="btn btn-dark">Update</button></a>
                         <!-- Button trigger modal -->
@@ -23,6 +24,7 @@
                             </button>
                         </a>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="details-card-image">
                     <img src="{{ brand.logo.url }}" alt="{{ brand.name }} logo">
