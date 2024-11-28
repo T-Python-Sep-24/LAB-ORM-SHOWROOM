@@ -49,8 +49,8 @@
                           Login
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <li><a class="dropdown-item" href="{% url 'accounts:sign_in' %}">Sign In</a></li>
-                          <li><a class="dropdown-item" href="{% url 'accounts:sign_up' %}">Sign Up</a></li>
+                          <li><a class="dropdown-item" href="{% url 'accounts:sign_in' %}?next={{ request.path }}">Sign In</a></li>
+                          <li><a class="dropdown-item" href="{% url 'accounts:sign_up' %}?next={{ request.path }}">Sign Up</a></li>
                         </ul>
                       </li>
                       {% endif %}
