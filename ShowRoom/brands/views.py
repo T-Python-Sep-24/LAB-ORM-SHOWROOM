@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from .models import Brand
 from cars.models import Car
 from .forms import BrandForm
+from django.contrib import messages
 
 # Create your views here.
 def all_brands_view(request: HttpRequest):
@@ -15,6 +16,11 @@ def all_brands_view(request: HttpRequest):
 
 
 def new_brand_view(request: HttpRequest):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     if request.method == "POST":
         brand_form = BrandForm(request.POST, request.FILES)
         if brand_form.is_valid():
@@ -27,6 +33,11 @@ def new_brand_view(request: HttpRequest):
 
 
 def update_brand_view(request: HttpRequest, brand_id: int):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     brand = Brand.objects.get(pk=brand_id)
     context = {"brand": brand}
 
@@ -51,6 +62,11 @@ def details_brand_view(request: HttpRequest, brand_id: int):
 
 
 def delete_brand_view(request: HttpRequest, brand_id: int):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     brand = Brand.objects.get(pk=brand_id)
     brand.delete()
 
