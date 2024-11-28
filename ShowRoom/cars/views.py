@@ -41,6 +41,11 @@ def details_car_view(request: HttpRequest, car_id: int):
 
 
 def new_car_view(request: HttpRequest):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     brands = Brand.objects.all()
     colors = Color.objects.all()
     context = {"brands": brands, "colors": colors}
@@ -59,6 +64,11 @@ def new_car_view(request: HttpRequest):
 
 
 def update_car_view(request: HttpRequest, car_id: int):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     brands = Brand.objects.all()
     colors = Color.objects.all()
     car = Car.objects.get(pk=car_id)
@@ -80,6 +90,11 @@ def update_car_view(request: HttpRequest, car_id: int):
 
 
 def delete_car_view(request: HttpRequest, car_id: int):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     car = Car.objects.get(pk=car_id)
     car.delete()
     messages.success(request, "Car deleted successfully!", "alert-success")
@@ -90,6 +105,11 @@ def delete_car_view(request: HttpRequest, car_id: int):
 
 
 def new_color_view(request: HttpRequest):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     if request.method == "POST":
         color_form = ColorForm(request.POST)
         if color_form.is_valid():
@@ -102,6 +122,11 @@ def new_color_view(request: HttpRequest):
 
 
 def update_color_view(request: HttpRequest, color_id: int):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+
     color = Color.objects.get(pk=color_id)
     context = {"color": color}
 
@@ -117,6 +142,11 @@ def update_color_view(request: HttpRequest, color_id: int):
 
 
 def delete_color_view(request: HttpRequest, color_id: int):
+    # Limit acces to admin
+    if not request.user.is_superuser:
+        messages.error(request, "This operation requires admin account","alert-danger")
+        return redirect("accounts:sign_in")
+    
     color = Color.objects.get(pk=color_id)
     color.delete()
 
