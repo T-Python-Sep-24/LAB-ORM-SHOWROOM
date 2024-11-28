@@ -49,11 +49,11 @@ def new_car_view(request: HttpRequest):
         car_form = CarForm(request.POST, request.FILES)
         if car_form.is_valid():
             car_form.save()
-            messages.success(request, "Car created successfully!")
+            messages.success(request, "Car created successfully!", "alert-success")
             return redirect("cars:all_cars_view")
         else:
             print("form error: ", car_form.errors)
-            messages.error(request, "Error creating car. Please try again later")
+            messages.error(request, "Error creating car. Please try again later", "alert-warning")
 
     return render(request, "cars/new.html", context)
 
@@ -82,7 +82,7 @@ def update_car_view(request: HttpRequest, car_id: int):
 def delete_car_view(request: HttpRequest, car_id: int):
     car = Car.objects.get(pk=car_id)
     car.delete()
-    messages.success(request, "Car deleted successfully!")
+    messages.success(request, "Car deleted successfully!", "alert-success")
     
     return redirect("cars:all_cars_view")
 
