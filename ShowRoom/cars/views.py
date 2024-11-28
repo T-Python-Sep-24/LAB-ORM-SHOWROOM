@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from brands.models import Brand
-from .models import Car, Color
+from .models import Car, Color, Review
 from .forms import CarForm, ColorForm
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -121,3 +121,18 @@ def delete_color_view(request: HttpRequest, color_id: int):
     color.delete()
 
     return redirect("cars:all_cars_view")
+
+
+def add_review_view(request:HttpRequest, car_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "Only registered user can add review","alert-danger")
+        return redirect("accounts:sign_in")
+
+    if request.method == "POST":
+        car_object = Car.objects.get(pk=car_id)
+        new_review = Review(car=car_object,user=request.user,comment=request.POST["comment"],rating=request.POST["rating"])
+        new_review.save()
+
+        messages.success(request, "Added Review Successfully", "alert-success")
+
+    return redirect("cars:details_car_view", car_id=car_id)
